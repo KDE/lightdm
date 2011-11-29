@@ -25,7 +25,10 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     setGeometry(screen);
     
     m_greeter->connectSync();
-
+    
+    //add a new plasma widget which is a plasma line edit in password mode.
+    qmlRegisterType<PasswordLineEdit>("MyLibrary", 1, 0, "PasswordLineEdit");
+    qmlRegisterType<ModelComboBox>("MyLibrary", 1, 0, "ModelComboBox");
 
     KDeclarative kdeclarative;
     kdeclarative.setDeclarativeEngine(engine());

@@ -13,6 +13,8 @@ add_subdirectory(libkdeclarative)
 set(GREETER_SRCS
     greeterwindow.cpp
     main.cpp
+    components/modelcombobox.cpp
+    components/passwordlineedit.cpp
 )
 
 # Create the plasmoid
