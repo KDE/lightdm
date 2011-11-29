@@ -5,6 +5,7 @@ include_directories(
   ${CMAKE_BINARY_DIR}
   ${KDE4_INCLUDES}
   ${QLIGHTDM_INCLUDE_DIR}
+  libkdeclarative
 )
 
 add_subdirectory(libkdeclarative)

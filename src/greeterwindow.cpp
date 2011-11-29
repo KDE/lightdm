@@ -7,6 +7,7 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QtCore/QDebug>
+#include <QtDeclarative/qdeclarative.h>
 
 #include <QLightDM/Greeter>
 #include <QLightDM/UsersModel>
@@ -16,6 +17,9 @@
 #include "libkdeclarative/kdeclarative.h"
 
 #include <KUrl>
+
+#include "components/passwordlineedit.h"
+#include "components/modelcombobox.h"
 
 GreeterWindow::GreeterWindow(QWidget *parent)
     : QDeclarativeView(parent),
@@ -43,7 +47,7 @@ GreeterWindow::GreeterWindow(QWidget *parent)
 
 
     //FIXME load from /etc/lightdm/lightdm-kde.conf
-    QString theme = "classic";
+    QString theme = "shinydemo";
 
     //FIXME use KStandardDirs and such.
     KUrl source = "/usr/local/share/apps/lightdm-kde/themes/" + theme + "/main.qml";
