@@ -13,7 +13,8 @@
 #include <QLightDM/SessionsModel>
 
 //FIXME use the KDeclarative from KDE (requires >= 4.8)
-#include <kdeclarative.h>
+#include "libkdeclarative/kdeclarative.h"
+
 #include <KUrl>
 
 GreeterWindow::GreeterWindow(QWidget *parent)
