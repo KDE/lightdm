@@ -1,0 +1,22 @@
+File format as follows:
+in /usr/share/lightdm-kde/
+
+themename/
+  theme.rc
+  Preview.png(or live preview?) 
+     -live preview, fake QML entires. Easily do-able, would be good for testing
+  main.qml
+  config.kcfg
+  config.ui
+
+The latter two will be used in the KCM to get per-theme options.
+This will save having two rebuild an entire theme each time just to change the background. Also avoids the problem of having a UI which shows options which don't do anything. Both being things that realy suck in KDM.
+
+Context Properties:
+  powerInterface
+  screenSize
+  greeter
+  usersModel
+  sessionsModel
+
+(Fixme? Alternately could expose this as objects which can be created, may make more sense for the models)

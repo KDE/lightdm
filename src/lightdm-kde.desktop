@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=LightDM KDE Greeter
+Comment=This runs the KDE greeter, it should only be run from LightDM
+Exec=lightdm-kde
+Type=Application
+X-Ubuntu-Gettext-Domain=lightdm
