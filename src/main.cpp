@@ -8,7 +8,7 @@
 
 int main(int argc, char *argv[])
 {
-    KAboutData aboutData("greeter", 0, ki18n("greeter"),
+    KAboutData aboutData("lightdm-kde", 0, ki18n("LightDM KDE"),
                          "0.1", ki18n("Description here"),
                          KAboutData::License_GPL,
                          ki18n("(c) KDE"),

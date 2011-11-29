@@ -18,6 +18,7 @@
 //FIXME use the KDeclarative from KDE (requires >= 4.8)
 #include "libkdeclarative/kdeclarative.h"
 
+#include <KStandardDirs>
 #include <KUrl>
 
 #include "components/passwordlineedit.h"
@@ -58,8 +59,7 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     //FIXME load from /etc/lightdm/lightdm-kde.conf
     QString theme = "shinydemo";
 
-    //FIXME use KStandardDirs and such.
-    KUrl source = "/usr/local/share/apps/lightdm-kde/themes/" + theme + "/main.qml";
+    KUrl source = KGlobal::dirs()->locate("appdata", "themes/" + theme + "/main.qml");
     this->setSource(source);
 
     connect(m_greeter, SIGNAL(quit()), SLOT(close()));
