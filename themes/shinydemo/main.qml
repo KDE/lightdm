@@ -20,12 +20,12 @@ Item {
         }
 
         onShowPrompt: {
-            greeter.provideSecret(passwordInput.text);
+            greeter.respond(passwordInput.text);
         }
 
         onAuthenticationComplete: {
-            if(isAuthenticated) {
-                greeter.startSession(sessionCombo.itemData(sessionCombo.currentIndex), "en-GB");
+            if(greeter.isAuthenticated) {
+                greeter.startSessionSync(sessionCombo.itemData(sessionCombo.currentIndex));
             }
             else {
                 feedbackLabel.text = "Sorry, incorrect password please try again,";
@@ -34,7 +34,7 @@ Item {
     }
 
     function login() {
-        greeter.login(usernameInput.text);
+        greeter.authenticate(usernameInput.text);
     }
 
     PlasmaCore.FrameSvgItem {
@@ -163,29 +163,29 @@ Item {
             PlasmaWidgets.IconWidget {
                 text: i18n("Shutdown")
                 icon: QIcon("system-shutdown")
-                enabled: greeter.canShutdown;
-                onClicked: {greeter.shutDown();}
+                enabled: power.canShutdown;
+                onClicked: {power.shutDown();}
             }
 
             PlasmaWidgets.IconWidget {
                 text: i18n("Suspend")
                 icon: QIcon("system-suspend")
-                enabled: greeter.canSuspend;
-                onClicked: {greeter.suspend();}
+                enabled: power.canSuspend;
+                onClicked: {power.suspend();}
             }
 
             PlasmaWidgets.IconWidget {
                 text: i18n("Restart")
                 icon: QIcon("system-reboot")
-                enabled: greeter.canRestart;
-                onClicked: {greeter.restart();}
+                enabled: power.canRestart;
+                onClicked: {power.restart();}
             }
 
             PlasmaWidgets.IconWidget {
                 text: i18n("Hibernate")
                 icon: QIcon("system-suspend-hibernate")
-                enabled: greeter.canHibernate;
-                onClicked: {greeter.hibernate();}
+                enabled: power.canHibernate;
+                onClicked: {power.hibernate();}
             }
         }
 
