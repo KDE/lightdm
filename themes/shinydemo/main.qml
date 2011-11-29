@@ -24,7 +24,7 @@ Item {
         }
 
         onAuthenticationComplete: {
-            if(greeter.isAuthenticated) {
+            if(greeter.authenticated) {
                 greeter.startSessionSync(sessionCombo.itemData(sessionCombo.currentIndex));
             }
             else {
