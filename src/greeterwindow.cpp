@@ -48,6 +48,13 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     //FIXME set the engine to ban ALL network activity.
 
 
+    
+    rootContext()->setContextProperty("screenSize", size());
+    rootContext()->setContextProperty("greeter", m_greeter);
+    rootContext()->setContextProperty("usersModel", new QLightDM::UsersModel(this));
+    rootContext()->setContextProperty("sessionsModel", new QLightDM::SessionsModel(this));
+    rootContext()->setContextProperty("power", new QLightDM::PowerInterface(this));
+    
     //FIXME load from /etc/lightdm/lightdm-kde.conf
     QString theme = "shinydemo";
 
@@ -58,11 +65,7 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     connect(m_greeter, SIGNAL(quit()), SLOT(close()));
     connect(m_greeter, SIGNAL(connected()), SLOT(onGreeterConnected()));
 
-    rootContext()->setContextProperty("screenSize", size());
-    rootContext()->setContextProperty("greeter", m_greeter);
-    rootContext()->setContextProperty("usersModel", new QLightDM::UsersModel(this));
-    rootContext()->setContextProperty("sessionsModel", new QLightDM::SessionsModel(this));
-    rootContext()->setContextProperty("power", new QLightDM::PowerInterface(this));
+
  
 }
 

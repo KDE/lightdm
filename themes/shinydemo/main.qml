@@ -4,8 +4,8 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import MyLibrary 1.0 as LightDMPlasmaWidgets
 
 Item {
-    width:800
-    height: 600
+    width: screenSize.width;
+    height: screenSize.height;
 
     Image {
         fillMode: Image.PreserveAspectCrop
