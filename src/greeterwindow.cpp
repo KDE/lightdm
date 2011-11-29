@@ -12,6 +12,8 @@
 #include <QLightDM/Greeter>
 #include <QLightDM/UsersModel>
 #include <QLightDM/SessionsModel>
+#include <QLightDM/Power>
+
 
 //FIXME use the KDeclarative from KDE (requires >= 4.8)
 #include "libkdeclarative/kdeclarative.h"
@@ -60,6 +62,8 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     rootContext()->setContextProperty("greeter", m_greeter);
     rootContext()->setContextProperty("usersModel", new QLightDM::UsersModel(this));
     rootContext()->setContextProperty("sessionsModel", new QLightDM::SessionsModel(this));
+    rootContext()->setContextProperty("power", new QLightDM::PowerInterface(this));
+ 
 }
 
 GreeterWindow::~GreeterWindow()
