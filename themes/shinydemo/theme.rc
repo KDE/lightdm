@@ -1,0 +1,6 @@
+[theme]
+Name = Shiny Demo
+Description = A pretty looking greeter, shows basic functionality, nothing too complex, based on old plasma QML widgets
+Version = 0.1
+Author = David Edmundson
+Homepage = http://kde.org
