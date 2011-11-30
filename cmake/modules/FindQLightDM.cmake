@@ -7,7 +7,7 @@ set(QLIGHTDM_LIBRARIES_FIND_REQUIRED ${QLightDM_FIND_REQUIRED})
 
 find_package(PkgConfig)
 if(PKG_CONFIG_FOUND)
-     pkg_check_modules(PC_QLIGHTDM liblightdm-qt-1)
+     pkg_check_modules(PC_QLIGHTDM liblightdm-qt-2)
 endif(PKG_CONFIG_FOUND)
 
 
@@ -19,7 +19,7 @@ find_path(QLIGHTDM_INCLUDE_DIR
 )
 
 find_library(QLIGHTDM_LIBRARIES
-             NAMES lightdm-qt-1
+             NAMES lightdm-qt-2
              HINTS
              ${PC_QLIGHTDM_LIBDIR}
              ${PC_QLIGHTDM_LIBRARY_DIRS}
