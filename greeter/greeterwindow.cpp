@@ -20,6 +20,8 @@
 
 #include <KStandardDirs>
 #include <KUrl>
+#include <KDebug>
+
 
 #include "components/passwordlineedit.h"
 #include "components/modelcombobox.h"
@@ -48,8 +50,6 @@ GreeterWindow::GreeterWindow(QWidget *parent)
    
     //FIXME set the engine to ban ALL network activity.
 
-
-    
     rootContext()->setContextProperty("screenSize", size());
     rootContext()->setContextProperty("greeter", m_greeter);
     rootContext()->setContextProperty("usersModel", new QLightDM::UsersModel(this));
@@ -60,13 +60,16 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     QString theme = "shinydemo";
 
     KUrl source = KGlobal::dirs()->locate("appdata", "themes/" + theme + "/main.qml");
-    this->setSource(source);
-
-    connect(m_greeter, SIGNAL(quit()), SLOT(close()));
-    connect(m_greeter, SIGNAL(connected()), SLOT(onGreeterConnected()));
-
-
- 
+    
+    kDebug() << "loading " << source;
+    
+    if (source.isEmpty()) {
+        //FIXME we should probably try falling back to a known theme before crashing out.
+        qFatal("Cannot find QML File");
+    }
+    else {
+        this->setSource(source);
+    }
 }
 
 GreeterWindow::~GreeterWindow()
@@ -80,27 +83,6 @@ void GreeterWindow::resizeEvent(QResizeEvent *event)
 }
 
 
-void GreeterWindow::onGreeterConnected()
-{
-    qDebug() << "connected!";
-
-//    KUrl themeUrl(m_greeter->theme());
-//    QSettings themeInfo(themeUrl.path(), QSettings::IniFormat);
-
-//    KUrl themeDirectory(themeUrl.directory(KUrl::AppendTrailingSlash));
-
-//    KUrl qmlUrl(themeDirectory, themeInfo.value("theme/qmlfile").toString());
-
-//    qDebug() << "********";
-//    qDebug() << m_greeter->property("theme/background").toString();
-    
-//    if (qmlUrl.isEmpty()) {
-//        qDebug() << "No qmlfile supplied in";
-//        close();
-//    }
-//    else {
-//    }
-}
 
 #include "moc_greeterwindow.cpp"
 

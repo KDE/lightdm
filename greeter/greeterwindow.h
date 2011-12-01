@@ -19,8 +19,6 @@ public:
 protected:
     void resizeEvent(QResizeEvent *);
 
-private slots:
-    void onGreeterConnected();
 private:
     QLightDM::Greeter *m_greeter;
 
