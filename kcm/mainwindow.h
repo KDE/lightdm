@@ -19,6 +19,7 @@ public:
 
 private slots:
     void onThemeSelected(const QModelIndex &index);
+    void onApply();
 
 
 private:

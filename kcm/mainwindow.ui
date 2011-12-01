@@ -39,25 +39,6 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QLabel" name="previewLabel">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-       <property name="scaledContents">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QLabel" name="nameLabel">
        <property name="font">
         <font>
@@ -71,11 +52,31 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="descriptionLabel">
+      <widget class="QLabel" name="preview">
        <property name="text">
         <string>TextLabel</string>
        </property>
       </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="descriptionLabel">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="authorLabel">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QWidget" name="optionsWidget" native="true"/>
      </item>
      <item>
       <spacer name="verticalSpacer">
@@ -95,13 +96,6 @@
      </item>
      <item>
       <widget class="QWidget" name="widget" native="true"/>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="checkBox">
-       <property name="text">
-        <string>Show User List</string>
-       </property>
-      </widget>
      </item>
     </layout>
    </item>

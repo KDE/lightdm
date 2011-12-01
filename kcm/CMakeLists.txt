@@ -11,12 +11,7 @@ add_definitions (${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
 include_directories(
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_BINARY_DIR}
-#   ${QT_QTNETWORK_INCLUDE_DIR}
-#   ${QT_QTDBUS_INCLUDE_DIR}
-#   ${QT_QTSQL_INCLUDE_DIR}
-#   ${QT_QTWEBKIT_INCLUDE_DIR}
   ${KDE4_INCLUDES}
- #   ${SOPRANO_INCLUDE_DIR}
 )
 
 # Insert your sources here
@@ -38,6 +33,7 @@ kde4_add_executable(lightdmkcm ${LIGHTDM_KCM_SRCS})
 target_link_libraries(lightdmkcm
   ${KDE4_KDEUI_LIBS}
   ${QT_QTUITOOLS_LIBRARY}
+  ${QT_QTDECLARATIVE_LIBRARY}
 )
 # 
 # install(TARGETS lightdmkcm ${INSTALL_TARGETS_DEFAULT_ARGS})

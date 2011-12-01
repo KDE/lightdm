@@ -10,7 +10,12 @@ class ThemesModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    enum Roles {PreviewRole = Qt::UserRole};
+    enum Roles {IdRole = Qt::UserRole,
+               AuthorRole,
+               DescriptionRole,
+               VersionRole,
+               PreviewRole};
+
     explicit ThemesModel(QObject *parent = 0);
 
     int rowCount(const QModelIndex &parent) const;
