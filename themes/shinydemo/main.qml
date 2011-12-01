@@ -28,7 +28,7 @@ Item {
                 greeter.startSessionSync(sessionCombo.itemData(sessionCombo.currentIndex));
             }
             else {
-                feedbackLabel.text = "Sorry, incorrect password please try again,";
+                feedbackLabel.text = i18n("Sorry, incorrect password please try again.");
             }
         }
     }
@@ -60,7 +60,7 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter;
                 id: feedbackLabel;
                 font.pointSize: 9
-                text: "Welcome to "+ greeter.hostname;
+                text: i18n("Welcome to %1", greeter.hostname);
             }
 
             Row {
@@ -210,7 +210,7 @@ Item {
             anchors.centerIn: parent
 
             Text {
-                text: "Session"
+                text: i18n("Session")
                 anchors.verticalCenter: parent.verticalCenter;
             }
 
@@ -223,7 +223,7 @@ Item {
 
 
             Text {
-                text: "Language:"
+                text: i18n("Language:")
                 anchors.verticalCenter: parent.verticalCenter;
             }
 
