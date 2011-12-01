@@ -211,31 +211,24 @@ Item {
 
             Text {
                 text: "Session"
-                verticalAlignment: Qt.AlignHCenter;
+                anchors.verticalCenter: parent.verticalCenter;
             }
 
             LightDMPlasmaWidgets.ModelComboBox {
                 id: sessionCombo
                 model: sessionsModel;
+                anchors.verticalCenter: parent.verticalCenter;
+                width: 200;
             }
 
-
-            Text {
-                text: "Keyboard:"
-                verticalAlignment: Qt.AlignHCenter;
-            }
-
-            PlasmaWidgets.ComboBox {
-
-            }
 
             Text {
                 text: "Language:"
-                verticalAlignment: Qt.AlignHCenter;
+                anchors.verticalCenter: parent.verticalCenter;
             }
 
             PlasmaWidgets.ComboBox {
-
+                anchors.verticalCenter: parent.verticalCenter;
             }
 
         }
