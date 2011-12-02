@@ -14,7 +14,9 @@ KCM:
  - policyKit time!
  - Make it actually a KCM (do this last, apps are easier to debug)
  - Proper preview (simply fake QML components - can we do that just in javascript?)
+ - Messages.sh
 
 Themes:
  - Make a sexy greeter
  - Hook up the "classic" version to work.
+ - Messages.sh + work out how i18n loading is meant to work.
