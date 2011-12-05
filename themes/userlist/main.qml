@@ -4,7 +4,7 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import MyLibrary 1.0 as LightDMPlasmaWidgets
 
 Item {
-    id: frontend
+    id: screen
     width: screenSize.width;
     height: screenSize.height;
 
@@ -21,13 +21,13 @@ Item {
         target: greeter;
 
         onShowPrompt: {
-            console.log("onShowPrompt " + frontend.password);
-            greeter.respond(frontend.password);
+            console.log("onShowPrompt " + screen.password);
+            greeter.respond(screen.password);
         }
 
         onAuthenticationComplete: {
             if(greeter.authenticated) {
-                greeter.startSessionSync(frontend.session);
+                greeter.startSessionSync(screen.session);
             } else {
                 feedbackLabel.text = i18n("Sorry, incorrect password please try again.");
             }
@@ -35,9 +35,9 @@ Item {
     }
 
     function login(username, _password, _session) {
-        frontend.password = _password;
-        frontend.session = _session;
-        console.log(username + " " + frontend.password + " " + frontend.session);
+        screen.password = _password;
+        screen.session = _session;
+        console.log(username + " " + screen.password + " " + screen.session);
         greeter.authenticate(username);
     }
 
@@ -57,114 +57,111 @@ Item {
         focus: true
 
         model: usersModel
+
+        cacheBuffer: count * 80
+
         delegate: Item {
             id: wrapper
 
-            height: ListView.isCurrentItem ? currentItemRect.height : itemRect.height
+            property bool isCurrent: ListView.isCurrentItem
+
+            height: isCurrent ? 80 : 40
             width: parent.width
+            Behavior on height {
+                NumberAnimation { duration: 100 }
+            }
 
             PlasmaCore.FrameSvgItem {
-                id: currentItemRect
-                anchors.left: parent.left
-                anchors.right: parent.right
-                height: 80
+                anchors.fill: parent
                 imagePath: "translucent/dialogs/background"
-                opacity: wrapper.ListView.isCurrentItem ? 1 : 0
-
-                Item {
-                    // Create extra margins around the whole content
-                    anchors.fill: parent
-                    anchors.margins: 12
-
-                    property int padding: 6
-
-                    Rectangle {
-                        id: currentFace
-                        x: parent.padding
-                        y: parent.padding
-                        width: parent.height - 2 * parent.padding
-                        height: width
-                        color: "gray"
-                    }
-
-                    Text {
-                        id: loginText
-                        anchors.top: parent.top
-                        anchors.left: currentFace.right
-                        anchors.right: loginButton.left
-                        anchors.margins: parent.padding
-                        text: realName
-                    }
-
-                    LightDMPlasmaWidgets.PasswordLineEdit {
-                        id: passwordInput
-                        anchors.top: loginText.bottom
-                        anchors.left: currentFace.right
-                        anchors.right: loginButton.left
-                        anchors.margins: parent.padding
-                        clickMessage: i18n("Password")
-                        onReturnPressed: startLogin();
-                    }
-
-                    PlasmaWidgets.PushButton {
-                        id: loginButton
-                        anchors.top: parent.top
-                        anchors.right: parent.right
-                        anchors.bottom: parent.bottom
-                        width: height
-                        anchors.margins: parent.padding
-                        text: ">"
-                        onClicked: startLogin();
-                    }
-
-                    LightDMPlasmaWidgets.ModelComboBox {
-                        id: sessionCombo
-                        model: sessionsModel
-                        anchors.right: parent.right
-                        anchors.top: parent.bottom
-                        width: 200;
-                    }
-
+                opacity: isCurrent ? 1 : 0
+                Behavior on opacity {
+                    NumberAnimation { duration: 100 }
                 }
-            } // /currentItemRect
+            }
+
+            property int outerPadding: isCurrent ? 18 : 6
+            property int padding: 6
+            Behavior on outerPadding {
+                NumberAnimation { duration: 100 }
+            }
+
+            Rectangle {
+                id: face
+                anchors.right: wrapper.left
+                anchors.rightMargin: -60
+                y: parent.outerPadding
+                width: parent.height - 2 * parent.outerPadding
+                height: width
+                color: "gray"
+                Behavior on x {
+                    NumberAnimation { duration: 100 }
+                }
+            }
+
+            Text {
+                id: loginText
+                anchors.top: face.top
+                anchors.left: face.right
+                anchors.right: loginButton.left
+                anchors.rightMargin: wrapper.padding
+                anchors.leftMargin: wrapper.padding
+                font.pointSize: isCurrent ? 14 : 12
+                text: realName
+                Behavior on font.pointSize {
+                    NumberAnimation { duration: 100 }
+                }
+            }
+
+            LightDMPlasmaWidgets.PasswordLineEdit {
+                id: passwordInput
+                anchors.top: loginText.bottom
+                anchors.left: face.right
+                anchors.right: loginButton.left
+                anchors.margins: wrapper.padding
+                clickMessage: i18n("Password")
+                onReturnPressed: startLogin();
+                opacity: isCurrent ? 1 : 0
+                Behavior on opacity {
+                    NumberAnimation { duration: 100 }
+                }
+            }
+
+            PlasmaWidgets.PushButton {
+                id: loginButton
+                anchors.top: face.top
+                anchors.right: parent.right
+                anchors.bottom: face.bottom
+                width: height
+                anchors.rightMargin: wrapper.outerPadding
+                text: ">"
+                onClicked: startLogin();
+                opacity: isCurrent ? 1 : 0
+                Behavior on opacity {
+                    NumberAnimation { duration: 100 }
+                }
+            }
+
+            LightDMPlasmaWidgets.ModelComboBox {
+                id: sessionCombo
+                model: sessionsModel
+                anchors.right: loginButton.right
+                anchors.top: loginButton.bottom
+                anchors.topMargin: padding
+                width: 200;
+                opacity: isCurrent ? 1 : 0
+                Behavior on opacity {
+                    NumberAnimation { duration: 100 }
+                }
+            }
 
             function startLogin() {
-                // Note: I would like to put this function inside the current
-                // item rect, but for some reason if I do this I get
-                // "startLogin" unknown variable when code tries to call it.
                 var session = sessionCombo.itemData(sessionCombo.currentIndex);
                 if (session == "") {
                     session = "default";
                 }
                 login(name, passwordInput.text, session);
             }
-
-            Rectangle {
-                id: itemRect
-                anchors.left: parent.left
-                anchors.right: parent.right
-                height: 30
-                opacity: wrapper.ListView.isCurrentItem ? 0 : 1
-                color: "transparent"
-                property int padding: 5
-                Rectangle {
-                    id: face
-                    anchors.left: parent.left
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    width: height
-                    anchors.margins: parent.padding
-                    color: "gray"
-                }
-
-                Text {
-                    anchors.left: face.right
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    anchors.margins: parent.padding
-                    text: realName
-                }
-            } // /itemRect
         }
     }
 
