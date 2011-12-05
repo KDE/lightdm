@@ -21,7 +21,6 @@ Item {
         target: greeter;
 
         onShowPrompt: {
-            console.log("onShowPrompt " + screen.password);
             greeter.respond(screen.password);
         }
 
@@ -37,7 +36,6 @@ Item {
     function login(username, _password, _session) {
         screen.password = _password;
         screen.session = _session;
-        console.log(username + " " + screen.password + " " + screen.session);
         greeter.authenticate(username);
     }
 
