@@ -65,6 +65,12 @@ Item {
 
             property bool isCurrent: ListView.isCurrentItem
 
+            onIsCurrentChanged: {
+                if (isCurrent) {
+                    passwordInput.setFocus();
+                }
+            }
+
             height: isCurrent ? 80 : 40
             width: parent.width
             Behavior on height {

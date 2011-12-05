@@ -7,3 +7,8 @@ PasswordLineEdit::PasswordLineEdit(QGraphicsWidget *parent) :
 {
     nativeWidget()->setEchoMode(QLineEdit::Password);
 }
+
+void PasswordLineEdit::setFocus()
+{
+    nativeWidget()->setFocus();
+}
