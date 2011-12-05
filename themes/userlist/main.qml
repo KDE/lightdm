@@ -4,8 +4,12 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import MyLibrary 1.0 as LightDMPlasmaWidgets
 
 Item {
+    id: frontend
     width: screenSize.width;
     height: screenSize.height;
+
+    property string password;
+    property string session;
 
     Image {
         fillMode: Image.PreserveAspectCrop
@@ -17,35 +21,44 @@ Item {
         target: greeter;
 
         onShowPrompt: {
-            greeter.respond(passwordInput.text);
+            console.log("onShowPrompt " + frontend.password);
+            greeter.respond(frontend.password);
         }
 
         onAuthenticationComplete: {
             if(greeter.authenticated) {
-                greeter.startSessionSync(sessionCombo.itemData(sessionCombo.currentIndex));
-            }
-            else {
+                greeter.startSessionSync(frontend.session);
+            } else {
                 feedbackLabel.text = i18n("Sorry, incorrect password please try again.");
             }
         }
     }
 
-    function login() {
-        greeter.authenticate(usernameInput.text);
+    function login(username, _password, _session) {
+        frontend.password = _password;
+        frontend.session = _session;
+        console.log(username + " " + frontend.password + " " + frontend.session);
+        greeter.authenticate(username);
+    }
+
+    Text {
+        anchors.horizontalCenter: parent.horizontalCenter;
+        anchors.top: parent.top
+        id: feedbackLabel;
+        font.pointSize: 9
+        text: i18n("Welcome to %1", greeter.hostname);
     }
 
     ListView {
         id: usersList
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
+        anchors.centerIn: parent
+        height: parent.height - feedbackLabel.height * 2
         width: parent.width * 0.8
         focus: true
 
         model: usersModel
         delegate: Item {
             id: wrapper
-            property string loginName: name
 
             height: ListView.isCurrentItem ? currentItemRect.height : itemRect.height
             width: parent.width
@@ -89,8 +102,8 @@ Item {
                         anchors.left: currentFace.right
                         anchors.right: loginButton.left
                         anchors.margins: parent.padding
-                        clickMessage: i18n("Password");
-                        onReturnPressed: login();
+                        clickMessage: i18n("Password")
+                        onReturnPressed: startLogin();
                     }
 
                     PlasmaWidgets.PushButton {
@@ -101,10 +114,30 @@ Item {
                         width: height
                         anchors.margins: parent.padding
                         text: ">"
-                        onClicked: login();
+                        onClicked: startLogin();
                     }
+
+                    LightDMPlasmaWidgets.ModelComboBox {
+                        id: sessionCombo
+                        model: sessionsModel
+                        anchors.right: parent.right
+                        anchors.top: parent.bottom
+                        width: 200;
+                    }
+
                 }
             } // /currentItemRect
+
+            function startLogin() {
+                // Note: I would like to put this function inside the current
+                // item rect, but for some reason if I do this I get
+                // "startLogin" unknown variable when code tries to call it.
+                var session = sessionCombo.itemData(sessionCombo.currentIndex);
+                if (session == "") {
+                    session = "default";
+                }
+                login(name, passwordInput.text, session);
+            }
 
             Rectangle {
                 id: itemRect
