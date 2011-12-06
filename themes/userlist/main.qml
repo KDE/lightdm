@@ -28,7 +28,8 @@ Item {
             if(greeter.authenticated) {
                 greeter.startSessionSync(screen.session);
             } else {
-                feedbackLabel.text = i18n("Sorry, incorrect password please try again.");
+                feedbackLabel.text = i18n("Sorry, incorrect password. Please try again.");
+                feedbackLabel.showFeedback();
             }
         }
     }
@@ -40,18 +41,25 @@ Item {
     }
 
     Text {
-        anchors.horizontalCenter: parent.horizontalCenter;
+        id: welcomeLabel
+        anchors.left: parent.left;
         anchors.top: parent.top
-        id: feedbackLabel;
         font.pointSize: 9
         text: i18n("Welcome to %1", greeter.hostname);
+    }
+
+    FeedbackLabel {
+        id: feedbackLabel
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        font.pointSize: 14
     }
 
     ListView {
         id: usersList
         anchors.centerIn: parent
-        height: parent.height - feedbackLabel.height * 2
-        width: parent.width * 0.8
+        height: parent.height * 0.66
+        width: parent.width * 0.66
         focus: true
 
         model: usersModel
