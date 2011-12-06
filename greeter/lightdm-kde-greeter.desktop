@@ -1,6 +1,18 @@
 [Desktop Entry]
 Name=LightDM KDE Greeter
+Name[nl]=KDE-begroeting van LightDM
+Name[pt]=Ecrã de Boas-Vindas do LightDM para o KDE
+Name[pt_BR]=Saudador LightDM do KDE
+Name[sv]=LightDM KDE välkomstskärm
+Name[uk]=Вікно входу до системи LightDM для KDE
+Name[x-test]=xxLightDM KDE Greeterxx
 Comment=This runs the KDE greeter, it should only be run from LightDM
+Comment[nl]=Dit voert de KDE-begroeting uit, het zou alleen uitgevoerd moeten worden vanuit LightDM
+Comment[pt]=Isto executa o ecrã de boas-vindas do KDE, que só deverá ser corrido a partir do LightDM
+Comment[pt_BR]=Isto executa o Saudador do KDE, deve somente ser executado a partir do LightDM
+Comment[sv]=Detta gör KDE:s välkomstskärm. Den ska bara köras från LightDM.
+Comment[uk]=Запускає вікно входу KDE, можна виконувати лише з LightDM
+Comment[x-test]=xxThis runs the KDE greeter, it should only be run from LightDMxx
 Exec=lightdm-kde-greeter
 Type=Application
 X-Ubuntu-Gettext-Domain=lightdm
