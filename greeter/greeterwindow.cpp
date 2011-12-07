@@ -18,6 +18,8 @@
 //FIXME use the KDeclarative from KDE (requires >= 4.8)
 #include "libkdeclarative/kdeclarative.h"
 
+#include <KConfig>
+#include <KConfigGroup>
 #include <KStandardDirs>
 #include <KUrl>
 #include <KDebug>
@@ -25,6 +27,8 @@
 
 #include "components/passwordlineedit.h"
 #include "components/modelcombobox.h"
+
+#include <config.h>
 
 GreeterWindow::GreeterWindow(QWidget *parent)
     : QDeclarativeView(parent),
@@ -55,9 +59,9 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     rootContext()->setContextProperty("usersModel", new QLightDM::UsersModel(this));
     rootContext()->setContextProperty("sessionsModel", new QLightDM::SessionsModel(this));
     rootContext()->setContextProperty("power", new QLightDM::PowerInterface(this));
-    
-    //FIXME load from /etc/lightdm/lightdm-kde.conf
-    QString theme = "shinydemo";
+
+    KConfig config(LIGHTDM_CONFIG_DIR "/lightdm-kde-greeter.conf");
+    QString theme = config.group("greeter").readEntry("theme-name", "shinydemo");
 
     KUrl source = KGlobal::dirs()->locate("appdata", "themes/" + theme + "/main.qml");
     
