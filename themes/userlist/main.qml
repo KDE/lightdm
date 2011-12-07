@@ -98,14 +98,13 @@ Item {
                 NumberAnimation { duration: 100 }
             }
 
-            Rectangle {
+            Face {
                 id: face
                 anchors.right: wrapper.left
                 anchors.rightMargin: -60
                 y: parent.outerPadding
                 width: parent.height - 2 * parent.outerPadding
-                height: width
-                color: "gray"
+                source: "image://face/" + name
                 Behavior on x {
                     NumberAnimation { duration: 100 }
                 }

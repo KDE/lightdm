@@ -12,6 +12,7 @@ add_subdirectory(libkdeclarative)
 
 # Insert your sources here
 set(GREETER_SRCS
+    faceimageprovider.cpp
     greeterwindow.cpp
     main.cpp
     components/modelcombobox.cpp

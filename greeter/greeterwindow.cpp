@@ -27,6 +27,7 @@
 
 #include "components/passwordlineedit.h"
 #include "components/modelcombobox.h"
+#include "faceimageprovider.h"
 
 #include <config.h>
 
@@ -49,6 +50,10 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     //binds things like kconfig and icons
     kdeclarative.setupBindings();
 
+    QLightDM::UsersModel* usersModel = new QLightDM::UsersModel(this);
+
+    engine()->addImageProvider("face", new FaceImageProvider(usersModel));
+
 //     scriptEngine = kdeclarative.scriptEngine();
 //     registerDataEngineMetaTypes(scriptEngine);
    
@@ -56,7 +61,7 @@ GreeterWindow::GreeterWindow(QWidget *parent)
 
     rootContext()->setContextProperty("screenSize", size());
     rootContext()->setContextProperty("greeter", m_greeter);
-    rootContext()->setContextProperty("usersModel", new QLightDM::UsersModel(this));
+    rootContext()->setContextProperty("usersModel", usersModel);
     rootContext()->setContextProperty("sessionsModel", new QLightDM::SessionsModel(this));
     rootContext()->setContextProperty("power", new QLightDM::PowerInterface(this));
 
