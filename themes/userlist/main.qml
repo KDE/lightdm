@@ -69,28 +69,30 @@ Item {
                 NumberAnimation { duration: 100 }
             }
 
+            height: isCurrent ? 80 : 40
+            Behavior on height {
+                NumberAnimation { duration: 100 }
+            }
+
+            width: parent.width
+
+            property int outerPadding: isCurrent ? 18 : 6
+            Behavior on outerPadding {
+                NumberAnimation { duration: 100 }
+            }
+
+            property int padding: 6
+
             onIsCurrentChanged: {
                 if (isCurrent) {
                     passwordInput.setFocus();
                 }
             }
 
-            height: isCurrent ? 80 : 40
-            width: parent.width
-            Behavior on height {
-                NumberAnimation { duration: 100 }
-            }
-
             PlasmaCore.FrameSvgItem {
                 anchors.fill: parent
                 imagePath: "translucent/dialogs/background"
                 opacity: currentOpacity
-            }
-
-            property int outerPadding: isCurrent ? 18 : 6
-            property int padding: 6
-            Behavior on outerPadding {
-                NumberAnimation { duration: 100 }
             }
 
             Face {
