@@ -63,6 +63,12 @@ Item {
 
             property bool isCurrent: ListView.isCurrentItem
 
+            // Opacity for items which are only visible when we are on the current index
+            property real currentOpacity: isCurrent ? 1 : 0
+            Behavior on currentOpacity {
+                NumberAnimation { duration: 100 }
+            }
+
             onIsCurrentChanged: {
                 if (isCurrent) {
                     passwordInput.setFocus();
@@ -78,10 +84,7 @@ Item {
             PlasmaCore.FrameSvgItem {
                 anchors.fill: parent
                 imagePath: "translucent/dialogs/background"
-                opacity: isCurrent ? 1 : 0
-                Behavior on opacity {
-                    NumberAnimation { duration: 100 }
-                }
+                opacity: currentOpacity
             }
 
             property int outerPadding: isCurrent ? 18 : 6
@@ -124,10 +127,7 @@ Item {
                 anchors.margins: wrapper.padding
                 clickMessage: i18n("Password")
                 onReturnPressed: startLogin();
-                opacity: isCurrent ? 1 : 0
-                Behavior on opacity {
-                    NumberAnimation { duration: 100 }
-                }
+                opacity: currentOpacity
             }
 
             PlasmaWidgets.PushButton {
@@ -139,10 +139,7 @@ Item {
                 anchors.rightMargin: wrapper.outerPadding
                 text: ">"
                 onClicked: startLogin();
-                opacity: isCurrent ? 1 : 0
-                Behavior on opacity {
-                    NumberAnimation { duration: 100 }
-                }
+                opacity: currentOpacity
             }
 
             LightDMPlasmaWidgets.ModelComboBox {
@@ -152,10 +149,7 @@ Item {
                 anchors.top: loginButton.bottom
                 anchors.topMargin: padding
                 width: 200;
-                opacity: isCurrent ? 1 : 0
-                Behavior on opacity {
-                    NumberAnimation { duration: 100 }
-                }
+                opacity: currentOpacity
             }
 
             function startLogin() {
