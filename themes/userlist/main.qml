@@ -132,6 +132,12 @@ Item {
                 opacity: currentOpacity
             }
 
+            MouseArea {
+                anchors.fill: parent
+                enabled: !isCurrent
+                onClicked: wrapper.ListView.view.currentIndex = index;
+            }
+
             function startLogin() {
                 var session = sessionCombo.itemData(sessionCombo.currentIndex);
                 if (session == "") {
