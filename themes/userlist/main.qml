@@ -118,7 +118,7 @@ Item {
                 anchors.rightMargin: wrapper.padding
                 anchors.leftMargin: wrapper.padding
                 font.pointSize: isCurrent ? 14 : 12
-                text: realName
+                text: display
                 Behavior on font.pointSize {
                     NumberAnimation { duration: 100 }
                 }
