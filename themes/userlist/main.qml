@@ -64,30 +64,14 @@ Item {
             property bool isCurrent: ListView.isCurrentItem
 
             // Opacity for items which are only visible when we are on the current index
-            property real currentOpacity: isCurrent ? 1 : 0
-            Behavior on currentOpacity {
-                NumberAnimation { duration: 100 }
-            }
+            property real currentOpacity: 0
 
-            height: isCurrent ? 80 : 40
-            Behavior on height {
-                NumberAnimation { duration: 100 }
-            }
-
+            height: 40
             width: parent.width
 
-            property int outerPadding: isCurrent ? 18 : 6
-            Behavior on outerPadding {
-                NumberAnimation { duration: 100 }
-            }
-
+            // Padding between the current frame and the other items
+            property int outerPadding: 6
             property int padding: 6
-
-            onIsCurrentChanged: {
-                if (isCurrent) {
-                    passwordInput.setFocus();
-                }
-            }
 
             PlasmaCore.FrameSvgItem {
                 anchors.fill: parent
@@ -111,11 +95,8 @@ Item {
                 anchors.right: loginButton.left
                 anchors.rightMargin: wrapper.padding
                 anchors.leftMargin: wrapper.padding
-                font.pointSize: isCurrent ? 14 : 12
+                font.pointSize: 12
                 text: display
-                Behavior on font.pointSize {
-                    NumberAnimation { duration: 100 }
-                }
             }
 
             LightDMPlasmaWidgets.PasswordLineEdit {
@@ -157,6 +138,46 @@ Item {
                     session = "default";
                 }
                 login(name, passwordInput.text, session);
+            }
+
+            states: State {
+                name: "Current"
+                PropertyChanges {
+                    target: wrapper
+                    currentOpacity: 1
+                    outerPadding: 18
+                    height: 80
+                }
+                PropertyChanges {
+                    target: loginText
+                    font.pointSize: 14
+                }
+            }
+
+            transitions: Transition {
+                to: "Current"
+                reversible: true
+                SequentialAnimation {
+                    // Animate sizes first so that current-only items do not appear
+                    // outside of the frame boundaries
+                    NumberAnimation {
+                        duration: 200
+                        properties: "outerPadding,height,font.pointSize"
+                    }
+                    NumberAnimation {
+                        duration: 100
+                        properties: "currentOpacity"
+                    }
+                }
+            }
+
+            onIsCurrentChanged: {
+                if (isCurrent) {
+                    passwordInput.setFocus();
+                    wrapper.state = "Current";
+                } else {
+                    wrapper.state = "";
+                }
             }
         }
     }
