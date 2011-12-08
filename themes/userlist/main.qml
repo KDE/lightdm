@@ -55,18 +55,10 @@ Item {
         font.pointSize: 14
     }
 
-    ListView {
-        id: usersList
-        anchors.centerIn: parent
-        height: parent.height * 0.66
-        width: parent.width * 0.66
-        focus: true
+    Component {
+        id: userDelegate
 
-        model: usersModel
-
-        cacheBuffer: count * 80
-
-        delegate: Item {
+        Item {
             id: wrapper
 
             property bool isCurrent: ListView.isCurrentItem
@@ -174,6 +166,20 @@ Item {
                 login(name, passwordInput.text, session);
             }
         }
+    }
+
+    ListView {
+        id: usersList
+        anchors.centerIn: parent
+        height: parent.height * 0.66
+        width: parent.width * 0.66
+        focus: true
+
+        model: usersModel
+
+        cacheBuffer: count * 80
+
+        delegate: userDelegate
     }
 
     PlasmaCore.FrameSvgItem {
