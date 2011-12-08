@@ -11,6 +11,12 @@ class ModelComboBox : public Plasma::ComboBox
 
     Q_PROPERTY(QObject* model READ model WRITE setModel)
 
+    /**
+     * popupVisible is true when the user clicks on the comboxbox to show the
+     * list, false otherwise.
+     */
+    Q_PROPERTY(bool popupVisible READ isPopupVisible NOTIFY popupVisibleChanged)
+
 public:
     explicit ModelComboBox(QGraphicsWidget *parent = 0);
 
@@ -19,6 +25,19 @@ public:
     QObject* model() const;
 
     Q_INVOKABLE QVariant itemData(int index, int role = Qt::UserRole) const;
+
+    Q_INVOKABLE bool isPopupVisible() const;
+
+Q_SIGNALS:
+    void popupVisibleChanged(bool);
+
+protected:
+    bool eventFilter(QObject*, QEvent* event);
+
+private:
+    bool m_isPopupVisible;
+
+    void updatePopupVisible(bool);
 };
 
 #endif // MODELCOMBOBOX_H

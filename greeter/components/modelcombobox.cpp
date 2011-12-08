@@ -1,13 +1,17 @@
 #include "modelcombobox.h"
 
 #include <QAbstractItemModel>
+#include <QAbstractItemView>
 #include <QDebug>
+#include <QEvent>
 
 #include <KComboBox>
 
-ModelComboBox::ModelComboBox(QGraphicsWidget *parent) :
-    Plasma::ComboBox(parent)
+ModelComboBox::ModelComboBox(QGraphicsWidget *parent)
+: Plasma::ComboBox(parent)
+, m_isPopupVisible(false)
 {
+    nativeWidget()->view()->installEventFilter(this);
 }
 
 void ModelComboBox::setModel(QObject *model)
@@ -30,4 +34,30 @@ QVariant ModelComboBox::itemData(int index, int role) const
     return nativeWidget()->itemData(index, role);
 }
 
+bool ModelComboBox::isPopupVisible() const
+{
+    return m_isPopupVisible;
+}
 
+bool ModelComboBox::eventFilter(QObject*, QEvent* event)
+{
+    switch (event->type()) {
+    case QEvent::Show:
+        updatePopupVisible(true);
+        break;
+    case QEvent::Hide:
+        updatePopupVisible(false);
+        break;
+    default:
+        break;
+    }
+    return false;
+}
+
+void ModelComboBox::updatePopupVisible(bool value)
+{
+    if (m_isPopupVisible != value) {
+        m_isPopupVisible = value;
+        popupVisibleChanged(m_isPopupVisible);
+    }
+}
