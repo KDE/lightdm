@@ -176,37 +176,50 @@ Item {
         }
     }
 
-    Row {
-        spacing: 5
+    PlasmaCore.FrameSvgItem {
         anchors.bottom: parent.bottom
         anchors.right: parent.right
+        width: childrenRect.width + margins.left
+        height: childrenRect.height + margins.top * 2
+        imagePath: "translucent/widgets/panel-background"
+        prefix: "south-mini"
 
-        PowerButton {
-            text: i18n("Shutdown")
-            icon: QIcon("system-shutdown")
-            enabled: power.canShutdown
-            onClicked: power.shutDown();
-        }
+        // Hack to hide left and bottom corners. Tried to use enabledBorders but failed.
+        anchors.rightMargin: -margins.right
+        anchors.bottomMargin: -margins.bottom
 
-        PowerButton {
-            text: i18n("Suspend")
-            icon: QIcon("system-suspend")
-            enabled: power.canSuspend;
-            onClicked: power.suspend();
-        }
+        Row {
+            spacing: 5
+            x: parent.margins.left
+            y: parent.margins.top
 
-        PowerButton {
-            text: i18n("Restart")
-            icon: QIcon("system-reboot")
-            enabled: power.canRestart
-            onClicked: power.restart();
-        }
+            PowerButton {
+                text: i18n("Shutdown")
+                icon: QIcon("system-shutdown")
+                enabled: power.canShutdown
+                onClicked: power.shutDown();
+            }
 
-        PowerButton {
-            text: i18n("Hibernate")
-            icon: QIcon("system-suspend-hibernate")
-            enabled: power.canHibernate
-            onClicked: power.hibernate();
+            PowerButton {
+                text: i18n("Suspend")
+                icon: QIcon("system-suspend")
+                enabled: power.canSuspend;
+                onClicked: power.suspend();
+            }
+
+            PowerButton {
+                text: i18n("Restart")
+                icon: QIcon("system-reboot")
+                enabled: power.canRestart
+                onClicked: power.restart();
+            }
+
+            PowerButton {
+                text: i18n("Hibernate")
+                icon: QIcon("system-suspend-hibernate")
+                enabled: power.canHibernate
+                onClicked: power.hibernate();
+            }
         }
     }
 
