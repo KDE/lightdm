@@ -19,10 +19,12 @@ set(LIGHTDM_KCM_SRCS
     mainwindow.cpp
     main.cpp
     themesmodel.cpp
+coreconfig.cpp
 )
 
 set(LIGHTDM_KCM_UI
-    mainwindow.ui)
+    mainwindow.ui
+    coreconfig.ui)
 
 kde4_add_ui_files(LIGHTDM_KCM_SRCS ${LIGHTDM_KCM_UI})
 
