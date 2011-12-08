@@ -176,62 +176,41 @@ Item {
         }
     }
 
+    Row {
+        spacing: 5
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+
+        PowerButton {
+            text: i18n("Shutdown")
+            icon: QIcon("system-shutdown")
+            enabled: power.canShutdown
+            onClicked: power.shutDown();
+        }
+
+        PowerButton {
+            text: i18n("Suspend")
+            icon: QIcon("system-suspend")
+            enabled: power.canSuspend;
+            onClicked: power.suspend();
+        }
+
+        PowerButton {
+            text: i18n("Restart")
+            icon: QIcon("system-reboot")
+            enabled: power.canRestart
+            onClicked: power.restart();
+        }
+
+        PowerButton {
+            text: i18n("Hibernate")
+            icon: QIcon("system-suspend-hibernate")
+            enabled: power.canHibernate
+            onClicked: power.hibernate();
+        }
+    }
+
     /*
-    PlasmaCore.FrameSvgItem {
-        id: dialog;
-        imagePath: "translucent/dialogs/background"
-        anchors.centerIn: parent;
-
-        width: childrenRect.width + 80;
-        height: childrenRect.height + 40;
-
-        Column {
-            spacing: 5
-            anchors.centerIn: parent
-
-            Image {
-                id: logo
-                source: "images/kubuntu_logo.png";
-                anchors.centerIn: parent;
-            }
-
-
-            Text {
-                anchors.horizontalCenter: parent.horizontalCenter;
-                id: feedbackLabel;
-                font.pointSize: 9
-                text: i18n("Welcome to %1", greeter.hostname);
-            }
-
-            Row {
-                Image {
-                    source: "image://icon/meeting-participant"
-                    height: usernameInput.height;
-                    fillMode: Image.PreserveAspectFit
-
-                }
-
-                PlasmaWidgets.LineEdit {
-                    id: usernameInput;
-                    width: 250;
-                    height: 30;
-                    clickMessage: "Username";
-                    clearButtonShown: true;
-                }
-            }
-
-
-            Row {
-                Image {
-                    source: "image://icon/object-locked.png"
-                    height: passwordInput.height;
-                    fillMode: Image.PreserveAspectFit
-
-                }
-
-//                PlasmaWidgets.LineEdit {
-            }
-
             Row {
                 anchors.horizontalCenter: parent.horizontalCenter;
                 spacing:10;
@@ -286,38 +265,6 @@ Item {
         width: childrenRect.width + 30;
         height: childrenRect.height + 30;
 
-        Row {
-            spacing: 5
-            anchors.centerIn: parent
-
-            PlasmaWidgets.IconWidget {
-                text: i18n("Shutdown")
-                icon: QIcon("system-shutdown")
-                enabled: power.canShutdown;
-                onClicked: {power.shutDown();}
-            }
-
-            PlasmaWidgets.IconWidget {
-                text: i18n("Suspend")
-                icon: QIcon("system-suspend")
-                enabled: power.canSuspend;
-                onClicked: {power.suspend();}
-            }
-
-            PlasmaWidgets.IconWidget {
-                text: i18n("Restart")
-                icon: QIcon("system-reboot")
-                enabled: power.canRestart;
-                onClicked: {power.restart();}
-            }
-
-            PlasmaWidgets.IconWidget {
-                text: i18n("Hibernate")
-                icon: QIcon("system-suspend-hibernate")
-                enabled: power.canHibernate;
-                onClicked: {power.hibernate();}
-            }
-        }
 
     }
 
