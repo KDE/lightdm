@@ -100,9 +100,6 @@ Item {
                 y: parent.outerPadding
                 width: parent.height - 2 * parent.outerPadding
                 source: "image://face/" + name
-                Behavior on x {
-                    NumberAnimation { duration: 100 }
-                }
             }
 
             Text {
