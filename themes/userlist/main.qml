@@ -130,6 +130,11 @@ Item {
                 anchors.topMargin: padding
                 width: 200;
                 opacity: currentOpacity
+                onPopupVisibleChanged: {
+                    // If we don't disable interactive when the popup is visible,
+                    // moving the mouse flicks the view!
+                    wrapper.ListView.view.interactive = !popupVisible;
+                }
             }
 
             MouseArea {
