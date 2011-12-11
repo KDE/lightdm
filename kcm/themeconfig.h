@@ -29,7 +29,6 @@ private slots:
     void onThemeSelected(const QModelIndex &index);
 
 private:
-    KSharedConfigPtr m_config;
     Ui::ThemeConfig *ui;
 };
 

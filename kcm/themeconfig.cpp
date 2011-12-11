@@ -10,9 +10,10 @@
 
 #include <KMessageBox> //note only used for temporary warning.
 #include <KDebug>
-
 #include <KConfig>
-#include <KSharedConfigPtr>
+#include <KConfigGroup>
+#include <KAuth/Action>
+#include <KAuth/ActionReply>
 
 #include "config.h"
 
@@ -21,13 +22,8 @@ ThemeConfig::ThemeConfig(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ThemeConfig)
 {
-    m_config = KSharedConfig::openConfig(LIGHTDM_CONFIG_DIR "/lightdm-kde-greeter.conf");
+    KConfig config(LIGHTDM_CONFIG_DIR "/lightdm-kde-greeter.conf");
 
-    //temporarily warn user if config file is read only.
-    if (m_config->accessMode() != KConfig::ReadWrite) {
-        KMessageBox::error(this,
-                           QString("Write access is needed to %1 for saving. This is only temporary because I haven't implemented PolKit stuff yet. Saving will probably not work.").arg(QString(LIGHTDM_CONFIG_DIR "/lightdm-kde-greeter.conf")));
-    }
 
     ui->setupUi(this);
 
@@ -40,7 +36,7 @@ ThemeConfig::ThemeConfig(QWidget *parent) :
     connect(ui->themesList, SIGNAL(activated(QModelIndex)), SLOT(onThemeSelected(QModelIndex)));
 
 
-    QString theme = m_config->group("greeter").readEntry("theme-name", "shinydemo");
+    QString theme = config.group("greeter").readEntry("theme-name", "shinydemo");
 
     //set the UI to show the correct item if available.
     for (int i=0;i < model->rowCount(QModelIndex()); i++) {
@@ -95,15 +91,28 @@ void ThemeConfig::onThemeSelected(const QModelIndex &index)
 
 void ThemeConfig::save()
 {
-
-    qDebug() << "saving";
-    //save to a config
     QModelIndex currentIndex = ui->themesList->currentIndex();
     if (currentIndex.isValid()) {
-        QString themeName = currentIndex.data(ThemesModel::IdRole).toString();
-        m_config->group("greeter").writeEntry("theme-name", themeName);
+        KAuth::Action saveAction("org.kde.kcontrol.kcmlightdm.savetheme");
+        saveAction.setHelperID("org.kde.kcontrol.kcmlightdm");
+        QVariantMap args;
+        args["theme-name"] = currentIndex.data(ThemesModel::IdRole);
+        saveAction.setArguments(args);
+
+        qDebug() << saveAction.details();
+        qDebug() << saveAction.isValid();
+
+        KAuth::ActionReply reply = saveAction.execute();
+        if (reply.failed()) {
+            qDebug() << reply.errorCode();
+            qDebug() << KAuth::ActionReply::NoSuchAction;
+            qDebug() << reply.errorDescription();
+            qDebug() << "save failed :-(";
+        } else {
+            qDebug() << "save ok!";
+        }
     }
-    m_config->sync();
+
 }
 
 #include "moc_themeconfig.cpp"

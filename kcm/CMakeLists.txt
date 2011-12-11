@@ -11,8 +11,6 @@ include_directories(
   ${KDE4_INCLUDES}
 )
 
-
-
 # Insert your sources here
 set(LIGHTDM_KCM_SRCS
     themeconfig.cpp
@@ -41,10 +39,17 @@ target_link_libraries(kcm_lightdm
 install(TARGETS kcm_lightdm
           DESTINATION ${PLUGIN_INSTALL_DIR})
 
-install (FILES kcm_lightdm.desktop
+install(FILES kcm_lightdm.desktop
          DESTINATION ${SERVICES_INSTALL_DIR}
 )
 
+kde4_add_executable(kcmlightdmhelper helper.cpp)
+target_link_libraries(kcmlightdmhelper ${KDE4_KDECORE_LIBS})
+
+kde4_install_auth_helper_files(kcmlightdmhelper org.kde.kcontrol.kcmlightdm root)
+install(TARGETS kcmlightdmhelper DESTINATION ${LIBEXEC_INSTALL_DIR})
+
+kde4_install_auth_actions(org.kde.kcontrol.kcmlightdm kcm_lightdm.actions)
 
 macro_display_feature_log()
 

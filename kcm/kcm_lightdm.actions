@@ -1,0 +1,10 @@
+[Domain]
+Name=LightDM
+Icon=kauth-example
+URL=https://projects.kde.org/projects/playground/base/lightdm
+
+[org.kde.kcontrol.kcmlightdm.savetheme]
+Name=Save Theme Config
+Description=Save Theme Information in LightDM
+Policy=auth_admin
+Persistence=session
