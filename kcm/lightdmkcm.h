@@ -1,18 +1,25 @@
 #ifndef LIGHTDMKCM_H
 #define LIGHTDMKCM_H
 
-#include <QWidget>
+#include <KCModule>
 
-class LightDMKcm : public QWidget
+class CoreConfig;
+class ThemeConfig;
+
+class LightDMKcm : public KCModule
 {
     Q_OBJECT
 public:
-    explicit LightDMKcm(QWidget *parent = 0);
+    explicit LightDMKcm(QWidget *parent, const QVariantList &args);
 
 signals:
 
-public slots:
+private slots:
+    void onSave();
 
+private:
+    CoreConfig *m_coreConfig;
+    ThemeConfig *m_themeConfig;
 };
 
 #endif // LIGHTDMKCM_H

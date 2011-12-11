@@ -16,7 +16,6 @@ include_directories(
 # Insert your sources here
 set(LIGHTDM_KCM_SRCS
     themeconfig.cpp
-    main.cpp
     themesmodel.cpp
     coreconfig.cpp
     lightdmkcm.cpp
@@ -28,18 +27,24 @@ set(LIGHTDM_KCM_UI
 
 kde4_add_ui_files(LIGHTDM_KCM_SRCS ${LIGHTDM_KCM_UI})
 
-# Create the plasmoid
-kde4_add_executable(lightdmkcm ${LIGHTDM_KCM_SRCS})
+kde4_add_plugin(kcm_lightdm
+                ${LIGHTDM_KCM_SRCS})
+
 
 # Link against the needed libraries
-target_link_libraries(lightdmkcm
+target_link_libraries(kcm_lightdm
   ${KDE4_KDEUI_LIBS}
   ${QT_QTUITOOLS_LIBRARY}
   ${QT_QTDECLARATIVE_LIBRARY}
 )
-# 
-# install(TARGETS lightdmkcm ${INSTALL_TARGETS_DEFAULT_ARGS})
-# install(FILES lightdmkcm.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+
+install(TARGETS kcm_lightdm
+          DESTINATION ${PLUGIN_INSTALL_DIR})
+
+install (FILES kcm_lightdm.desktop
+         DESTINATION ${SERVICES_INSTALL_DIR}
+)
+
 
 macro_display_feature_log()
 
