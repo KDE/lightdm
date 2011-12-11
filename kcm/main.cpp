@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "lightdmkcm.h"
 
 #include <KApplication>
 #include <KCmdLineArgs>
@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 
     KCmdLineArgs::init(argc, argv, &aboutData);
     KApplication a;
-    MainWindow w;
+    LightDMKcm w;
     w.show();
 
     return a.exec();

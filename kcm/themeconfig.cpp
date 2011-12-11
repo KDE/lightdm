@@ -1,5 +1,5 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "themeconfig.h"
+#include "ui_themeconfig.h"
 
 #include "themesmodel.h"
 
@@ -9,9 +9,9 @@
 #include <QPixmap>
 
 
-MainWindow::MainWindow(QWidget *parent) :
+ThemeConfig::ThemeConfig(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::ThemeConfig)
 {
     ui->setupUi(this);
 
@@ -23,12 +23,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->themesList, SIGNAL(activated(QModelIndex)), SLOT(onThemeSelected(QModelIndex)));
 }
 
-MainWindow::~MainWindow()
+ThemeConfig::~ThemeConfig()
 {
     delete ui;
 }
 
-void MainWindow::onThemeSelected(const QModelIndex &index)
+void ThemeConfig::onThemeSelected(const QModelIndex &index)
 {
     ui->nameLabel->setText(index.data().toString());
     ui->descriptionLabel->setText(index.data(ThemesModel::DescriptionRole).toString());
@@ -39,6 +39,7 @@ void MainWindow::onThemeSelected(const QModelIndex &index)
 
     //can't do this easily now as we need our private kdeclarative library and my widgets from the greeter
     //could make a private lib for all this - but that seems overkill when we won't need any of that in the 4.8 only versions.
+ 
     QPixmap preview = index.data(ThemesModel::PreviewRole).value<QPixmap>();
     if (! preview.isNull()) {
         ui->preview->setPixmap(preview.scaled(QSize(250,250), Qt::KeepAspectRatio));
@@ -60,7 +61,7 @@ void MainWindow::onThemeSelected(const QModelIndex &index)
     //    ui->optionsWidget->layout()->addWidget(widget);
 }
 
-void MainWindow::onApply()
+void ThemeConfig::onApply()
 {
     //save to a config
 }

@@ -16,14 +16,15 @@ include_directories(
 
 # Insert your sources here
 set(LIGHTDM_KCM_SRCS
-    mainwindow.cpp
+    themeconfig.cpp
     main.cpp
     themesmodel.cpp
-coreconfig.cpp
+    coreconfig.cpp
+    lightdmkcm.cpp
 )
 
 set(LIGHTDM_KCM_UI
-    mainwindow.ui
+    themeconfig.ui
     coreconfig.ui)
 
 kde4_add_ui_files(LIGHTDM_KCM_SRCS ${LIGHTDM_KCM_UI})
