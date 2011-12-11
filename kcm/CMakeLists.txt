@@ -1,6 +1,3 @@
-project(lightdmkcm)
-
-
 find_package(KDE4 REQUIRED)
 
 include(KDE4Defaults)
@@ -13,6 +10,8 @@ include_directories(
   ${CMAKE_BINARY_DIR}
   ${KDE4_INCLUDES}
 )
+
+
 
 # Insert your sources here
 set(LIGHTDM_KCM_SRCS

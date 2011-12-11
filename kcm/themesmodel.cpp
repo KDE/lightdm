@@ -24,7 +24,9 @@ public:
 ThemesModel::ThemesModel(QObject *parent) :
     QAbstractListModel(parent)
 {
-    //FUTURE FIXME: do the single shot trick so we can start displaying the UI before bothering to do the loading.
+    //FUTURE FIXME: do the single shot trick so we can start displaying the UI
+    //before bothering to do the loading.
+    //will need emit on finished.
     this->load();
 }
 
