@@ -25,11 +25,13 @@ LightDMKcm::LightDMKcm(QWidget *parent, const QVariantList &args) :
     m_coreConfig = new CoreConfig(this);
     m_themeConfig = new ThemeConfig(this);
 
+    connect(m_themeConfig, SIGNAL(changed(bool)), SIGNAL(changed(bool)));
+
     tabWidget->addTab(m_themeConfig, i18n("Theme"));
     tabWidget->addTab(m_coreConfig, i18n("General"));
 }
 
-void LightDMKcm::onSave()
+void LightDMKcm::save()
 {
     m_themeConfig->save();
 }

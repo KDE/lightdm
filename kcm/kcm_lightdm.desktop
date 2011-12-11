@@ -11,5 +11,6 @@ X-KDE-ParentApp=kcontrol
 X-KDE-SubstituteUID=false
 X-KDE-RootOnly=false
 Categories=Qt;KDE;X-KDE-settings-system;
+X-KDE-System-Settings-Parent-Category=system-administration
 
 Name=Login Manager

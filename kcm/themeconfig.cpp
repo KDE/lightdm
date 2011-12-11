@@ -9,6 +9,10 @@
 #include <QPixmap>
 
 #include <KMessageBox> //note only used for temporary warning.
+#include <KDebug>
+
+#include <KConfig>
+#include <KSharedConfigPtr>
 
 #include "config.h"
 
@@ -17,11 +21,10 @@ ThemeConfig::ThemeConfig(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ThemeConfig)
 {
-    KConfig config(LIGHTDM_CONFIG_DIR "/lightdm-kde-greeter.conf");
-    m_config = config.group("greeter");
+    m_config = KSharedConfig::openConfig(LIGHTDM_CONFIG_DIR "/lightdm-kde-greeter.conf");
 
     //temporarily warn user if config file is read only.
-    if (m_config.accessMode() != KConfig::ReadWrite) {
+    if (m_config->accessMode() != KConfig::ReadWrite) {
         KMessageBox::error(this,
                            QString("Write access is needed to %1 for saving. This is only temporary because I haven't implemented PolKit stuff yet. Saving will probably not work.").arg(QString(LIGHTDM_CONFIG_DIR "/lightdm-kde-greeter.conf")));
     }
@@ -37,7 +40,7 @@ ThemeConfig::ThemeConfig(QWidget *parent) :
     connect(ui->themesList, SIGNAL(activated(QModelIndex)), SLOT(onThemeSelected(QModelIndex)));
 
 
-    QString theme = m_config.readEntry("theme-name", "shinydemo");
+    QString theme = m_config->group("greeter").readEntry("theme-name", "shinydemo");
 
     //set the UI to show the correct item if available.
     for (int i=0;i < model->rowCount(QModelIndex()); i++) {
@@ -47,6 +50,7 @@ ThemeConfig::ThemeConfig(QWidget *parent) :
             onThemeSelected(index);
         }
     }
+
 }
 
 ThemeConfig::~ThemeConfig()
@@ -85,14 +89,21 @@ void ThemeConfig::onThemeSelected(const QModelIndex &index)
 //    }
 
     //    ui->optionsWidget->layout()->addWidget(widget);
+
+    emit changed(true);
 }
 
 void ThemeConfig::save()
 {
+
+    qDebug() << "saving";
     //save to a config
     QModelIndex currentIndex = ui->themesList->currentIndex();
     if (currentIndex.isValid()) {
         QString themeName = currentIndex.data(ThemesModel::IdRole).toString();
-        m_config.writeEntry("theme-name", themeName);
+        m_config->group("greeter").writeEntry("theme-name", themeName);
     }
+    m_config->sync();
 }
+
+#include "moc_themeconfig.cpp"

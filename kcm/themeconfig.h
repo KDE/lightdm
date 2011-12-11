@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include <KConfigGroup>
+#include <KConfig>
 
 namespace Ui {
     class ThemeConfig;
@@ -19,6 +19,9 @@ public:
     explicit ThemeConfig(QWidget *parent = 0);
     ~ThemeConfig();
 
+signals:
+    void changed(bool);
+
 public slots:
     void save();
 
@@ -26,8 +29,7 @@ private slots:
     void onThemeSelected(const QModelIndex &index);
 
 private:
-
-    KConfigGroup m_config;
+    KSharedConfigPtr m_config;
     Ui::ThemeConfig *ui;
 };
 

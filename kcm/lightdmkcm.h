@@ -14,8 +14,8 @@ public:
 
 signals:
 
-private slots:
-    void onSave();
+public slots:
+    void save();
 
 private:
     CoreConfig *m_coreConfig;
