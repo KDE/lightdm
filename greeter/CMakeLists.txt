@@ -15,6 +15,7 @@ set(GREETER_SRCS
     faceimageprovider.cpp
     greeterwindow.cpp
     main.cpp
+    configwrapper.cpp
     components/modelcombobox.cpp
     components/passwordlineedit.cpp
 )

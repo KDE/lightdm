@@ -28,6 +28,8 @@
 #include "components/passwordlineedit.h"
 #include "components/modelcombobox.h"
 #include "faceimageprovider.h"
+#include "configwrapper.h"
+
 
 #include <config.h>
 
@@ -59,14 +61,19 @@ GreeterWindow::GreeterWindow(QWidget *parent)
    
     //FIXME set the engine to ban ALL network activity.
 
+    KConfig config(LIGHTDM_CONFIG_DIR "/lightdm-kde-greeter.conf");
+    KConfigGroup configGroup = config.group("greeter");
+    QString theme = configGroup.readEntry("theme-name", "shinydemo");
+
+    rootContext()->setContextProperty("config", new ConfigWrapper(this));
     rootContext()->setContextProperty("screenSize", size());
     rootContext()->setContextProperty("greeter", m_greeter);
     rootContext()->setContextProperty("usersModel", usersModel);
     rootContext()->setContextProperty("sessionsModel", new QLightDM::SessionsModel(this));
     rootContext()->setContextProperty("power", new QLightDM::PowerInterface(this));
 
-    KConfig config(LIGHTDM_CONFIG_DIR "/lightdm-kde-greeter.conf");
-    QString theme = config.group("greeter").readEntry("theme-name", "shinydemo");
+
+
 
     KUrl source = KGlobal::dirs()->locate("appdata", "themes/" + theme + "/main.qml");
     

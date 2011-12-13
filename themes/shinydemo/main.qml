@@ -9,8 +9,8 @@ Item {
 
     Image {
         fillMode: Image.PreserveAspectCrop
-        source: "air.jpeg"
         anchors.fill: parent
+        source:config.readEntry("background", "air.jpeg");
     }
 
     Connections {
