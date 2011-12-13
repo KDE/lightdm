@@ -1,10 +1,25 @@
 [Domain]
 Name=LightDM
+Name[pt]=LightDM
+Name[pt_BR]=LightDM
+Name[sv]=LightDM
+Name[uk]=LightDM
+Name[x-test]=xxLightDMxx
 Icon=kauth-example
 URL=https://projects.kde.org/projects/playground/base/lightdm
 
 [org.kde.kcontrol.kcmlightdm.savetheme]
 Name=Save Theme Config
+Name[pt]=Gravar a Configuração do Tema
+Name[pt_BR]=Salvar a configuração do tema
+Name[sv]=Spara temainställningen
+Name[uk]=Зберегти налаштування теми
+Name[x-test]=xxSave Theme Configxx
 Description=Save Theme Information in LightDM
+Description[pt]=Gravar a Informação do Tema no LightDM
+Description[pt_BR]=Salvar a informação do tema no LightDM
+Description[sv]=Spara temainformation i LightDM
+Description[uk]=Зберегти дані теми до LightDM
+Description[x-test]=xxSave Theme Information in LightDMxx
 Policy=auth_admin
 Persistence=session
