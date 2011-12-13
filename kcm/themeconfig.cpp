@@ -75,16 +75,16 @@ void ThemeConfig::onThemeSelected(const QModelIndex &index)
     }
 
 
-//    //this is just test code for loading config options.
-//    QUiLoader loader;
-//    QFile uiFile("/home/david/lightdm/lightdm-kde/kcm/sessionconfig.ui");
-//    QWidget* widget = loader.load(&uiFile, this);
+    //this is just test code for loading config options.
+    QUiLoader loader;
+    QFile uiFile("/home/david/lightdm/lightdm-kde/kcm/sessionconfig.ui");
+    QWidget* widget = loader.load(&uiFile, this);
 
-//    if(ui->optionsWidget->layout()->count() > 0) {
-//        delete ui->optionsWidget->layout()->itemAt(0);
-//    }
+    if(ui->optionsWidget->layout()->count() > 0) {
+        ui->optionsWidget->layout()->itemAt(0)->widget()->deleteLater();
+    }
 
-    //    ui->optionsWidget->layout()->addWidget(widget);
+    ui->optionsWidget->layout()->addWidget(widget);
 
     emit changed(true);
 }
