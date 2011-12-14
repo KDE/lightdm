@@ -19,6 +19,7 @@ public:
     QString author;
     QString version;
     QPixmap preview;
+    QString path;
 };
 
 ThemesModel::ThemesModel(QObject *parent) :
@@ -57,6 +58,8 @@ QVariant ThemesModel::data(const QModelIndex &index, int role) const
         return m_themes[row]->version;
     case ThemesModel::AuthorRole:
         return m_themes[row]->author;
+    case ThemesModel::PathRole:
+        return m_themes[row]->path;
     }
 
     return QVariant();
@@ -94,6 +97,7 @@ void ThemesModel::loadTheme(const QDir &themePath) {
     theme->version = themeInfo.value("theme/Version").toString();
 
     theme->preview = QPixmap(themePath.absoluteFilePath("preview.png"));
+    theme->path = themePath.path();
 
     qDebug() << QString("adding theme") << theme->name;
 

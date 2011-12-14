@@ -5,6 +5,7 @@
 #include <KSharedConfig>
 #include <KConfigGroup>
 
+#include <QDebug>
 
 ConfigWrapper::ConfigWrapper(QObject *parent) :
     QObject(parent)
@@ -14,6 +15,9 @@ ConfigWrapper::ConfigWrapper(QObject *parent) :
 
 QVariant ConfigWrapper::readEntry(const QString &key, const QVariant &aDefault) const
 {
-    KConfigGroup configGroup = m_config->group("greeter");
+    //FIXME I should use a KConfigSkeleton which loads the KCFG, then remove the "default" parameter
+
+    KConfigGroup configGroup = m_config->group("greeter-details");
+
     return configGroup.readEntry(key, aDefault);
 }

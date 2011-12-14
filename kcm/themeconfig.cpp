@@ -7,36 +7,74 @@
 #include <QFile>
 #include <QHBoxLayout>
 #include <QPixmap>
+#include <QDir>
 
 #include <KMessageBox> //note only used for temporary warning.
 #include <KDebug>
-#include <KConfig>
+#include <KSharedConfig>
 #include <KConfigGroup>
+#include <KConfigDialog>
+#include <KConfigSkeletonItem>
+
+
 #include <KAuth/Action>
 #include <KAuth/ActionReply>
 
+#include <Plasma/ConfigLoader>
+
 #include "config.h"
 
+class AuthKitConfigLoader : public Plasma::ConfigLoader {
+public:
+    AuthKitConfigLoader(KSharedConfigPtr config, QIODevice *xml, QObject *parent=0);
+protected:
+    void usrWriteConfig();
+};
+
+AuthKitConfigLoader::AuthKitConfigLoader(KSharedConfigPtr config, QIODevice *xml, QObject *parent)
+    : Plasma::ConfigLoader(config, xml, parent)
+{}
+
+//using the normal KConfigSkeleton we can't write to the config, so we need to use authkit.
+void AuthKitConfigLoader::usrWriteConfig() {
+    kDebug() << "user write config";
+
+    KAuth::Action saveAction("org.kde.kcontrol.kcmlightdm.savethemedetails");
+    saveAction.setHelperID("org.kde.kcontrol.kcmlightdm");
+
+    QVariantMap args;
+    foreach(KConfigSkeletonItem* item, items()) {
+        args[item->key()] = item->property();
+    }
+
+    saveAction.setArguments(args);
+
+    KAuth::ActionReply reply = saveAction.execute();
+    if (reply.failed()) {
+        qDebug() << reply.errorCode();
+        qDebug() << KAuth::ActionReply::NoSuchAction;
+        qDebug() << reply.errorDescription();
+        qDebug() << "save failed :-(";
+    } else {
+        qDebug() << "save ok!";
+    }
+}
 
 ThemeConfig::ThemeConfig(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ThemeConfig)
 {
-    KConfig config(LIGHTDM_CONFIG_DIR "/lightdm-kde-greeter.conf");
-
+    m_config = KSharedConfig::openConfig(LIGHTDM_CONFIG_DIR "/lightdm-kde-greeter.conf");
 
     ui->setupUi(this);
-
-    QHBoxLayout *layout = new QHBoxLayout(this);
-    ui->optionsWidget->setLayout(layout);
 
     ThemesModel *model = new ThemesModel(this);
     ui->themesList->setModel(model);
 
     connect(ui->themesList, SIGNAL(activated(QModelIndex)), SLOT(onThemeSelected(QModelIndex)));
+    connect(ui->configureButton, SIGNAL(released()), SLOT(onConfigureClicked()));
 
-
-    QString theme = config.group("greeter").readEntry("theme-name", "shinydemo");
+    QString theme = m_config->group("greeter").readEntry("theme-name", "shinydemo");
 
     //set the UI to show the correct item if available.
     for (int i=0;i < model->rowCount(QModelIndex()); i++) {
@@ -74,19 +112,34 @@ void ThemeConfig::onThemeSelected(const QModelIndex &index)
         ui->preview->setPixmap(QPixmap());
     }
 
+    emit changed(true);
+}
 
-    //this is just test code for loading config options.
-    QUiLoader loader;
-    QFile uiFile("/home/david/lightdm/lightdm-kde/kcm/sessionconfig.ui");
-    QWidget* widget = loader.load(&uiFile, this);
+void ThemeConfig::onConfigureClicked()
+{
+    kDebug();
 
-    if(ui->optionsWidget->layout()->count() > 0) {
-        ui->optionsWidget->layout()->itemAt(0)->widget()->deleteLater();
+    //FIXME I'd like to replace to have the widgets inline rather than in a dialog.
+
+    QDir themeDir(ui->themesList->currentIndex().data(ThemesModel::PathRole).toString());
+    if (! (themeDir.exists(QLatin1String("main.xml")) && themeDir.exists(QLatin1String("main.xml")))) {
+        //FIXME check this earlier, and enable/disable button as approrpiate.
+        return;
     }
 
-    ui->optionsWidget->layout()->addWidget(widget);
 
-    emit changed(true);
+    QFile kcfgFile(themeDir.filePath(QLatin1String("main.xml")));
+    kcfgFile.open(QFile::ReadOnly);
+    AuthKitConfigLoader configLoader(m_config, &kcfgFile, this);
+
+    QUiLoader loader;
+    QFile uiFile(themeDir.filePath(QLatin1String("config.ui")));
+    QWidget* widget = loader.load(&uiFile, this);
+
+    KConfigDialog dialog(this, QLatin1String("theme-config"), &configLoader);
+    dialog.setFaceType(KPageDialog::Plain);
+    dialog.addPage(widget, i18n("Configure Theme"));
+    dialog.exec();
 }
 
 void ThemeConfig::save()
@@ -98,9 +151,6 @@ void ThemeConfig::save()
         QVariantMap args;
         args["theme-name"] = currentIndex.data(ThemesModel::IdRole);
         saveAction.setArguments(args);
-
-        qDebug() << saveAction.details();
-        qDebug() << saveAction.isValid();
 
         KAuth::ActionReply reply = saveAction.execute();
         if (reply.failed()) {

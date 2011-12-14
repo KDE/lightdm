@@ -22,6 +22,21 @@ KAuth::ActionReply Helper::savetheme(const QVariantMap &args)
     return reply;
 }
 
+KAuth::ActionReply Helper::savethemedetails(const QVariantMap &args)
+{
+    KAuth::ActionReply reply;
+    KConfig config(LIGHTDM_CONFIG_DIR "/lightdm-kde-greeter.conf");
+    KConfigGroup configGroup = config.group("greeter-details");
+
+    QMap<QString, QVariant>::const_iterator i;
+    for (i = args.constBegin() ; i != args.constEnd() ; i++) {
+        configGroup.writeEntry(i.key(), i.value());
+    }
+    config.sync();
+
+    return reply;
+}
+
 
 KDE4_AUTH_HELPER_MAIN("org.kde.kcontrol.kcmlightdm", Helper);
 

@@ -34,6 +34,7 @@ target_link_libraries(kcm_lightdm
   ${KDE4_KDEUI_LIBS}
   ${QT_QTUITOOLS_LIBRARY}
   ${QT_QTDECLARATIVE_LIBRARY}
+  ${KDE4_PLASMA_LIBS}
 )
 
 install(TARGETS kcm_lightdm

@@ -14,7 +14,8 @@ public:
                AuthorRole,
                DescriptionRole,
                VersionRole,
-               PreviewRole};
+               PreviewRole,
+               PathRole};
 
     explicit ThemesModel(QObject *parent = 0);
 
