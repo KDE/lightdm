@@ -26,6 +26,16 @@ Persistence=session
 
 [org.kde.kcontrol.kcmlightdm.savethemedetails]
 Name=Save Theme Details
+Name[pt]=Gravar os Detalhes do Tema
+Name[pt_BR]=Salvar os detalhes do tema
+Name[sv]=Spara temainställningen
+Name[uk]=Зберегти параметри теми
+Name[x-test]=xxSave Theme Detailsxx
 Description=Save Theme Details in LightDM
+Description[pt]=Gravar os Detalhes do Tema no LightDM
+Description[pt_BR]=Salvar os detalhes do tema no LightDM
+Description[sv]=Spara temainformation i LightDM
+Description[uk]=Зберегти параметри теми до LightDM
+Description[x-test]=xxSave Theme Details in LightDMxx
 Policy=auth_admin
 Persistence=session
