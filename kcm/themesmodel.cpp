@@ -88,6 +88,7 @@ void ThemesModel::load()
 
 void ThemesModel::loadTheme(const QDir &themePath) {
     QSettings themeInfo(themePath.filePath("theme.rc"), QSettings::IniFormat);
+    themeInfo.setIniCodec("UTF-8");
 
     ThemeItem *theme = new ThemeItem;
     theme->id = themePath.dirName();
