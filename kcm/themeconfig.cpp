@@ -72,6 +72,7 @@ ThemeConfig::ThemeConfig(QWidget *parent) :
     ui->themesList->setModel(model);
 
     connect(ui->themesList, SIGNAL(activated(QModelIndex)), SLOT(onThemeSelected(QModelIndex)));
+    connect(ui->themesList, SIGNAL(clicked(QModelIndex)), SLOT(onThemeSelected(QModelIndex)));
     connect(ui->configureButton, SIGNAL(released()), SLOT(onConfigureClicked()));
 
     QString theme = m_config->group("greeter").readEntry("theme-name", "shinydemo");
