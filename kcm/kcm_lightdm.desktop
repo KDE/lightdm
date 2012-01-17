@@ -14,6 +14,7 @@ Categories=Qt;KDE;X-KDE-settings-system;
 X-KDE-System-Settings-Parent-Category=system-administration
 
 Name=Login Manager
+Name[et]=Sisselogimise haldur
 Name[ga]=Bainisteoir Logála Isteach
 Name[nl]=Aanmeldbeheerder
 Name[pl]=Menedżer logowania
