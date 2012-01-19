@@ -16,6 +16,8 @@ public:
     ~CoreConfig();
 
 private:
+    void loadFromConfig();
+
     Ui::CoreConfig *ui;
 };
 

@@ -15,14 +15,14 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QCheckBox" name="checkBox_2">
+    <widget class="QCheckBox" name="allowGuest">
      <property name="text">
       <string>Allow guest login</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="checkBox">
+    <widget class="QCheckBox" name="autoLogin">
      <property name="text">
       <string>Autologin as user:</string>
      </property>
@@ -56,7 +56,11 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QComboBox" name="comboBox"/>
+        <widget class="QComboBox" name="autoLoginUser">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="label_2">
@@ -66,7 +70,11 @@
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QComboBox" name="comboBox_2"/>
+        <widget class="QComboBox" name="autoLoginSession">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
        </item>
        <item row="2" column="0">
         <widget class="QLabel" name="label_3">
@@ -76,7 +84,10 @@
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QSpinBox" name="spinBox">
+        <widget class="QSpinBox" name="autoLoginTimeout">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="suffix">
           <string> minutes</string>
          </property>
@@ -92,7 +103,7 @@
       <enum>QFormLayout::ExpandingFieldsGrow</enum>
      </property>
      <item row="0" column="0">
-      <widget class="QCheckBox" name="checkBox_3">
+      <widget class="QCheckBox" name="enableXdmcp">
        <property name="text">
         <string>Enable XDMCP Server</string>
        </property>
@@ -100,13 +111,16 @@
      </item>
      <item row="0" column="1">
       <widget class="KPushButton" name="kpushbutton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Configure...</string>
        </property>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QCheckBox" name="checkBox_4">
+      <widget class="QCheckBox" name="enableVnc">
        <property name="text">
         <string>Enabled VNC Server</string>
        </property>
@@ -114,6 +128,9 @@
      </item>
      <item row="1" column="1">
       <widget class="KPushButton" name="kpushbutton_2">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Configure...</string>
        </property>
@@ -131,5 +148,86 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>autoLogin</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>autoLoginUser</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>90</x>
+     <y>36</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>118</x>
+     <y>65</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoLogin</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>autoLoginSession</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>67</x>
+     <y>39</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>120</x>
+     <y>102</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoLogin</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>autoLoginTimeout</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>38</x>
+     <y>38</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>125</x>
+     <y>127</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>enableXdmcp</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kpushbutton</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>104</x>
+     <y>182</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>208</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>enableVnc</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kpushbutton_2</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>84</x>
+     <y>217</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>197</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

@@ -9,6 +9,8 @@ include_directories(
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_BINARY_DIR}
   ${KDE4_INCLUDES}
+  ${QLIGHTDM_INCLUDE_DIR}
+
 )
 
 # Insert your sources here
@@ -35,6 +37,8 @@ target_link_libraries(kcm_lightdm
   ${QT_QTUITOOLS_LIBRARY}
   ${QT_QTDECLARATIVE_LIBRARY}
   ${KDE4_PLASMA_LIBS}
+  ${QLIGHTDM_LIBRARIES}
+
 )
 
 install(TARGETS kcm_lightdm
