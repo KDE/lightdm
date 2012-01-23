@@ -135,6 +135,7 @@ Item {
                     // moving the mouse flicks the view!
                     wrapper.ListView.view.interactive = !popupVisible;
                 }
+                currentIndex: indexForData(session, sessionsModel.key)
             }
 
             MouseArea {
