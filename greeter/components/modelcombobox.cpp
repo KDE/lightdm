@@ -61,3 +61,15 @@ void ModelComboBox::updatePopupVisible(bool value)
         popupVisibleChanged(m_isPopupVisible);
     }
 }
+
+int ModelComboBox::indexForData(const QVariant& data, int role) const
+{
+    QAbstractItemModel* model = nativeWidget()->model();
+    for (int row = model->rowCount() - 1; row >= 0; --row) {
+        QModelIndex index = model->index(row, 0);
+        if (model->data(index, role) == data) {
+            return row;
+        }
+    }
+    return -1;
+}

@@ -28,6 +28,8 @@ public:
 
     Q_INVOKABLE bool isPopupVisible() const;
 
+    Q_INVOKABLE int indexForData(const QVariant& data, int role = Qt::UserRole) const;
+
 Q_SIGNALS:
     void popupVisibleChanged(bool);
 
