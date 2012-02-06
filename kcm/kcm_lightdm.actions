@@ -1,6 +1,7 @@
 [Domain]
 Name=LightDM
 Name[cs]=LightDM
+Name[de]=LightDM
 Name[et]=LightDM
 Name[nl]=LightDM
 Name[pl]=LightDM
@@ -15,6 +16,7 @@ URL=https://projects.kde.org/projects/playground/base/lightdm
 [org.kde.kcontrol.kcmlightdm.savetheme]
 Name=Save Theme Config
 Name[cs]=Uložit nastavení motivu
+Name[de]=Design-Konfiguration speichern
 Name[et]=Teemaseadistuse salvestamine
 Name[nl]=Themainstellingen opslaan
 Name[pl]=Zapisz konfigurację motywu
@@ -24,6 +26,7 @@ Name[sv]=Spara temainställningen
 Name[uk]=Зберегти налаштування теми
 Name[x-test]=xxSave Theme Configxx
 Description=Save Theme Information in LightDM
+Description[de]=Design-Informationen in LightDM speichern
 Description[et]=Teemateabe salvestamine LightDM-is
 Description[nl]=Thema-informatie in LightDM opslaan
 Description[pl]=Zapisz informacje motywu w LightDM
@@ -38,6 +41,7 @@ Persistence=session
 [org.kde.kcontrol.kcmlightdm.savethemedetails]
 Name=Save Theme Details
 Name[cs]=Uložit podrobnosti motivu
+Name[de]=Design-Details speichern
 Name[et]=Teema üksikasjade salvestamine
 Name[nl]=Thema-details opslaan
 Name[pl]=Zapisz szczegóły motywu
@@ -47,6 +51,7 @@ Name[sv]=Spara temainställningen
 Name[uk]=Зберегти параметри теми
 Name[x-test]=xxSave Theme Detailsxx
 Description=Save Theme Details in LightDM
+Description[de]=Design-Details in LightDM speichern
 Description[et]=Teema üksikasjade salvestamine LightDM-is
 Description[nl]=Thema-details in LightDM opslaan
 Description[pl]=Zapisz szczegóły motywu w LightDM
