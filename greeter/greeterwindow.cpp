@@ -57,9 +57,11 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     ExtraRowProxyModel* usersModel = new ExtraRowProxyModel(this);
     usersModel->setSourceModel(new QLightDM::UsersModel(this));
 
-    int guestRowId = usersModel->appendRow();
-    usersModel->setRowText(guestRowId, 0, i18n("Guest"));
-    usersModel->setRowData(guestRowId, 0, "*guest", QLightDM::UsersModel::NameRole);
+    if (m_greeter->hasGuestAccountHint()) {
+        int guestRowId = usersModel->appendRow();
+        usersModel->setRowText(guestRowId, 0, i18n("Guest"));
+        usersModel->setRowData(guestRowId, 0, "*guest", QLightDM::UsersModel::NameRole);
+    }
 
     engine()->addImageProvider("face", new FaceImageProvider(usersModel));
 
