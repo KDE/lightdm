@@ -66,9 +66,6 @@ Item {
 
             property string username: model.name
 
-            // Opacity for items which are only visible when we are on the current index
-            property real currentOpacity: 0
-
             width: userItemWidth
             height: userItemHeight
 
