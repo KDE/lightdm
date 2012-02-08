@@ -84,7 +84,6 @@ Item {
                 anchors.centerIn: face
                 width: face.width + padding * 2
                 height: face.height + padding * 2
-                //imagePath: "translucent/dialogs/background"
                 imagePath: "opaque/dialogs/background"
                 opacity: 0.618
             }
