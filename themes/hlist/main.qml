@@ -8,9 +8,6 @@ Item {
     width: screenSize.width;
     height: screenSize.height;
 
-    property string password;
-    property string session;
-
     Image {
         fillMode: Image.PreserveAspectCrop
         source: plasmaTheme.wallpaperPath()
@@ -22,23 +19,21 @@ Item {
         target: greeter;
 
         onShowPrompt: {
-            greeter.respond(screen.password);
+            greeter.respond(passwordInput.text);
         }
 
         onAuthenticationComplete: {
+            var session = sessionCombo.itemData(sessionCombo.currentIndex);
+            if (session == "") {
+                session = "default";
+            }
             if(greeter.authenticated) {
-                greeter.startSessionSync(screen.session);
+                greeter.startSessionSync(session);
             } else {
                 feedbackLabel.text = i18n("Sorry, incorrect password. Please try again.");
                 feedbackLabel.showFeedback();
             }
         }
-    }
-
-    function login(username, _password, _session) {
-        screen.password = _password;
-        screen.session = _session;
-        greeter.authenticate(username);
     }
 
     Text {
@@ -68,6 +63,8 @@ Item {
             id: wrapper
 
             property bool isCurrent: ListView.isCurrentItem
+
+            property string username: model.name
 
             // Opacity for items which are only visible when we are on the current index
             property real currentOpacity: 0
@@ -117,11 +114,7 @@ Item {
     }
 
     function startLogin() {
-        var session = sessionCombo.itemData(sessionCombo.currentIndex);
-        if (session == "") {
-            session = "default";
-        }
-        login(name, passwordInput.text, session);
+        greeter.authenticate(usersList.currentItem.username);
     }
 
     ListView {
