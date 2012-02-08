@@ -10,7 +10,7 @@ Item {
     Image {
         fillMode: Image.PreserveAspectCrop
         anchors.fill: parent
-        source:config.readEntry("Background", "air.jpeg");
+        source:config.readEntry("Background", plasmaTheme.wallpaperPath());
     }
 
     Connections {

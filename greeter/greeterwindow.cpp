@@ -23,6 +23,7 @@
 #include <KStandardDirs>
 #include <KUrl>
 #include <KDebug>
+#include <Plasma/Theme>
 
 
 #include "components/passwordlineedit.h"
@@ -71,7 +72,7 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     rootContext()->setContextProperty("usersModel", usersModel);
     rootContext()->setContextProperty("sessionsModel", new QLightDM::SessionsModel(this));
     rootContext()->setContextProperty("power", new QLightDM::PowerInterface(this));
-
+    rootContext()->setContextProperty("plasmaTheme", Plasma::Theme::defaultTheme());
 
 
 

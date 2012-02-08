@@ -13,7 +13,7 @@ Item {
 
     Image {
         fillMode: Image.PreserveAspectCrop
-        source: "air.jpeg"
+        source: plasmaTheme.wallpaperPath()
         anchors.fill: parent
     }
 
