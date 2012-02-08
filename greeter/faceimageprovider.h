@@ -8,14 +8,16 @@ namespace QLightDM
     class UsersModel;
 }
 
+class QAbstractItemModel;
+
 class FaceImageProvider : public QDeclarativeImageProvider
 {
 public:
-    FaceImageProvider(QLightDM::UsersModel*);
+    FaceImageProvider(QAbstractItemModel*);
     QPixmap requestPixmap(const QString &id, QSize *size, const QSize &requestedSize);
 
 private:
-    QLightDM::UsersModel* m_model;
+    QAbstractItemModel* m_model;
 };
 
 #endif

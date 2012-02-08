@@ -7,7 +7,7 @@
 
 #include <QPixmap>
 
-FaceImageProvider::FaceImageProvider(QLightDM::UsersModel* model)
+FaceImageProvider::FaceImageProvider(QAbstractItemModel* model)
 : QDeclarativeImageProvider(QDeclarativeImageProvider::Pixmap)
 , m_model(model)
 {

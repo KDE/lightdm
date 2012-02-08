@@ -113,7 +113,12 @@ Item {
     }
 
     function startLogin() {
-        greeter.authenticate(usersList.currentItem.username);
+        var username = usersList.currentItem.username;
+        if (username == "*guest") {
+            greeter.authenticateAsGuest();
+        } else {
+            greeter.authenticate(username);
+        }
     }
 
     ListView {
@@ -152,6 +157,7 @@ Item {
             height: widgetHeight
             clickMessage: i18n("Password")
             onReturnPressed: startLogin();
+            visible: usersList.currentItem.username != "*guest"
         }
 
         LightDMPlasmaWidgets.ModelComboBox {

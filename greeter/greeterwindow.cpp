@@ -28,6 +28,7 @@
 
 #include "components/passwordlineedit.h"
 #include "components/modelcombobox.h"
+#include "extrarowproxymodel.h"
 #include "faceimageprovider.h"
 #include "configwrapper.h"
 
@@ -53,7 +54,12 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     //binds things like kconfig and icons
     kdeclarative.setupBindings();
 
-    QLightDM::UsersModel* usersModel = new QLightDM::UsersModel(this);
+    ExtraRowProxyModel* usersModel = new ExtraRowProxyModel(this);
+    usersModel->setSourceModel(new QLightDM::UsersModel(this));
+
+    int guestRowId = usersModel->appendRow();
+    usersModel->setRowText(guestRowId, 0, i18n("Guest"));
+    usersModel->setRowData(guestRowId, 0, "*guest", QLightDM::UsersModel::NameRole);
 
     engine()->addImageProvider("face", new FaceImageProvider(usersModel));
 
