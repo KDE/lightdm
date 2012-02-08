@@ -226,17 +226,17 @@ Item {
             y: parent.margins.top
 
             PowerButton {
-                text: i18n("Shutdown")
-                icon: QIcon("system-shutdown")
-                enabled: power.canShutdown
-                onClicked: power.shutDown();
-            }
-
-            PowerButton {
                 text: i18n("Suspend")
                 icon: QIcon("system-suspend")
                 enabled: power.canSuspend;
                 onClicked: power.suspend();
+            }
+
+            PowerButton {
+                text: i18n("Hibernate")
+                icon: QIcon("system-suspend-hibernate")
+                enabled: power.canHibernate
+                onClicked: power.hibernate();
             }
 
             PowerButton {
@@ -247,113 +247,11 @@ Item {
             }
 
             PowerButton {
-                text: i18n("Hibernate")
-                icon: QIcon("system-suspend-hibernate")
-                enabled: power.canHibernate
-                onClicked: power.hibernate();
+                text: i18n("Shutdown")
+                icon: QIcon("system-shutdown")
+                enabled: power.canShutdown
+                onClicked: power.shutDown();
             }
         }
     }
-
-    /*
-            Row {
-                anchors.horizontalCenter: parent.horizontalCenter;
-                spacing:10;
-
-                PlasmaWidgets.PushButton {
-                    text: i18n("Login");
-                    onClicked: {
-                        login();
-                    }
-                }
-
-                PlasmaWidgets.PushButton {
-                    text: i18n("Power");
-                    onClicked: {
-                        if (powerDialog.opacity == 1) {
-                            powerDialog.opacity = 0;
-                        } else {
-                            powerDialog.opacity = 1;
-                        }
-
-                        optionsDialog.opacity = 0;
-                    }
-                }
-
-                PlasmaWidgets.PushButton {
-                    text: i18n("Options");
-                    onClicked: {
-                        if (optionsDialog.opacity == 1) {
-                            optionsDialog.opacity = 0;
-                        } else {
-                            optionsDialog.opacity = 1;
-                        }
-
-                        powerDialog.opacity = 0;
-                    }
-                }
-
-            }
-        }
-    }
-
-    PlasmaCore.FrameSvgItem {
-        id: powerDialog;
-        anchors.top: dialog.bottom
-        anchors.topMargin: 3
-        anchors.horizontalCenter: parent.horizontalCenter
-        imagePath: "translucent/dialogs/background"
-        opacity: 0
-
-        Behavior on opacity { PropertyAnimation { duration: 500} }
-
-        width: childrenRect.width + 30;
-        height: childrenRect.height + 30;
-
-
-    }
-
-
-    PlasmaCore.FrameSvgItem {
-        id: optionsDialog;
-        anchors.top: dialog.bottom
-        anchors.topMargin: 3
-        anchors.horizontalCenter: parent.horizontalCenter
-        imagePath: "translucent/dialogs/background"
-        opacity: 0
-
-        Behavior on opacity { PropertyAnimation { duration: 500} }
-
-        width: childrenRect.width + 30;
-        height: childrenRect.height + 30;
-
-        Row {
-            spacing: 5
-            anchors.centerIn: parent
-
-            Text {
-                text: i18n("Session")
-                anchors.verticalCenter: parent.verticalCenter;
-            }
-
-            LightDMPlasmaWidgets.ModelComboBox {
-                id: sessionCombo
-                model: sessionsModel;
-                anchors.verticalCenter: parent.verticalCenter;
-                width: 200;
-            }
-
-
-            Text {
-                text: i18n("Language:")
-                anchors.verticalCenter: parent.verticalCenter;
-            }
-
-            PlasmaWidgets.ComboBox {
-                anchors.verticalCenter: parent.verticalCenter;
-            }
-
-        }
-    }
-    */
 }
