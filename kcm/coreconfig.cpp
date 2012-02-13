@@ -19,6 +19,7 @@ CoreConfig::CoreConfig(QWidget *parent) :
     ui->autoLoginUser->setModel(new QLightDM::UsersModel(this));
     ui->autoLoginSession->setModel(new QLightDM::SessionsModel(this));
 
+    loadFromConfig();
 }
 
 CoreConfig::~CoreConfig()
@@ -28,10 +29,9 @@ CoreConfig::~CoreConfig()
 
 void CoreConfig::loadFromConfig()
 {
-    KConfig config((LIGHTDM_CONFIG_DIR "/lightdm/lightdm.conf"));
+    KConfig config((LIGHTDM_CONFIG_DIR "/lightdm.conf"));
 
-    ui->allowGuest->setChecked(config.group("SeatDefaults").readEntry("allow-guest",false));
-
+    ui->allowGuest->setChecked(config.group("SeatDefaults").readEntry("allow-guest", true));
 
     ui->enableXdmcp->setChecked(config.group("XDMCPServer").readEntry("enabled", false));
     ui->enableVnc->setChecked(config.group("VNCServer").readEntry("enabled", false));
