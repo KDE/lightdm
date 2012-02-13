@@ -7,6 +7,7 @@
 
 #include <QHBoxLayout>
 
+#include "../about.h"
 #include "themeconfig.h"
 #include "coreconfig.h"
 
@@ -17,12 +18,14 @@ K_EXPORT_PLUGIN(LightDMKcmFactory("kcm_lightdm", "kcm_lightdm"))
 LightDMKcm::LightDMKcm(QWidget *parent, const QVariantList &args) :
     KCModule(LightDMKcmFactory::componentData(), parent, args)
 {
-    KAboutData* aboutData =
-        new KAboutData("kcmlightdm", 0, ki18n("LightDM KDE Config"),
-                       "0.1", ki18n("Description here"),
-                       KAboutData::License_GPL,
-                       ki18n("(c) KDE"),
-                       KLocalizedString(), "", "kde-devel@kde.org");
+    KAboutData* aboutData = new KAboutData(
+        "kcmlightdm",                // appName
+        0,                           // catalogName
+        ki18n("LightDM KDE Config"), // programName
+        "0");                        // version (set by initAboutData)
+
+    initAboutData(aboutData);
+
     setAboutData(aboutData);
 
     setNeedsAuthorization(true);

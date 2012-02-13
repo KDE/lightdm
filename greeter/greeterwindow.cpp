@@ -14,9 +14,7 @@
 #include <QLightDM/SessionsModel>
 #include <QLightDM/Power>
 
-
-//FIXME use the KDeclarative from KDE (requires >= 4.8)
-#include "libkdeclarative/kdeclarative.h"
+#include <kdeclarative.h>
 
 #include <KConfig>
 #include <KConfigGroup>
