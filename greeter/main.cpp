@@ -4,17 +4,18 @@
 #include <KAboutData>
 #include <KLocale>
 
+#include "../about.h"
 #include "greeterwindow.h"
 
 int main(int argc, char *argv[])
 {
-    KAboutData aboutData("lightdm-kde-greeter", 0, ki18n("LightDM KDE Greeter"),
-                         "0.1", ki18n("Description here"),
-                         KAboutData::License_GPL,
-                         ki18n("(c) KDE"),
-                         KLocalizedString(), "", "kde-devel@kde.org");
+    KAboutData aboutData(
+        "lightdm-kde-greeter",        // appName
+        0,                            // catalogName
+        ki18n("LightDM KDE Greeter"), // programName
+        "0");                         // version (set by initAboutData)
 
-    aboutData.addAuthor(ki18n("David Edmundson"), ki18n("Author"), "kde@davidedmundson.co.uk");
+    initAboutData(&aboutData);
 
     KCmdLineArgs::init(argc, argv, &aboutData);
 
