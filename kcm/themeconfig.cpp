@@ -113,7 +113,18 @@ void ThemeConfig::onThemeSelected(const QModelIndex &index)
         ui->preview->setPixmap(QPixmap());
     }
 
+    QDir dir = themeDir();
+    ui->configureButton->setVisible(
+        dir.exists(QLatin1String("main.xml"))
+        && dir.exists(QLatin1String("config.ui"))
+        );
+
     emit changed(true);
+}
+
+QDir ThemeConfig::themeDir() const
+{
+    return QDir(ui->themesList->currentIndex().data(ThemesModel::PathRole).toString());
 }
 
 void ThemeConfig::onConfigureClicked()
@@ -122,19 +133,14 @@ void ThemeConfig::onConfigureClicked()
 
     //FIXME I'd like to replace to have the widgets inline rather than in a dialog.
 
-    QDir themeDir(ui->themesList->currentIndex().data(ThemesModel::PathRole).toString());
-    if (! (themeDir.exists(QLatin1String("main.xml")) && themeDir.exists(QLatin1String("main.xml")))) {
-        //FIXME check this earlier, and enable/disable button as approrpiate.
-        return;
-    }
+    QDir dir = themeDir();
 
-
-    QFile kcfgFile(themeDir.filePath(QLatin1String("main.xml")));
+    QFile kcfgFile(dir.filePath(QLatin1String("main.xml")));
     kcfgFile.open(QFile::ReadOnly);
     AuthKitConfigLoader configLoader(m_config, &kcfgFile, this);
 
     QUiLoader loader;
-    QFile uiFile(themeDir.filePath(QLatin1String("config.ui")));
+    QFile uiFile(dir.filePath(QLatin1String("config.ui")));
     QWidget* widget = loader.load(&uiFile, this);
 
     KConfigDialog dialog(this, QLatin1String("theme-config"), &configLoader);

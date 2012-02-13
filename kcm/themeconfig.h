@@ -9,6 +9,7 @@ namespace Ui {
     class ThemeConfig;
 }
 
+class QDir;
 class QModelIndex;
 
 class ThemeConfig : public QWidget
@@ -32,6 +33,8 @@ private slots:
 private:
     KSharedConfigPtr m_config;
     Ui::ThemeConfig *ui;
+
+    QDir themeDir() const;
 
 };
 
