@@ -1,3 +1,14 @@
+# Try to find the QLightDM library
+# Once done this will define
+#
+#   QLIGHTDM_FOUND          Indicates that QLightDM was found
+#   QLIGHTDM_LIBRARIES      Libraries needed to use QLightDM
+#   QLIGHTDM_LIBRARY_DIRS   Paths needed for linking against QLightDM
+#   QLIGHTDM_INCLUDE_DIR    Path needed for finding QLightDM include files
+#
+# Copyright 2012 David Edmundson <kde@davidedmundson.co.uk>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
 
 set(QLIGHTDM_LIBRARIES_FIND_REQUIRED ${QLightDM_FIND_REQUIRED})
 # if(QLIGHTDM_INCLUDE_DIR AND QLIGHTDM_LIBRARIES)
