@@ -23,6 +23,8 @@ CoreConfig::CoreConfig(QWidget *parent) :
     loadFromConfig();
 
     connect(ui->allowGuest, SIGNAL(toggled(bool)), SIGNAL(changed()));
+    connect(ui->enableXdmcp, SIGNAL(toggled(bool)), SIGNAL(changed()));
+    connect(ui->enableVnc, SIGNAL(toggled(bool)), SIGNAL(changed()));
 }
 
 CoreConfig::~CoreConfig()
@@ -44,5 +46,7 @@ QVariantMap CoreConfig::save()
 {
     QVariantMap args;
     args["core/SeatDefaults/allow-guest"] = ui->allowGuest->isChecked();
+    args["core/XDMCPServer/enabled"] = ui->enableXdmcp->isChecked();
+    args["core/VNCServer/enabled"] = ui->enableVnc->isChecked();
     return args;
 }
