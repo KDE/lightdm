@@ -105,6 +105,7 @@ void GreeterWindow::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event)
     rootContext()->setContextProperty("screenSize", size());
+    setSceneRect(QRectF(0, 0, width(), height()));
 }
 
 
