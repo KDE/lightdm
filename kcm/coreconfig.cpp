@@ -6,9 +6,10 @@
 #include <QLightDM/SessionsModel>
 #include <QLightDM/UsersModel>
 
+#include <KAuth/Action>
 #include <KConfig>
 #include <KConfigGroup>
-
+#include <KDebug>
 
 CoreConfig::CoreConfig(QWidget *parent) :
     QWidget(parent),
@@ -20,6 +21,8 @@ CoreConfig::CoreConfig(QWidget *parent) :
     ui->autoLoginSession->setModel(new QLightDM::SessionsModel(this));
 
     loadFromConfig();
+
+    connect(ui->allowGuest, SIGNAL(toggled(bool)), SIGNAL(changed()));
 }
 
 CoreConfig::~CoreConfig()
@@ -35,4 +38,11 @@ void CoreConfig::loadFromConfig()
 
     ui->enableXdmcp->setChecked(config.group("XDMCPServer").readEntry("enabled", false));
     ui->enableVnc->setChecked(config.group("VNCServer").readEntry("enabled", false));
+}
+
+QVariantMap CoreConfig::save()
+{
+    QVariantMap args;
+    args["core/SeatDefaults/allow-guest"] = ui->allowGuest->isChecked();
+    return args;
 }

@@ -1,6 +1,9 @@
 #include "lightdmkcm.h"
 
 #include <KAboutData>
+#include <KAuth/Action>
+#include <KAuth/ActionReply>
+#include <KDebug>
 #include <KTabWidget>
 #include <KLocalizedString>
 #include <KPluginFactory>
@@ -38,6 +41,7 @@ LightDMKcm::LightDMKcm(QWidget *parent, const QVariantList &args) :
     m_themeConfig = new ThemeConfig(this);
 
     connect(m_themeConfig, SIGNAL(changed(bool)), SIGNAL(changed(bool)));
+    connect(m_coreConfig, SIGNAL(changed(bool)), SIGNAL(changed(bool)));
 
     tabWidget->addTab(m_themeConfig, i18n("Theme"));
     tabWidget->addTab(m_coreConfig, i18n("General"));
@@ -45,5 +49,19 @@ LightDMKcm::LightDMKcm(QWidget *parent, const QVariantList &args) :
 
 void LightDMKcm::save()
 {
-    m_themeConfig->save();
+    QVariantMap args;
+
+    args = m_themeConfig->save();
+    args.unite(m_coreConfig->save());
+
+    KAuth::Action saveAction("org.kde.kcontrol.kcmlightdm.save");
+    saveAction.setHelperID("org.kde.kcontrol.kcmlightdm");
+    saveAction.setArguments(args);
+    KAuth::ActionReply reply = saveAction.execute();
+    if (reply.failed()) {
+        // FIXME: Show a message here
+        kWarning() << "save failed:" << reply.errorDescription();
+    } else {
+        changed(false);
+    }
 }

@@ -1,6 +1,7 @@
 #ifndef CORECONFIG_H
 #define CORECONFIG_H
 
+#include <QVariant>
 #include <QWidget>
 
 namespace Ui {
@@ -14,6 +15,11 @@ class CoreConfig : public QWidget
 public:
     explicit CoreConfig(QWidget *parent = 0);
     ~CoreConfig();
+
+    QVariantMap save();
+
+Q_SIGNALS:
+    void changed(bool state=true);
 
 private:
     void loadFromConfig();

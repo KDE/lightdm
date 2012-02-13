@@ -10,8 +10,8 @@ class Helper: public QObject
 {
     Q_OBJECT
 public slots:
-    ActionReply savetheme(const QVariantMap &args);
     ActionReply savethemedetails(const QVariantMap &args);
+    ActionReply save(const QVariantMap &args);
 };
 
 #endif

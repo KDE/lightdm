@@ -20,11 +20,10 @@ public:
     explicit ThemeConfig(QWidget *parent = 0);
     ~ThemeConfig();
 
+    QVariantMap save();
+
 signals:
     void changed(bool);
-
-public slots:
-    void save();
 
 private slots:
     void onThemeSelected(const QModelIndex &index);

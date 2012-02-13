@@ -18,7 +18,6 @@
 
 
 #include <KAuth/Action>
-#include <KAuth/ActionReply>
 
 #include <Plasma/ConfigLoader>
 
@@ -149,27 +148,15 @@ void ThemeConfig::onConfigureClicked()
     dialog.exec();
 }
 
-void ThemeConfig::save()
+QVariantMap ThemeConfig::save()
 {
     QModelIndex currentIndex = ui->themesList->currentIndex();
-    if (currentIndex.isValid()) {
-        KAuth::Action saveAction("org.kde.kcontrol.kcmlightdm.savetheme");
-        saveAction.setHelperID("org.kde.kcontrol.kcmlightdm");
-        QVariantMap args;
-        args["theme-name"] = currentIndex.data(ThemesModel::IdRole);
-        saveAction.setArguments(args);
-
-        KAuth::ActionReply reply = saveAction.execute();
-        if (reply.failed()) {
-            qDebug() << reply.errorCode();
-            qDebug() << KAuth::ActionReply::NoSuchAction;
-            qDebug() << reply.errorDescription();
-            qDebug() << "save failed :-(";
-        } else {
-            qDebug() << "save ok!";
-        }
+    if (!currentIndex.isValid()) {
+        return QVariantMap();
     }
-
+    QVariantMap args;
+    args["greeter/greeter/theme-name"] = currentIndex.data(ThemesModel::IdRole);
+    return args;
 }
 
 #include "moc_themeconfig.cpp"

@@ -13,31 +13,6 @@ Name[x-test]=xxLightDMxx
 Icon=kauth-example
 URL=https://projects.kde.org/projects/playground/base/lightdm
 
-[org.kde.kcontrol.kcmlightdm.savetheme]
-Name=Save Theme Config
-Name[cs]=Uložit nastavení motivu
-Name[de]=Design-Konfiguration speichern
-Name[et]=Teemaseadistuse salvestamine
-Name[nl]=Themainstellingen opslaan
-Name[pl]=Zapisz konfigurację motywu
-Name[pt]=Gravar a Configuração do Tema
-Name[pt_BR]=Salvar a configuração do tema
-Name[sv]=Spara temainställningen
-Name[uk]=Зберегти налаштування теми
-Name[x-test]=xxSave Theme Configxx
-Description=Save Theme Information in LightDM
-Description[de]=Design-Informationen in LightDM speichern
-Description[et]=Teemateabe salvestamine LightDM-is
-Description[nl]=Thema-informatie in LightDM opslaan
-Description[pl]=Zapisz informacje motywu w LightDM
-Description[pt]=Gravar a Informação do Tema no LightDM
-Description[pt_BR]=Salvar a informação do tema no LightDM
-Description[sv]=Spara temainformation i LightDM
-Description[uk]=Зберегти дані теми до LightDM
-Description[x-test]=xxSave Theme Information in LightDMxx
-Policy=auth_admin
-Persistence=session
-
 [org.kde.kcontrol.kcmlightdm.savethemedetails]
 Name=Save Theme Details
 Name[cs]=Uložit podrobnosti motivu
@@ -60,5 +35,11 @@ Description[pt_BR]=Salvar os detalhes do tema no LightDM
 Description[sv]=Spara temainformation i LightDM
 Description[uk]=Зберегти параметри теми до LightDM
 Description[x-test]=xxSave Theme Details in LightDMxx
+Policy=auth_admin
+Persistence=session
+
+[org.kde.kcontrol.kcmlightdm.save]
+Name=Save Settings
+Description=Save Settings in LightDM
 Policy=auth_admin
 Persistence=session
