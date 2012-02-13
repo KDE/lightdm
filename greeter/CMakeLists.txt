@@ -1,14 +1,11 @@
-
 add_definitions (${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
 include_directories(
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_BINARY_DIR}
   ${KDE4_INCLUDES}
   ${QLIGHTDM_INCLUDE_DIR}
-  libkdeclarative
+  ${KDECLARATIVE_INCLUDE_DIR}
 )
-
-add_subdirectory(libkdeclarative)
 
 # Insert your sources here
 set(GREETER_SRCS
@@ -30,7 +27,7 @@ target_link_libraries(lightdm-kde-greeter
   ${KDE4_KDEUI_LIBS}
   ${KDE4_PLASMA_LIBS}
   ${QLIGHTDM_LIBRARIES}
-  kdeclarative
+  ${KDECLARATIVE_LIBRARIES}
 )
 
 install(TARGETS lightdm-kde-greeter RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/sbin/)
