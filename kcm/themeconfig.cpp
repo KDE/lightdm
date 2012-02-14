@@ -92,22 +92,36 @@ ThemeConfig::ThemeConfig(QWidget *parent) :
     connect(ui->themesList, SIGNAL(clicked(QModelIndex)), SLOT(onThemeSelected(QModelIndex)));
     connect(ui->configureButton, SIGNAL(released()), SLOT(onConfigureClicked()));
 
-    QString theme = m_config->group("greeter").readEntry("theme-name", "shinydemo");
+    QString theme = m_config->group("greeter").readEntry("theme-name", "classic");
 
-    //set the UI to show the correct item if available.
-    for (int i=0;i < model->rowCount(QModelIndex()); i++) {
-        QModelIndex index = model->index(i);
-        if (index.data(ThemesModel::IdRole).toString() == theme) {
-            ui->themesList->setCurrentIndex(index);
-            onThemeSelected(index);
+    QModelIndex index = findIndexForTheme(theme);
+    if (!index.isValid()) {
+        kWarning() << "Could not find" << theme << "in theme list. Falling back to \"classic\" theme.";
+        index = findIndexForTheme("classic");
+        if (!index.isValid()) {
+            kWarning() << "Could not find \"classic\" theme. Something is wrong with this installation. Falling back to first available theme.";
+            index = model->index(0);
         }
     }
-
+    ui->themesList->setCurrentIndex(index);
+    onThemeSelected(index);
 }
 
 ThemeConfig::~ThemeConfig()
 {
     delete ui;
+}
+
+QModelIndex ThemeConfig::findIndexForTheme(const QString& theme) const
+{
+    QAbstractItemModel* model = ui->themesList->model();
+    for (int i=0; i < model->rowCount(); i++) {
+        QModelIndex index = model->index(i, 0);
+        if (index.data(ThemesModel::IdRole).toString() == theme) {
+            return index;
+        }
+    }
+    return QModelIndex();
 }
 
 void ThemeConfig::onThemeSelected(const QModelIndex &index)

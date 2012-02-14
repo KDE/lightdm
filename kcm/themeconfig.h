@@ -52,7 +52,7 @@ private:
     Ui::ThemeConfig *ui;
 
     QDir themeDir() const;
-
+    QModelIndex findIndexForTheme(const QString& theme) const;
 };
 
 #endif // THEMECONFIG_H
