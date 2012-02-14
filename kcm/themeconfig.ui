@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>531</width>
-    <height>406</height>
+    <width>556</width>
+    <height>293</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,6 +38,21 @@
    </item>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
+     <item alignment="Qt::AlignHCenter">
+      <widget class="QLabel" name="preview">
+       <property name="styleSheet">
+        <string notr="true">background-color: white;
+padding: 2px;
+border: 1px solid #888;</string>
+       </property>
+       <property name="text">
+        <string notr="true">[preview]</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
      <item>
       <widget class="QLabel" name="nameLabel">
        <property name="font">
@@ -47,21 +62,46 @@
         </font>
        </property>
        <property name="text">
-        <string>TextLabel</string>
+        <string notr="true">[Theme Name]</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="preview">
+      <widget class="QLabel" name="authorLabel">
        <property name="text">
-        <string>TextLabel</string>
+        <string notr="true">[Author]</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>12</height>
+        </size>
+       </property>
+      </spacer>
      </item>
      <item>
       <widget class="QLabel" name="descriptionLabel">
        <property name="text">
-        <string>TextLabel</string>
+        <string notr="true">[Long description of the theme, may spawn multiple lines]</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
        <property name="wordWrap">
         <bool>true</bool>
@@ -69,16 +109,9 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="authorLabel">
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QWidget" name="optionsWidget" native="true"/>
      </item>
-     <item>
+     <item alignment="Qt::AlignHCenter">
       <widget class="QPushButton" name="configureButton">
        <property name="text">
         <string>Configure</string>
