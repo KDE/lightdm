@@ -138,7 +138,7 @@ void ThemeConfig::onThemeSelected(const QModelIndex &index)
  
     QPixmap preview = index.data(ThemesModel::PreviewRole).value<QPixmap>();
     if (! preview.isNull()) {
-        ui->preview->setPixmap(preview.scaled(QSize(250,250), Qt::KeepAspectRatio));
+        ui->preview->setPixmap(preview.scaled(QSize(250, 250), Qt::KeepAspectRatio, Qt::SmoothTransformation));
     } else
     {
         ui->preview->setPixmap(QPixmap());
