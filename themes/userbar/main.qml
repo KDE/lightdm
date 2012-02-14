@@ -139,59 +139,78 @@ Item {
         }
     }
 
-    ListView {
-        id: usersList
+    // Central item. This item is used to position the main items in the screen.
+    Item {
+        property int widgetHeight: 30
+
         anchors.horizontalCenter: parent.horizontalCenter
-        y: parent.height / 4
-        focus: true
-        height: userItemHeight
+        /* Hack: we want to have 1/3 space above and 2/3 space below the main
+         * items. We could use (parent.height - childrenRect.height) / 3 but
+         * that causes the view to move down when selecting the guest session
+         * because childrenRect.height decreases. Instead we compute a static
+         * height for our items.
+         */
+        y: (parent.height -
+            (usersList.height
+            + fixedWidgetsColumn.anchors.topMargin
+            + 3 * widgetHeight
+            + 2 * fixedWidgetsColumn.spacing
+            )) / 3
+        width: parent.width
 
-        model: usersModel
-
-        cacheBuffer: count * 80
-
-        delegate: userDelegate
-
-        orientation: ListView.Horizontal
-
-        highlightRangeMode: ListView.StrictlyEnforceRange
-        preferredHighlightBegin: width / 2 - userItemWidth / 2
-        preferredHighlightEnd: width / 2 + userItemWidth / 2
-    }
-
-    // Fixed widgets
-    property int widgetHeight: 30
-
-    Column {
-        anchors.top: usersList.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        width: 200
-        anchors.topMargin: 2 * padding
-        spacing: padding
-
-        LightDMPlasmaWidgets.PasswordLineEdit {
-            id: passwordInput
-            width: parent.width
-            height: widgetHeight
-            clickMessage: i18n("Password")
-            onReturnPressed: startLogin();
-            visible: usersList.currentItem.username != "*guest"
-        }
-
-        LightDMPlasmaWidgets.ModelComboBox {
-            id: sessionCombo
-            width: parent.width
-            height: widgetHeight
-            model: sessionsModel
-            currentIndex: indexForData(usersList.currentItem.usersession, sessionsModel.key)
-        }
-
-        PlasmaWidgets.PushButton {
-            id: loginButton
+        ListView {
+            id: usersList
             anchors.horizontalCenter: parent.horizontalCenter
-            height: widgetHeight
-            text: i18n("Login")
-            onClicked: startLogin();
+            y: 0
+            focus: true
+            height: userItemHeight
+
+            model: usersModel
+
+            cacheBuffer: count * 80
+
+            delegate: userDelegate
+
+            orientation: ListView.Horizontal
+
+            highlightRangeMode: ListView.StrictlyEnforceRange
+            preferredHighlightBegin: width / 2 - userItemWidth / 2
+            preferredHighlightEnd: width / 2 + userItemWidth / 2
+        }
+
+        // Fixed widgets
+        Column {
+            id: fixedWidgetsColumn
+            anchors.top: usersList.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 200
+            anchors.topMargin: 2 * padding
+            spacing: padding
+
+            LightDMPlasmaWidgets.PasswordLineEdit {
+                id: passwordInput
+                width: parent.width
+                height: widgetHeight
+                clickMessage: i18n("Password")
+                onReturnPressed: startLogin();
+                visible: usersList.currentItem.username != "*guest"
+            }
+
+            LightDMPlasmaWidgets.ModelComboBox {
+                id: sessionCombo
+                width: parent.width
+                height: widgetHeight
+                model: sessionsModel
+                currentIndex: indexForData(usersList.currentItem.usersession, sessionsModel.key)
+            }
+
+            PlasmaWidgets.PushButton {
+                id: loginButton
+                anchors.horizontalCenter: parent.horizontalCenter
+                height: widgetHeight
+                text: i18n("Login")
+                onClicked: startLogin();
+            }
         }
     }
 
