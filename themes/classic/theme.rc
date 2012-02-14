@@ -1,0 +1,6 @@
+[theme]
+Name = Classic
+Description = A pretty looking greeter
+Version = 0.1
+Author = David Edmundson
+Homepage = http://kde.org
