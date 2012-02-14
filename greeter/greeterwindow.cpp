@@ -19,11 +19,14 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include "greeterwindow.h"
 
 #include <QtGui/QWidget>
+#include <QApplication>
 #include <QDeclarativeView>
 #include <QDeclarativeEngine>
 #include <QDeclarativeContext>
-#include <QApplication>
 #include <QDesktopWidget>
+#include <QDir>
+#include <QPixmap>
+#include <QShortcut>
 #include <QtCore/QDebug>
 #include <QtDeclarative/qdeclarative.h>
 
@@ -110,6 +113,13 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     }
     kDebug() << "Loading" << source;
     setSource(source);
+
+    // Shortcut to take a screenshot of the screen. Handy because it is not
+    // possible to take a screenshot of the greeter in test mode without
+    // including the cursor.
+    QShortcut* cut = new QShortcut(this);
+    cut->setKey(Qt::CTRL + Qt::ALT + Qt::Key_S);
+    connect(cut, SIGNAL(activated()), SLOT(screenshot()));
 }
 
 GreeterWindow::~GreeterWindow()
@@ -123,7 +133,17 @@ void GreeterWindow::resizeEvent(QResizeEvent *event)
     setSceneRect(QRectF(0, 0, width(), height()));
 }
 
-
+void GreeterWindow::screenshot()
+{
+    QPixmap pix = QPixmap::grabWindow(winId());
+    QString path = QDir::temp().absoluteFilePath("lightdm-kde-greeter-screenshot.png");
+    bool ok = pix.save(path);
+    if (ok) {
+        kDebug() << "Saved screenshot as" << path;
+    } else {
+        kWarning() << "Failed to save screenshot as" << path;
+    }
+}
 
 #include "moc_greeterwindow.cpp"
 

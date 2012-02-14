@@ -37,6 +37,9 @@ public:
 protected:
     void resizeEvent(QResizeEvent *);
 
+private Q_SLOTS:
+    void screenshot();
+
 private:
     QLightDM::Greeter *m_greeter;
 

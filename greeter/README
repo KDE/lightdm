@@ -1,1 +1,5 @@
 This contains the main greeter loaded by LightDM
+
+Trick: Pressing Ctrl+Alt+S will save a screenshot to your temp dir under the
+name lightdm-kde-greeter-screenshot.png. This handy to update the preview.png file in
+themes.
