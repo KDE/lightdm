@@ -82,7 +82,10 @@ Item {
 
             property bool isCurrent: ListView.isCurrentItem
 
+            /* Expose current item info to the outer world. I can't find
+             * another way to access this from outside the list. */
             property string username: model.name
+            property string usersession: model.session
 
             width: userItemWidth
             height: userItemHeight
@@ -180,7 +183,7 @@ Item {
             width: parent.width
             height: widgetHeight
             model: sessionsModel
-            currentIndex: indexForData(session, sessionsModel.key)
+            currentIndex: indexForData(usersList.currentItem.usersession, sessionsModel.key)
         }
 
         PlasmaWidgets.PushButton {
