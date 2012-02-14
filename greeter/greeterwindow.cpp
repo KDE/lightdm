@@ -88,7 +88,6 @@ GreeterWindow::GreeterWindow(QWidget *parent)
 
     KConfig config(LIGHTDM_CONFIG_DIR "/lightdm-kde-greeter.conf");
     KConfigGroup configGroup = config.group("greeter");
-    QString theme = configGroup.readEntry("theme-name", "shinydemo");
 
     rootContext()->setContextProperty("config", new ConfigWrapper(this));
     rootContext()->setContextProperty("screenSize", size());
@@ -99,18 +98,18 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     rootContext()->setContextProperty("plasmaTheme", Plasma::Theme::defaultTheme());
 
 
-
+    QString theme = configGroup.readEntry("theme-name", "classic");
     KUrl source = KGlobal::dirs()->locate("appdata", "themes/" + theme + "/main.qml");
-    
-    kDebug() << "loading " << source;
-    
+
     if (source.isEmpty()) {
-        //FIXME we should probably try falling back to a known theme before crashing out.
-        qFatal("Cannot find QML File");
+        kError() << "Cannot find QML file for" << theme << "theme. Falling back to \"classic\" theme.";
+        source = KGlobal::dirs()->locate("appdata", "themes/classic/main.qml");
+        if (source.isEmpty()) {
+            kFatal() << "Cannot find QML file for \"classic\" theme. Something is wrong with this installation. Aborting.";
+        }
     }
-    else {
-        this->setSource(source);
-    }
+    kDebug() << "Loading" << source;
+    setSource(source);
 }
 
 GreeterWindow::~GreeterWindow()
