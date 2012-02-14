@@ -163,6 +163,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             y: 0
             focus: true
+            width: parent.width
             height: userItemHeight
 
             model: usersModel
