@@ -32,6 +32,9 @@ CoreConfig::CoreConfig(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // Hide for now: implementation is not complete
+    ui->serverWidget->hide();
+
     ui->autoLoginUser->setModel(new QLightDM::UsersModel(this));
     ui->autoLoginSession->setModel(new QLightDM::SessionsModel(this));
 
