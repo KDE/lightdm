@@ -38,7 +38,7 @@
    </item>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
+     <item alignment="Qt::AlignHCenter">
       <widget class="QLabel" name="preview">
        <property name="styleSheet">
         <string notr="true">background-color: white;
@@ -111,7 +111,7 @@ border: 1px solid #888;</string>
      <item>
       <widget class="QWidget" name="optionsWidget" native="true"/>
      </item>
-     <item>
+     <item alignment="Qt::AlignHCenter">
       <widget class="QPushButton" name="configureButton">
        <property name="text">
         <string>Configure</string>
