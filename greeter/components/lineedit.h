@@ -16,18 +16,23 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef PASSWORDLINEEDIT_H
-#define PASSWORDLINEEDIT_H
+#ifndef LINEEDIT_H
+#define LINEEDIT_H
 
 #include <Plasma/LineEdit>
 
 /** A slightly hacky class to get a version of plasma line edit which can be put in password mode*/
-class PasswordLineEdit : public Plasma::LineEdit
+class LineEdit : public Plasma::LineEdit
 {
     Q_OBJECT
-public:
-    explicit PasswordLineEdit(QGraphicsWidget *parent = 0);
+    Q_PROPERTY(bool passwordMode READ passwordMode WRITE setPasswordMode)
 
+public:
+    explicit LineEdit(QGraphicsWidget *parent = 0);
+
+    bool passwordMode() const;
+    void setPasswordMode(bool passwordMode);
+    
 signals:
 
 public slots:

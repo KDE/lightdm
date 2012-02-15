@@ -118,8 +118,9 @@ Item {
                 text: display
             }
 
-            LightDMPlasmaWidgets.PasswordLineEdit {
+            LightDMPlasmaWidgets.LineEdit {
                 id: passwordInput
+                passwordMode: true
                 anchors.top: loginText.bottom
                 anchors.left: face.right
                 anchors.right: loginButton.left

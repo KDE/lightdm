@@ -45,7 +45,7 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include <Plasma/Theme>
 
 
-#include "components/passwordlineedit.h"
+#include "components/lineedit.h"
 #include "components/modelcombobox.h"
 #include "extrarowproxymodel.h"
 #include "faceimageprovider.h"
@@ -64,7 +64,7 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     m_greeter->connectSync();
     
     //add a new plasma widget which is a plasma line edit in password mode.
-    qmlRegisterType<PasswordLineEdit>("MyLibrary", 1, 0, "PasswordLineEdit");
+    qmlRegisterType<LineEdit>("MyLibrary", 1, 0, "LineEdit");
     qmlRegisterType<ModelComboBox>("MyLibrary", 1, 0, "ModelComboBox");
 
     KDeclarative kdeclarative;

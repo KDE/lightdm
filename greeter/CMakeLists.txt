@@ -15,7 +15,7 @@ set(GREETER_SRCS
     main.cpp
     configwrapper.cpp
     components/modelcombobox.cpp
-    components/passwordlineedit.cpp
+    components/lineedit.cpp
 )
 
 # Create the plasmoid

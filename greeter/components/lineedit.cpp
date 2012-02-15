@@ -16,17 +16,30 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "passwordlineedit.h"
+#include "lineedit.h"
 
 #include <KLineEdit>
 
-PasswordLineEdit::PasswordLineEdit(QGraphicsWidget *parent) :
-    LineEdit(parent)
+LineEdit::LineEdit(QGraphicsWidget *parent) :
+    Plasma::LineEdit(parent)
 {
-    nativeWidget()->setEchoMode(QLineEdit::Password);
 }
 
-void PasswordLineEdit::setFocus()
+bool LineEdit::passwordMode() const
+{
+    return nativeWidget()->echoMode() == QLineEdit::Password;
+}
+
+void LineEdit::setPasswordMode(bool passwordMode)
+{
+    if (passwordMode) {
+        nativeWidget()->setEchoMode(QLineEdit::Password);
+    } else {
+        nativeWidget()->setEchoMode(QLineEdit::Normal);
+    }
+}
+
+void LineEdit::setFocus()
 {
     nativeWidget()->setFocus();
 }

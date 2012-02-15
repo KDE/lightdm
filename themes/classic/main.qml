@@ -89,12 +89,20 @@ Item {
 
                 }
 
-                PlasmaWidgets.LineEdit {
+                //not actually a password!
+                LightDMPlasmaWidgets.LineEdit {
                     id: usernameInput;
                     width: 250;
                     height: 30;
                     clickMessage: "Username";
                     clearButtonShown: true;
+                    onReturnPressed: {
+                        passwordInput.setFocus();
+                    }
+                    
+                     Component.onCompleted: {
+                        usernameInput.setFocus();
+                    }
                 }
             }
 
@@ -107,16 +115,15 @@ Item {
 
                 }
 
-//                PlasmaWidgets.LineEdit {
-                LightDMPlasmaWidgets.PasswordLineEdit {
+                LightDMPlasmaWidgets.LineEdit {
                     id: passwordInput;
                     width: 250;
                     height: 30;
                     clickMessage: i18n("Password");
+                    passwordMode: true;
                     onReturnPressed: {
                         login();
                     }
-
                 }
             }
 

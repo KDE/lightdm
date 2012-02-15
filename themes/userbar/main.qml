@@ -188,10 +188,11 @@ Item {
             anchors.topMargin: 2 * padding
             spacing: padding
 
-            LightDMPlasmaWidgets.PasswordLineEdit {
+            LightDMPlasmaWidgets.LineEdit {
                 id: passwordInput
                 width: parent.width
                 height: widgetHeight
+                passwordMode: true
                 clickMessage: i18n("Password")
                 onReturnPressed: startLogin();
                 visible: usersList.currentItem.username != "*guest"
