@@ -179,17 +179,17 @@ Item {
             anchors.centerIn: parent
 
             PlasmaWidgets.IconWidget {
-                text: i18n("Shutdown")
-                icon: QIcon("system-shutdown")
-                enabled: power.canShutdown;
-                onClicked: {power.shutDown();}
-            }
-
-            PlasmaWidgets.IconWidget {
                 text: i18n("Suspend")
                 icon: QIcon("system-suspend")
                 enabled: power.canSuspend;
                 onClicked: {power.suspend();}
+            }
+            
+            PlasmaWidgets.IconWidget {
+                text: i18n("Hibernate")
+                icon: QIcon("system-suspend-hibernate")
+                enabled: power.canHibernate;
+                onClicked: {power.hibernate();}
             }
 
             PlasmaWidgets.IconWidget {
@@ -198,13 +198,13 @@ Item {
                 enabled: power.canRestart;
                 onClicked: {power.restart();}
             }
-
+            
             PlasmaWidgets.IconWidget {
-                text: i18n("Hibernate")
-                icon: QIcon("system-suspend-hibernate")
-                enabled: power.canHibernate;
-                onClicked: {power.hibernate();}
-            }
+                text: i18n("Shutdown")
+                icon: QIcon("system-shutdown")
+                enabled: power.canShutdown;
+                onClicked: {power.shutDown();}
+            }     
         }
 
     }
