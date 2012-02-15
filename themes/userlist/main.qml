@@ -60,8 +60,9 @@ Item {
 
     Text {
         id: welcomeLabel
-        anchors.left: parent.left;
+        anchors.horizontalCenter: parent.horizontalCenter;
         anchors.top: parent.top
+        anchors.topMargin:10;
         font.pointSize: 9
         text: i18n("Welcome to %1", greeter.hostname);
     }
