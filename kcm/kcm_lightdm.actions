@@ -40,9 +40,15 @@ Persistence=session
 
 [org.kde.kcontrol.kcmlightdm.save]
 Name=Save Settings
+Name[nl]=Instellingen opslaan
+Name[pt]=Gravar a Configuração
+Name[pt_BR]=Salvar configurações
 Name[uk]=Зберегти параметри
 Name[x-test]=xxSave Settingsxx
 Description=Save Settings in LightDM
+Description[nl]=Instellingen opslaan in LightDM
+Description[pt]=Gravar a Configuração no LightDM
+Description[pt_BR]=Salvar configurações no LightDM
 Description[uk]=Зберегти параметри до LightDM
 Description[x-test]=xxSave Settings in LightDMxx
 Policy=auth_admin
