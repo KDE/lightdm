@@ -51,6 +51,7 @@ ThemesModel::ThemesModel(QObject *parent) :
 
 int ThemesModel::rowCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent);
     return m_themes.size();
 }
 
