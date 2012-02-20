@@ -22,7 +22,6 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 
 ExtraRowProxyModel::ExtraRowProxyModel(QObject* parent)
 : QAbstractListModel(parent)
-, m_model(0)
 {}
 
 int ExtraRowProxyModel::appendRow()
@@ -45,21 +44,29 @@ void ExtraRowProxyModel::setRowText(int id, int column, const QVariant& value)
 
 void ExtraRowProxyModel::setSourceModel(QAbstractItemModel* model)
 {
-    m_model = model;
+    m_model = QWeakPointer<QAbstractItemModel>(model);
     reset();
-    setRoleNames(m_model->roleNames());
+    setRoleNames(m_model.data()->roleNames());
 }
 
 int ExtraRowProxyModel::rowCount(const QModelIndex &) const
 {
-    return m_model->rowCount() + m_rows.count();
+    if (m_model.isNull()) {
+        return m_rows.count();
+    } else {
+        return m_model.data()->rowCount() + m_rows.count();
+    }
+
 }
 
 QVariant ExtraRowProxyModel::data(const QModelIndex &index, int role) const
 {
-    int count = m_model->rowCount();
-    if (index.row() < count) {
-        return m_model->data(index, role);
+    int count = 0;
+    if (!m_model.isNull()) {
+        count = m_model.data()->rowCount();
+        if (index.row() < count) {
+            return m_model.data()->data(index, role);
+        }
     }
 
     int extraRow = index.row() - count;
