@@ -29,6 +29,7 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
  */
 class ExtraRowProxyModel : public QAbstractListModel
 {
+    Q_OBJECT
 public:
     ExtraRowProxyModel(QObject *parent = 0);
 
@@ -44,6 +45,11 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const; // reimp
 
     void setSourceModel(QAbstractItemModel* model);
+
+private slots:
+    void onSourceRowsInserted(const QModelIndex &parent,int start,int end);
+    void onSourceRowsRemoved(const QModelIndex &parent,int start,int end);
+    void onSourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
 
 private:
     typedef QHash<int, QVariant> Item;

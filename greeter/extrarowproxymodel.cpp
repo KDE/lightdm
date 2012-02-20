@@ -19,6 +19,7 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include <extrarowproxymodel.h>
 
 #include <KDebug>
+#include <QAbstractItemModel>
 
 ExtraRowProxyModel::ExtraRowProxyModel(QObject* parent)
 : QAbstractListModel(parent)
@@ -44,9 +45,19 @@ void ExtraRowProxyModel::setRowText(int id, int column, const QVariant& value)
 
 void ExtraRowProxyModel::setSourceModel(QAbstractItemModel* model)
 {
+    if (! m_model.isNull()) {
+        disconnect(m_model.data(), SIGNAL(rowsInserted(QModelIndex, int, int)), this, SLOT(onSourceRowsInserted(QModelIndex,int,int)));
+        disconnect(m_model.data(), SIGNAL(rowsRemoved(QModelIndex, int, int)), this, SLOT(onSourceRowsRemoved(QModelIndex,int,int)));
+        disconnect(m_model.data(), SIGNAL(dataChanged(QModelIndex, QModelIndex)), this, SLOT(onSourceDataChanged(QModelIndex,QModelIndex)));
+    }
+
     m_model = QWeakPointer<QAbstractItemModel>(model);
     reset();
     setRoleNames(m_model.data()->roleNames());
+
+    connect(m_model.data(), SIGNAL(rowsInserted(QModelIndex, int, int)), SLOT(onSourceRowsInserted(QModelIndex,int,int)));
+    connect(m_model.data(), SIGNAL(rowsRemoved(QModelIndex, int, int)), SLOT(onSourceRowsRemoved(QModelIndex,int,int)));
+    connect(m_model.data(), SIGNAL(dataChanged(QModelIndex, QModelIndex)), SLOT(onSourceDataChanged(QModelIndex,QModelIndex)));
 }
 
 int ExtraRowProxyModel::rowCount(const QModelIndex &) const
@@ -77,3 +88,24 @@ QVariant ExtraRowProxyModel::data(const QModelIndex &index, int role) const
     const Item& item = m_rows[extraRow].at(index.column());
     return item.value(role);
 }
+
+void ExtraRowProxyModel::onSourceRowsInserted(const QModelIndex &parent, int start, int end)
+{
+    Q_UNUSED(parent);
+    beginInsertRows(QModelIndex(), start, end);
+    endInsertRows();
+}
+
+void ExtraRowProxyModel::onSourceRowsRemoved(const QModelIndex &parent, int start, int end)
+{
+    Q_UNUSED(parent);
+    beginRemoveRows(QModelIndex(), start, end);
+    endRemoveRows();
+}
+
+void ExtraRowProxyModel::onSourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight)
+{
+    dataChanged(createIndex(topLeft.row(), 0)   , createIndex(bottomRight.row(), 0));
+}
+
+
