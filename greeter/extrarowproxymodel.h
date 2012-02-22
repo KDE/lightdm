@@ -22,12 +22,14 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include <QSortFilterProxyModel>
 #include <QHash>
 #include <QVector>
+#include <QWeakPointer>
 
 /**
  * A proxy model which makes it possible to append extra rows at the end
  */
 class ExtraRowProxyModel : public QAbstractListModel
 {
+    Q_OBJECT
 public:
     ExtraRowProxyModel(QObject *parent = 0);
 
@@ -44,12 +46,17 @@ public:
 
     void setSourceModel(QAbstractItemModel* model);
 
+private slots:
+    void onSourceRowsInserted(const QModelIndex &parent,int start,int end);
+    void onSourceRowsRemoved(const QModelIndex &parent,int start,int end);
+    void onSourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
+
 private:
     typedef QHash<int, QVariant> Item;
     typedef QVector<Item> Row;
     typedef QVector<Row> Rows;
 
-    QAbstractItemModel* m_model;
+    QWeakPointer<QAbstractItemModel> m_model;
     Rows m_rows;
 };
 
