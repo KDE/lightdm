@@ -55,7 +55,7 @@ KAuth::ActionReply Helper::savethemedetails(const QVariantMap &args)
 {
     KAuth::ActionReply reply;
     QSharedPointer<KConfig> config = openConfig(GreeterConfig);
-    KConfigGroup configGroup = config->group("greeter-details");
+    KConfigGroup configGroup = config->group("greeter-settings");
 
     QMap<QString, QVariant>::const_iterator i;
     for (i = args.constBegin() ; i != args.constEnd() ; i++) {

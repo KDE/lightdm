@@ -35,7 +35,7 @@ QVariant ConfigWrapper::readEntry(const QString &key, const QVariant &aDefault) 
 {
     //FIXME I should use a KConfigSkeleton which loads the KCFG, then remove the "default" parameter
 
-    KConfigGroup configGroup = m_config->group("greeter-details");
+    KConfigGroup configGroup = m_config->group("greeter-settings");
 
     return configGroup.readEntry(key, aDefault);
 }

@@ -81,7 +81,7 @@ ThemeConfig::ThemeConfig(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ThemeConfig)
 {
-    m_config = KSharedConfig::openConfig(LIGHTDM_CONFIG_DIR "/lightdm-kde-greeter.conf");
+    m_config = KSharedConfig::openConfig(LIGHTDM_CONFIG_DIR "/lightdm-kde-greeter.conf", KConfig::SimpleConfig);
 
     ui->setupUi(this);
 
