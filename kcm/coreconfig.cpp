@@ -50,6 +50,12 @@ CoreConfig::CoreConfig(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // Hide for now: lightdm does not support those yet :/
+    ui->autoLoginSessionLabel->hide();
+    ui->autoLoginSession->hide();
+    ui->autoLoginTimeoutLabel->hide();
+    ui->autoLoginTimeout->hide();
+
     // Hide for now: implementation is not complete
     ui->serverWidget->hide();
 
