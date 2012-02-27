@@ -9,6 +9,11 @@
     <entry name="Background" type="String">
       <default>air.jpeg</default>
     </entry>
+    <entry name="Logo" type="String">
+        <default></default>
+    </entry>
+    <entry name="GreetMessage" type="String">
+        <default>Welcome to %hostname%</default>
+    </entry>
   </group>
-
 </kcfg>

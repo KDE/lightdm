@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>38</height>
+    <height>95</height>
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -28,6 +28,26 @@
     <widget class="KLineEdit" name="kcfg_Background"/>
    </item>
    <item row="1" column="1">
+    <widget class="KLineEdit" name="kcfg_Logo"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Logo Path:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Welcome Text:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="kcfg_GreetMessage"/>
+   </item>
+   <item row="3" column="1">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -35,7 +55,7 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>3</height>
+       <height>40</height>
       </size>
      </property>
     </spacer>
