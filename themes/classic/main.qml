@@ -29,7 +29,8 @@ Item {
     Image {
         fillMode: Image.PreserveAspectCrop
         anchors.fill: parent
-        source:config.readEntry("Background", plasmaTheme.wallpaperPath());
+        //read from config, if there's no entry use plasma theme
+        source: config.readEntry("Background", "") ? config.readEntry("Background", ""): plasmaTheme.wallpaperPath();
     }
 
     Connections {
