@@ -76,20 +76,20 @@ void CoreConfig::loadFromConfig()
 {
     KConfig config((LIGHTDM_CONFIG_DIR "/lightdm.conf"));
 
-    ui->allowGuest->setChecked(config.group("SeatDefaults").readEntry("allow-guest", true));
+    KConfigGroup seatDefaultsGroup = config.group("SeatDefaults");
+    ui->allowGuest->setChecked(seatDefaultsGroup.readEntry("allow-guest", true));
 
-    KConfigGroup lightdmGroup = config.group("LightDM");
-    QString user = lightdmGroup.readEntry("autologin-user");
+    QString user = seatDefaultsGroup.readEntry("autologin-user");
     if (!user.isEmpty()) {
         setCurrentItemFromData(ui->autoLoginUser, QLightDM::UsersModel::NameRole, user);
     }
     ui->autoLogin->setChecked(!user.isEmpty());
 
-    QString session = lightdmGroup.readEntry("autologin-session");
+    QString session = seatDefaultsGroup.readEntry("autologin-session");
     if (!session.isEmpty()) {
         setCurrentItemFromData(ui->autoLoginSession, QLightDM::SessionsModel::IdRole, session);
     }
-    ui->autoLoginTimeout->setValue(lightdmGroup.readEntry("autologin-user-timeout", 0) / 60);
+    ui->autoLoginTimeout->setValue(seatDefaultsGroup.readEntry("autologin-user-timeout", 0) / 60);
 
     ui->enableXdmcp->setChecked(config.group("XDMCPServer").readEntry("enabled", false));
     ui->enableVnc->setChecked(config.group("VNCServer").readEntry("enabled", false));
@@ -98,11 +98,11 @@ void CoreConfig::loadFromConfig()
 QVariantMap CoreConfig::save()
 {
     QVariantMap args;
-    args["core/LightDM/autologin-user"] = ui->autoLogin->isChecked()
+    args["core/SeatDefaults/autologin-user"] = ui->autoLogin->isChecked()
         ? currentItemData(ui->autoLoginUser, QLightDM::UsersModel::NameRole)
         : QString();
-    args["core/LightDM/autologin-session"] = currentItemData(ui->autoLoginSession, QLightDM::SessionsModel::IdRole);
-    args["core/LightDM/autologin-user-timeout"] = ui->autoLoginTimeout->value() * 60;
+    args["core/SeatDefaults/autologin-session"] = currentItemData(ui->autoLoginSession, QLightDM::SessionsModel::IdRole);
+    args["core/SeatDefaults/autologin-user-timeout"] = ui->autoLoginTimeout->value() * 60;
     args["core/SeatDefaults/allow-guest"] = ui->allowGuest->isChecked();
     args["core/XDMCPServer/enabled"] = ui->enableXdmcp->isChecked();
     args["core/VNCServer/enabled"] = ui->enableVnc->isChecked();
