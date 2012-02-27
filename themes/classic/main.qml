@@ -30,7 +30,7 @@ Item {
         fillMode: Image.PreserveAspectCrop
         anchors.fill: parent
         //read from config, if there's no entry use plasma theme
-        source: config.readEntry("Background", "") ? config.readEntry("Background", ""): plasmaTheme.wallpaperPath();
+        source: config.readEntry("Background") ? config.readEntry("Background"): plasmaTheme.wallpaperPath();
     }
 
     Connections {
@@ -71,7 +71,7 @@ Item {
 
             Image {
                 id: logo
-                source: config.readEntry("Logo","")
+                source: config.readEntry("Logo")
                 fillMode: Image.PreserveAspectFit
                 height: 100
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -83,7 +83,7 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter;
                 id: feedbackLabel;
                 font.pointSize: 9
-                text: config.readEntry("GreetMessage",i18n("Welcome to %1", greeter.hostname));
+                text: config.readEntry("GreetMessage").replace("%hostname%", greeter.hostname);
             }
 
             Row {
