@@ -7,10 +7,10 @@
 
   <group name="greeter-settings">
     <entry name="Background" type="String">
-      <default>file://air.jpeg</default>
+      <default></default>
     </entry>
     <entry name="Logo" type="String">
-        <default>CHEESE</default>
+        <default></default>
     </entry>
     <entry name="GreetMessage" type="String">
         <default>Welcome to %hostname%</default>

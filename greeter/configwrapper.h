@@ -20,7 +20,10 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #define CONFIGWRAPPER_H
 
 #include <QObject>
-#include <KSharedConfig>
+#include <QDir>
+
+#include <Plasma/ConfigLoader>
+
 
 /** This class exposes the lightdm-kde config to QML*/
 
@@ -28,12 +31,12 @@ class ConfigWrapper : public QObject
 {
     Q_OBJECT
 public:
-    explicit ConfigWrapper(QObject *parent = 0);
+    explicit ConfigWrapper(const KUrl &kcfgPath, QObject *parent = 0);
 
-    Q_INVOKABLE QVariant readEntry(const QString &key, const QVariant &aDefault=QVariant()) const;
+    Q_INVOKABLE QVariant readEntry(const QString &key) const;
 
 private:
-    KSharedConfigPtr m_config;
+    Plasma::ConfigLoader *m_config;
 
 };
 

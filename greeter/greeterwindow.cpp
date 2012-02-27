@@ -92,15 +92,6 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     KConfig config(LIGHTDM_CONFIG_DIR "/lightdm-kde-greeter.conf");
     KConfigGroup configGroup = config.group("greeter");
 
-    rootContext()->setContextProperty("config", new ConfigWrapper(this));
-    rootContext()->setContextProperty("screenSize", size());
-    rootContext()->setContextProperty("greeter", m_greeter);
-    rootContext()->setContextProperty("usersModel", usersModel);
-    rootContext()->setContextProperty("sessionsModel", new QLightDM::SessionsModel(this));
-    rootContext()->setContextProperty("power", new QLightDM::PowerInterface(this));
-    rootContext()->setContextProperty("plasmaTheme", Plasma::Theme::defaultTheme());
-
-
     QString theme = configGroup.readEntry("theme-name", "classic");
     KUrl source = KGlobal::dirs()->locate("appdata", "themes/" + theme + "/main.qml");
 
@@ -112,6 +103,16 @@ GreeterWindow::GreeterWindow(QWidget *parent)
         }
     }
     kDebug() << "Loading" << source;
+
+    rootContext()->setContextProperty("config", new ConfigWrapper(KGlobal::dirs()->locate("appdata", "themes/" + theme + "/main.xml"), this));
+    rootContext()->setContextProperty("screenSize", size());
+    rootContext()->setContextProperty("greeter", m_greeter);
+    rootContext()->setContextProperty("usersModel", usersModel);
+    rootContext()->setContextProperty("sessionsModel", new QLightDM::SessionsModel(this));
+    rootContext()->setContextProperty("power", new QLightDM::PowerInterface(this));
+    rootContext()->setContextProperty("plasmaTheme", Plasma::Theme::defaultTheme());
+
+
     setSource(source);
 
     // Shortcut to take a screenshot of the screen. Handy because it is not
