@@ -34,8 +34,6 @@ ModelComboBox::ModelComboBox(QGraphicsWidget *parent)
 
 void ModelComboBox::setModel(QObject *model)
 {
-
-    qDebug() << "hereADSF *** * " << model;
     QAbstractItemModel *realModel = qobject_cast<QAbstractItemModel*>(model);
     if (realModel){
             nativeWidget()->setModel(realModel);
