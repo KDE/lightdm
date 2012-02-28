@@ -82,6 +82,16 @@ GreeterWindow::GreeterWindow(QWidget *parent)
         usersModel->setRowData(guestRowId, 0, "*guest", QLightDM::UsersModel::NameRole);
     }
 
+    ExtraRowProxyModel* sessionsModel = new ExtraRowProxyModel(this);
+    sessionsModel->setSourceModel(new QLightDM::SessionsModel(this));
+    int lastSessionId = sessionsModel->appendRow();
+    sessionsModel->setRowText(lastSessionId, 0, i18n("Previously Used Session"));
+    //if lightDM is given an empty session parameter it will just guess something sensible. (last used)
+    sessionsModel->setRowData(lastSessionId, 0, "", QLightDM::SessionsModel::KeyRole);
+
+    //don't set any data.. no session ID = "", which means LightDM will default to whatever it thinks is best.
+
+
     engine()->addImageProvider("face", new FaceImageProvider(usersModel));
 
 //     scriptEngine = kdeclarative.scriptEngine();
@@ -108,7 +118,7 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     rootContext()->setContextProperty("screenSize", size());
     rootContext()->setContextProperty("greeter", m_greeter);
     rootContext()->setContextProperty("usersModel", usersModel);
-    rootContext()->setContextProperty("sessionsModel", new QLightDM::SessionsModel(this));
+    rootContext()->setContextProperty("sessionsModel", sessionsModel);
     rootContext()->setContextProperty("power", new QLightDM::PowerInterface(this));
     rootContext()->setContextProperty("plasmaTheme", Plasma::Theme::defaultTheme());
 

@@ -249,6 +249,9 @@ Item {
                 model: sessionsModel;
                 anchors.verticalCenter: parent.verticalCenter;
                 width: 200;
+                Component.onCompleted : {
+                    sessionCombo.currentIndex = sessionCombo.indexForData("", sessionsModel.key);
+                }
             }
 
 
