@@ -23,6 +23,7 @@ set(LIGHTDM_KCM_SRCS
     themesmodel.cpp
     coreconfig.cpp
     lightdmkcm.cpp
+    selectimagebutton.cpp
     ${GREETER_DIR}/extrarowproxymodel.cpp
 )
 
@@ -43,7 +44,7 @@ target_link_libraries(kcm_lightdm
   ${QT_QTDECLARATIVE_LIBRARY}
   ${KDE4_PLASMA_LIBS}
   ${QLIGHTDM_LIBRARIES}
-
+  ${KDE4_KIO_LIBS}
 )
 
 install(TARGETS kcm_lightdm
