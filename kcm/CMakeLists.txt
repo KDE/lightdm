@@ -17,13 +17,14 @@ include_directories(
   ${GREETER_DIR}
 )
 
+add_subdirectory(configwidgets)
+
 # Insert your sources here
 set(LIGHTDM_KCM_SRCS
     themeconfig.cpp
     themesmodel.cpp
     coreconfig.cpp
     lightdmkcm.cpp
-    selectimagebutton.cpp
     ${GREETER_DIR}/extrarowproxymodel.cpp
 )
 
@@ -45,6 +46,7 @@ target_link_libraries(kcm_lightdm
   ${KDE4_PLASMA_LIBS}
   ${QLIGHTDM_LIBRARIES}
   ${KDE4_KIO_LIBS}
+  lightdm_config_widgets
 )
 
 install(TARGETS kcm_lightdm

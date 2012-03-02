@@ -36,8 +36,9 @@ SelectImageButton::SelectImageButton(QWidget *parent)
 
     menu->addAction(KIcon(QLatin1String("document-open-folder")), i18n("Load from file..."), this, SLOT(onLoadImageFromFile()));
     menu->addAction(KIcon(QLatin1String("edit-clear")), i18n("Clear Image"), this, SLOT(onClearImage()));
-
     setMenu(menu);
+
+    onClearImage();
 }
 
 SelectImageButton::~SelectImageButton()
@@ -57,7 +58,7 @@ void SelectImageButton::setImagePath(const QString &imagePath) {
     } else {
         setIcon(KIcon(QLatin1String("image-x-generic")));
     }
-    Q_EMIT imageChanged();
+    Q_EMIT imagePathChanged(m_imagePath);
 }
 
 QString SelectImageButton::imagePath() const {
@@ -68,7 +69,7 @@ QString SelectImageButton::imagePath() const {
 void SelectImageButton::onLoadImageFromFile()
 {
     KUrl fileUrl = KFileDialog::getImageOpenUrl(KUrl(), this,
-                                                i18n("Please choose your avatar"));
+                                                i18n("Select image"));
 
     if (!fileUrl.isEmpty()) {
         setImagePath(fileUrl.path());
@@ -80,5 +81,4 @@ void SelectImageButton::onLoadImageFromFile()
 void SelectImageButton::onClearImage()
 {
     setImagePath(QString());
-    Q_EMIT imageChanged();
 }

@@ -25,6 +25,7 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include <KTabWidget>
 #include <KLocalizedString>
 #include <KPluginFactory>
+#include <KConfigDialogManager>
 
 #include <QHBoxLayout>
 
@@ -35,6 +36,7 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 K_PLUGIN_FACTORY(LightDMKcmFactory, registerPlugin<LightDMKcm>();)
 K_EXPORT_PLUGIN(LightDMKcmFactory("kcm_lightdm", "kcm_lightdm"))
 
+Q_IMPORT_PLUGIN(lightdm_config_widgets)
 
 LightDMKcm::LightDMKcm(QWidget *parent, const QVariantList &args) :
     KCModule(LightDMKcmFactory::componentData(), parent, args)
@@ -60,6 +62,9 @@ LightDMKcm::LightDMKcm(QWidget *parent, const QVariantList &args) :
 
     connect(m_themeConfig, SIGNAL(changed(bool)), SIGNAL(changed(bool)));
     connect(m_coreConfig, SIGNAL(changed(bool)), SIGNAL(changed(bool)));
+
+    //make our configwidgets work with KConfigXT
+    KConfigDialogManager::changedMap()->insert("SelectImageButton", SIGNAL(imagePathChanged(QString)));
 
     tabWidget->addTab(m_themeConfig, i18n("Theme"));
     tabWidget->addTab(m_coreConfig, i18n("General"));

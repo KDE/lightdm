@@ -26,17 +26,17 @@
 class SelectImageButton : public QToolButton
 {
     Q_OBJECT
-    Q_PROPERTY(QString imagePath READ imagePath WRITE setImagePath NOTIFY imageChanged USER true)
+    Q_PROPERTY(QString imagePath READ imagePath WRITE setImagePath NOTIFY imagePathChanged USER true)
 public:
     SelectImageButton(QWidget* parent = 0);
-    ~SelectImageButton();
+    virtual ~SelectImageButton();
 
     //we use QString rather that KUrl because it seems to work better with KConfigXT
     void setImagePath(const QString &imagePath);
     QString imagePath() const;
 
 Q_SIGNALS:
-    void imageChanged();
+    void imagePathChanged(QString);
 
 private Q_SLOTS:
     void onLoadImageFromFile();
@@ -44,7 +44,6 @@ private Q_SLOTS:
 
 private:
     QString m_imagePath;
-
 };
 
 #endif  //AVATAR_BUTTON_H
