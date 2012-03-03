@@ -52,8 +52,8 @@ private slots:
     void onSourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
 
 private:
-    typedef QHash<int, QVariant> Item;
-    typedef QVector<Item> Row;
+    typedef QHash<int, QVariant> Item; //role, item.
+    typedef QHash<int, Item> Row; //column, item
     typedef QVector<Row> Rows;
 
     QWeakPointer<QAbstractItemModel> m_model;

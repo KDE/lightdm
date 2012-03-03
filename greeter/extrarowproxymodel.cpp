@@ -27,7 +27,7 @@ ExtraRowProxyModel::ExtraRowProxyModel(QObject* parent)
 
 int ExtraRowProxyModel::appendRow()
 {
-    Row row(rowCount());
+    Row row;
     m_rows.append(row);
     return m_rows.count() - 1;
 }
@@ -85,7 +85,7 @@ QVariant ExtraRowProxyModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
-    const Item& item = m_rows[extraRow].at(index.column());
+    const Item& item = m_rows[extraRow][index.column()];
     return item.value(role);
 }
 
