@@ -225,9 +225,7 @@ Item {
         imagePath: "translucent/widgets/panel-background"
         prefix: "south-mini"
 
-        // Hack to hide left and bottom corners. Tried to use enabledBorders but failed.
-        anchors.rightMargin: -margins.right
-        anchors.bottomMargin: -margins.bottom
+        enabledBorders: "LeftBorder|TopBorder"
 
         Row {
             spacing: 5
