@@ -18,6 +18,7 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 */
 import QtQuick 1.0
 import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
+import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
 import MyLibrary 1.0 as LightDMPlasmaWidgets
 
@@ -54,10 +55,11 @@ Item {
         }
     }
 
-    Text {
+    PlasmaComponents.Label {
         id: welcomeLabel
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
+        anchors.topMargin: 5
         font.pointSize: 14
         text: i18n("Welcome to %1", greeter.hostname);
     }
@@ -66,6 +68,7 @@ Item {
         id: feedbackLabel
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: welcomeLabel.bottom
+        anchors.topMargin: 5
         font.pointSize: 14
     }
 
