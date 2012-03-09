@@ -191,13 +191,13 @@ Item {
             anchors.topMargin: 2 * padding
             spacing: padding
 
-            LightDMPlasmaWidgets.LineEdit {
+            PlasmaComponents.TextField {
                 id: passwordInput
                 width: parent.width
                 height: widgetHeight
-                passwordMode: true
-                clickMessage: i18n("Password")
-                onReturnPressed: startLogin();
+                echoMode: TextInput.Password
+                placeholderText: i18n("Password")
+//                onReturnPressed: startLogin();
                 visible: usersList.currentItem.username != "*guest"
             }
 
