@@ -13,7 +13,7 @@ X-KDE-RootOnly=false
 Categories=Qt;KDE;X-KDE-settings-system;
 X-KDE-System-Settings-Parent-Category=system-administration
 
-Name=Login Manager
+Name=Login Screen (LightDM)
 Name[cs]=Správce přihlášení
 Name[da]=Login-håndtering
 Name[es]=Gestor de inicio de sesión
@@ -26,3 +26,5 @@ Name[pt_BR]=Gerenciador de login
 Name[sv]=Inloggningshanterare
 Name[uk]=Керування входом до системи
 Name[x-test]=xxLogin Managerxx
+
+Comment=Select login theme, adjust login features
