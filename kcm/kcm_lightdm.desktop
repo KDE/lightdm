@@ -1,18 +1,15 @@
 [Desktop Entry]
 Exec=kcmshell4 kcm_lightdm
 Icon=preferences-system-login
-StartupNotify=true
-Terminal=false
 Type=Service
 X-KDE-ServiceTypes=KCModule
-X-DBUS-StartupType=
-X-KDE-HasReadOnlyMode=false
+
 X-KDE-Library=kcm_lightdm
 X-KDE-ParentApp=kcontrol
-X-KDE-SubstituteUID=false
-X-KDE-RootOnly=false
+
 Categories=Qt;KDE;X-KDE-settings-system;
 X-KDE-System-Settings-Parent-Category=system-administration
+
 X-KDE-Keywords=lightdm,display manager,face,user,users,login,greeting,theme,language,session,sessions,shutdown,restart,guest,auto login
 
 Name=Login Screen (LightDM)
