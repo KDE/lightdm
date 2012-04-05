@@ -12,6 +12,7 @@ X-KDE-SubstituteUID=false
 X-KDE-RootOnly=false
 Categories=Qt;KDE;X-KDE-settings-system;
 X-KDE-System-Settings-Parent-Category=system-administration
+X-KDE-Keywords=lightdm,display manager,face,user,users,login,greeting,theme,language,session,sessions,shutdown,restart,guest,auto login
 
 Name=Login Screen (LightDM)
 Name[cs]=Správce přihlášení
