@@ -13,17 +13,5 @@ X-KDE-System-Settings-Parent-Category=system-administration
 X-KDE-Keywords=lightdm,display manager,face,user,users,login,greeting,theme,language,session,sessions,shutdown,restart,guest,auto login
 
 Name=Login Screen (LightDM)
-Name[cs]=Správce přihlášení
-Name[da]=Login-håndtering
-Name[es]=Gestor de inicio de sesión
-Name[et]=Sisselogimise haldur
-Name[ga]=Bainisteoir Logála Isteach
-Name[nl]=Aanmeldbeheerder
-Name[pl]=Menedżer logowania
-Name[pt]=Gestor de Autenticação
-Name[pt_BR]=Gerenciador de login
-Name[sv]=Inloggningshanterare
-Name[uk]=Керування входом до системи
-Name[x-test]=xxLogin Managerxx
 
 Comment=Select login theme, adjust login features
