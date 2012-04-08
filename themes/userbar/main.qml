@@ -209,7 +209,7 @@ Item {
                 currentIndex: indexForData(usersList.currentItem.usersession, sessionsModel.key)
             }
 
-            PlasmaWidgets.PushButton {
+            PlasmaComponents.Button {
                 id: loginButton
                 anchors.horizontalCenter: parent.horizontalCenter
                 height: widgetHeight
