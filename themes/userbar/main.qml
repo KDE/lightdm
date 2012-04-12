@@ -57,6 +57,18 @@ Item {
         }
     }
 
+    Component.onCompleted: setTabOrder([usersList, passwordInput, sessionFocusScope])
+
+    function setTabOrder(lst) {
+        var idx;
+        var lastIdx = lst.length - 1;
+        for (idx = 0; idx <= lastIdx; ++idx) {
+            var item = lst[idx];
+            item.KeyNavigation.backtab = lst[idx > 0 ? idx - 1 : lastIdx];
+            item.KeyNavigation.tab = lst[idx < lastIdx ? idx + 1 : 0];
+        }
+    }
+
     PlasmaComponents.Label {
         id: welcomeLabel
         anchors.horizontalCenter: parent.horizontalCenter
@@ -167,9 +179,6 @@ Item {
         highlightRangeMode: ListView.StrictlyEnforceRange
         preferredHighlightBegin: width / 2 - userItemWidth / 2
         preferredHighlightEnd: width / 2 + userItemWidth / 2
-
-        KeyNavigation.backtab: loginButton
-        KeyNavigation.tab: sessionFocusScope
     }
 
     Item {
@@ -186,8 +195,6 @@ Item {
             width: 200
             height: parent.height
             opacity: usersList.currentItem.username == guestLogin ? 0 : 1
-            KeyNavigation.backtab: sessionFocusScope
-            KeyNavigation.tab: sessionFocusScope
 
             echoMode: TextInput.Password
             placeholderText: i18n("Password")
@@ -231,9 +238,6 @@ Item {
 
     FocusScope {
         id: sessionFocusScope
-
-        KeyNavigation.backtab: passwordInput
-        KeyNavigation.tab: usersList
 
         property bool showList: false
 
