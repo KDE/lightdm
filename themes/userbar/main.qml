@@ -57,7 +57,10 @@ Item {
         }
     }
 
-    Component.onCompleted: setTabOrder([usersList, passwordInput, sessionFocusScope])
+    Component.onCompleted: {
+        setTabOrder([usersList, passwordInput, sessionFocusScope]);
+        usersList.forceActiveFocus();
+    }
 
     function setTabOrder(lst) {
         var idx;
@@ -99,6 +102,7 @@ Item {
             id: wrapper
 
             property bool isCurrent: ListView.isCurrentItem
+            property bool activeFocus: ListView.view.activeFocus
 
             /* Expose current item info to the outer world. I can't find
              * another way to access this from outside the list. */
@@ -117,11 +121,35 @@ Item {
             }
 
             PlasmaCore.FrameSvgItem {
+                id: frame
                 anchors.centerIn: face
                 width: face.width + padding * 2
                 height: face.height + padding * 2
-                imagePath: "opaque/dialogs/background"
-                opacity: 0.618
+                imagePath: "widgets/lineedit"
+                prefix: "base"
+            }
+
+            PlasmaCore.FrameSvgItem {
+                id: frameFocus
+                anchors.fill: frame
+                imagePath: "widgets/lineedit"
+                prefix: "focus"
+                visible: wrapper.isCurrent
+                opacity: wrapper.activeFocus ? 1 : 0
+                Behavior on opacity {
+                    NumberAnimation { duration: 100 }
+                }
+            }
+
+            PlasmaCore.FrameSvgItem {
+                id: frameHover
+                anchors.fill: frame
+                imagePath: "widgets/lineedit"
+                prefix: "hover"
+                opacity: (mouseArea.containsMouse && !(wrapper.isCurrent && wrapper.activeFocus)) ? 1 : 0
+                Behavior on opacity {
+                    NumberAnimation { duration: 100 }
+                }
             }
 
             Face {
@@ -133,6 +161,7 @@ Item {
                 height: userFaceSize
                 source: "image://face/" + name
             }
+
             Text {
                 id: loginText
                 anchors.bottom: parent.bottom
@@ -141,9 +170,13 @@ Item {
             }
 
             MouseArea {
+                id: mouseArea
                 anchors.fill: parent
-                enabled: !isCurrent
-                onClicked: wrapper.ListView.view.currentIndex = index;
+                hoverEnabled: true
+                onClicked: {
+                    wrapper.ListView.view.currentIndex = index;
+                    wrapper.ListView.view.forceActiveFocus();
+                }
             }
         }
     }
@@ -166,7 +199,6 @@ Item {
         }
         width: parent.width
         height: userItemHeight
-        focus: true
 
         model: usersModel
 
