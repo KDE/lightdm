@@ -58,7 +58,7 @@ Item {
     }
 
     Component.onCompleted: {
-        setTabOrder([usersList, passwordInput, sessionFocusScope]);
+        setTabOrder([usersList, loginButtonItem, sessionFocusScope, suspendButton, hibernateButton, restartButton, shutdownButton]);
         usersList.forceActiveFocus();
     }
 
@@ -213,7 +213,7 @@ Item {
         preferredHighlightEnd: width / 2 + userItemWidth / 2
     }
 
-    Item {
+    FocusScope {
         id: loginButtonItem
         anchors {
             horizontalCenter: parent.horizontalCenter
@@ -221,12 +221,15 @@ Item {
         }
         height: 30
 
+        property bool isGuestLogin: usersList.currentItem.username == guestLogin
+
         /*PlasmaComponents.*/TextField {
             id: passwordInput
             anchors.horizontalCenter: parent.horizontalCenter
             width: 200
             height: parent.height
-            opacity: usersList.currentItem.username == guestLogin ? 0 : 1
+            focus: !loginButtonItem.isGuestLogin
+            opacity: loginButtonItem.isGuestLogin ? 0 : 1
 
             echoMode: TextInput.Password
             placeholderText: i18n("Password")
@@ -256,6 +259,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             width: userFaceSize + 2 * padding
             height: parent.height
+            focus: loginButtonItem.isGuestLogin
             opacity: 1 - passwordInput.opacity
 
             iconSource: loginButton.iconSource
