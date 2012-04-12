@@ -347,30 +347,34 @@ Item {
             x: parent.margins.left
             y: parent.margins.top
 
-            PowerButton {
+            /*PlasmaComponents.*/ToolButton {
+                id: suspendButton
                 text: i18n("Suspend")
-                icon: QIcon("system-suspend")
+                iconSource: "system-suspend"
                 enabled: power.canSuspend;
                 onClicked: power.suspend();
             }
 
-            PowerButton {
+            /*PlasmaComponents.*/ToolButton {
+                id: hibernateButton
                 text: i18n("Hibernate")
-                icon: QIcon("system-suspend-hibernate")
+                iconSource: "system-suspend-hibernate"
                 enabled: power.canHibernate
                 onClicked: power.hibernate();
             }
 
-            PowerButton {
+            /*PlasmaComponents.*/ToolButton {
+                id: restartButton
                 text: i18n("Restart")
-                icon: QIcon("system-reboot")
+                iconSource: "system-reboot"
                 enabled: power.canRestart
                 onClicked: power.restart();
             }
 
-            PowerButton {
+            /*PlasmaComponents.*/ToolButton {
+                id: shutdownButton
                 text: i18n("Shutdown")
-                icon: QIcon("system-shutdown")
+                iconSource: "system-shutdown"
                 enabled: power.canShutdown
                 onClicked: power.shutDown();
             }
