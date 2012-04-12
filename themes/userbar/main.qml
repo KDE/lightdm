@@ -27,6 +27,8 @@ Item {
     width: screenSize.width;
     height: screenSize.height;
 
+    property string guestLogin: "*guest"
+
     Image {
         fillMode: Image.PreserveAspectCrop
         source: plasmaTheme.wallpaperPath()
@@ -42,7 +44,7 @@ Item {
         }
 
         onAuthenticationComplete: {
-            var session = sessionCombo.itemData(sessionCombo.currentIndex);
+            var session = sessionList.itemData(sessionList.currentIndex);
             if (session == "") {
                 session = "default";
             }
@@ -136,7 +138,7 @@ Item {
 
     function startLogin() {
         var username = usersList.currentItem.username;
-        if (username == "*guest") {
+        if (username == guestLogin) {
             greeter.authenticateAsGuest();
         } else {
             greeter.authenticate(username);
@@ -145,8 +147,6 @@ Item {
 
     // Central item. This item is used to position the main items in the screen.
     Item {
-        property int widgetHeight: 30
-
         anchors.horizontalCenter: parent.horizontalCenter
         /* Hack: we want to have 1/3 space above and 2/3 space below the main
          * items. We could use (parent.height - childrenRect.height) / 3 but
@@ -154,13 +154,18 @@ Item {
          * because childrenRect.height decreases. Instead we compute a static
          * height for our items.
          */
+        /*
         y: (parent.height -
             (usersList.height
             + fixedWidgetsColumn.anchors.topMargin
             + 3 * widgetHeight
             + 2 * fixedWidgetsColumn.spacing
             )) / 3
+            */
+        // FIXME
+        y: 40
         width: parent.width
+        height: screen.height - y - powerBar.height
 
         ListView {
             id: usersList
@@ -181,41 +186,125 @@ Item {
             highlightRangeMode: ListView.StrictlyEnforceRange
             preferredHighlightBegin: width / 2 - userItemWidth / 2
             preferredHighlightEnd: width / 2 + userItemWidth / 2
+
+            KeyNavigation.backtab: loginButton
+            KeyNavigation.tab: sessionFocusScope
         }
 
-        // Fixed widgets
-        Column {
-            id: fixedWidgetsColumn
+        Item {
+            id: loginButtonItem
             anchors.top: usersList.bottom
             anchors.horizontalCenter: parent.horizontalCenter
-            width: 200
-            anchors.topMargin: 2 * padding
-            spacing: padding
+            anchors.topMargin: 12
+            height: 30
 
-            PlasmaComponents.TextField {
+            /*PlasmaComponents.*/TextField {
                 id: passwordInput
-                width: parent.width
-                height: widgetHeight
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: 200
+                height: parent.height
+                opacity: usersList.currentItem.username == guestLogin ? 0 : 1
+                KeyNavigation.backtab: sessionFocusScope
+                KeyNavigation.tab: sessionFocusScope
+
                 echoMode: TextInput.Password
                 placeholderText: i18n("Password")
-//                onReturnPressed: startLogin();
-                visible: usersList.currentItem.username != "*guest"
-            }
+                onAccepted: startLogin();
 
-            LightDMPlasmaWidgets.ModelComboBox {
-                id: sessionCombo
-                width: parent.width
-                height: widgetHeight
-                model: sessionsModel
-                currentIndex: indexForData(usersList.currentItem.usersession, sessionsModel.key)
+                PlasmaComponents.ToolButton {
+                    id: loginButton
+                    anchors {
+                        right: parent.right
+                        rightMargin: y
+                        verticalCenter: parent.verticalCenter
+                    }
+                    width: implicitWidth
+                    height: width
+
+                    iconSource: "go-jump-locationbar"
+                    onClicked: startLogin();
+                }
+
+                Behavior on opacity {
+                    NumberAnimation { duration: 100 }
+                }
             }
 
             PlasmaComponents.Button {
-                id: loginButton
+                id: guestLoginButton
                 anchors.horizontalCenter: parent.horizontalCenter
-                height: widgetHeight
-                text: i18n("Login")
+                width: userFaceSize + 2 * padding
+                height: parent.height
+                opacity: 1 - passwordInput.opacity
+
+                iconSource: loginButton.iconSource
+                text: "Login"
                 onClicked: startLogin();
+
+                Behavior on opacity {
+                    NumberAnimation { duration: 100 }
+                }
+            }
+        }
+
+        FocusScope {
+            id: sessionFocusScope
+
+            KeyNavigation.backtab: passwordInput
+            KeyNavigation.tab: usersList
+
+            property bool showList: false
+
+            anchors {
+                top: loginButtonItem.bottom
+                bottom: parent.bottom
+                horizontalCenter: parent.horizontalCenter
+                topMargin: 36
+            }
+
+            PlasmaComponents.Button {
+                id: sessionButton
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                }
+                focus: !parent.showList
+
+                text: sessionList.itemText(sessionList.currentIndex) + " ⌄"
+
+                onClicked: parent.showList = true
+
+                opacity: parent.showList ? 0 : 1
+
+                Behavior on opacity {
+                    NumberAnimation { duration: 100 }
+                }
+            }
+
+            RadioList {
+                id: sessionList
+                focus: parent.showList
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    bottomMargin: 40
+                }
+                opacity: 1 - sessionButton.opacity
+
+                model: sessionsModel
+                dataRole: "key"
+                currentIndex: indexForData(usersList.currentItem.usersession)
+                onCurrentIndexChanged: {
+                    if (parent.showList) {
+                        parent.showList = false;
+                    }
+                }
+            }
+
+            function onShowListChanged() {
+                if (showList) {
+                    sessionButton.opacity = 0;
+                } else {
+                    sessionButton.opacity = 1;
+                }
             }
         }
     }
