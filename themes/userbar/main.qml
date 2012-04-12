@@ -145,166 +145,147 @@ Item {
         }
     }
 
-    // Central item. This item is used to position the main items in the screen.
-    Item {
-        anchors.horizontalCenter: parent.horizontalCenter
-        /* Hack: we want to have 1/3 space above and 2/3 space below the main
-         * items. We could use (parent.height - childrenRect.height) / 3 but
-         * that causes the view to move down when selecting the guest session
-         * because childrenRect.height decreases. Instead we compute a static
-         * height for our items.
-         */
-        /*
-        y: (parent.height -
-            (usersList.height
-            + fixedWidgetsColumn.anchors.topMargin
-            + 3 * widgetHeight
-            + 2 * fixedWidgetsColumn.spacing
-            )) / 3
-            */
-        // FIXME
-        y: 40
+    ListView {
+        id: usersList
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            bottom: loginButtonItem.top
+            bottomMargin: 24
+        }
         width: parent.width
-        height: screen.height - y - powerBar.height
+        height: userItemHeight
+        focus: true
 
-        ListView {
-            id: usersList
+        model: usersModel
+
+        cacheBuffer: count * 80
+
+        delegate: userDelegate
+
+        orientation: ListView.Horizontal
+
+        highlightRangeMode: ListView.StrictlyEnforceRange
+        preferredHighlightBegin: width / 2 - userItemWidth / 2
+        preferredHighlightEnd: width / 2 + userItemWidth / 2
+
+        KeyNavigation.backtab: loginButton
+        KeyNavigation.tab: sessionFocusScope
+    }
+
+    Item {
+        id: loginButtonItem
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            bottom: parent.verticalCenter
+        }
+        height: 30
+
+        /*PlasmaComponents.*/TextField {
+            id: passwordInput
             anchors.horizontalCenter: parent.horizontalCenter
-            y: 0
-            focus: true
-            width: parent.width
-            height: userItemHeight
-
-            model: usersModel
-
-            cacheBuffer: count * 80
-
-            delegate: userDelegate
-
-            orientation: ListView.Horizontal
-
-            highlightRangeMode: ListView.StrictlyEnforceRange
-            preferredHighlightBegin: width / 2 - userItemWidth / 2
-            preferredHighlightEnd: width / 2 + userItemWidth / 2
-
-            KeyNavigation.backtab: loginButton
+            width: 200
+            height: parent.height
+            opacity: usersList.currentItem.username == guestLogin ? 0 : 1
+            KeyNavigation.backtab: sessionFocusScope
             KeyNavigation.tab: sessionFocusScope
-        }
 
-        Item {
-            id: loginButtonItem
-            anchors.top: usersList.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.topMargin: 12
-            height: 30
+            echoMode: TextInput.Password
+            placeholderText: i18n("Password")
+            onAccepted: startLogin();
 
-            /*PlasmaComponents.*/TextField {
-                id: passwordInput
-                anchors.horizontalCenter: parent.horizontalCenter
-                width: 200
-                height: parent.height
-                opacity: usersList.currentItem.username == guestLogin ? 0 : 1
-                KeyNavigation.backtab: sessionFocusScope
-                KeyNavigation.tab: sessionFocusScope
-
-                echoMode: TextInput.Password
-                placeholderText: i18n("Password")
-                onAccepted: startLogin();
-
-                PlasmaComponents.ToolButton {
-                    id: loginButton
-                    anchors {
-                        right: parent.right
-                        rightMargin: y
-                        verticalCenter: parent.verticalCenter
-                    }
-                    width: implicitWidth
-                    height: width
-
-                    iconSource: "go-jump-locationbar"
-                    onClicked: startLogin();
+            PlasmaComponents.ToolButton {
+                id: loginButton
+                anchors {
+                    right: parent.right
+                    rightMargin: y
+                    verticalCenter: parent.verticalCenter
                 }
+                width: implicitWidth
+                height: width
 
-                Behavior on opacity {
-                    NumberAnimation { duration: 100 }
-                }
-            }
-
-            PlasmaComponents.Button {
-                id: guestLoginButton
-                anchors.horizontalCenter: parent.horizontalCenter
-                width: userFaceSize + 2 * padding
-                height: parent.height
-                opacity: 1 - passwordInput.opacity
-
-                iconSource: loginButton.iconSource
-                text: "Login"
+                iconSource: "go-jump-locationbar"
                 onClicked: startLogin();
+            }
 
-                Behavior on opacity {
-                    NumberAnimation { duration: 100 }
+            Behavior on opacity {
+                NumberAnimation { duration: 100 }
+            }
+        }
+
+        PlasmaComponents.Button {
+            id: guestLoginButton
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: userFaceSize + 2 * padding
+            height: parent.height
+            opacity: 1 - passwordInput.opacity
+
+            iconSource: loginButton.iconSource
+            text: "Login"
+            onClicked: startLogin();
+
+            Behavior on opacity {
+                NumberAnimation { duration: 100 }
+            }
+        }
+    }
+
+    FocusScope {
+        id: sessionFocusScope
+
+        KeyNavigation.backtab: passwordInput
+        KeyNavigation.tab: usersList
+
+        property bool showList: false
+
+        anchors {
+            top: loginButtonItem.bottom
+            topMargin: 24
+            bottom: powerBar.top
+            horizontalCenter: parent.horizontalCenter
+        }
+
+        PlasmaComponents.Button {
+            id: sessionButton
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+            }
+            focus: !parent.showList
+
+            text: sessionList.itemText(sessionList.currentIndex) + " ⌄"
+
+            onClicked: parent.showList = true
+
+            opacity: parent.showList ? 0 : 1
+
+            Behavior on opacity {
+                NumberAnimation { duration: 100 }
+            }
+        }
+
+        RadioList {
+            id: sessionList
+            focus: parent.showList
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottomMargin: 40
+            }
+            opacity: 1 - sessionButton.opacity
+
+            model: sessionsModel
+            dataRole: "key"
+            currentIndex: indexForData(usersList.currentItem.usersession)
+            onCurrentIndexChanged: {
+                if (parent.showList) {
+                    parent.showList = false;
                 }
             }
         }
 
-        FocusScope {
-            id: sessionFocusScope
-
-            KeyNavigation.backtab: passwordInput
-            KeyNavigation.tab: usersList
-
-            property bool showList: false
-
-            anchors {
-                top: loginButtonItem.bottom
-                bottom: parent.bottom
-                horizontalCenter: parent.horizontalCenter
-                topMargin: 36
-            }
-
-            PlasmaComponents.Button {
-                id: sessionButton
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                }
-                focus: !parent.showList
-
-                text: sessionList.itemText(sessionList.currentIndex) + " ⌄"
-
-                onClicked: parent.showList = true
-
-                opacity: parent.showList ? 0 : 1
-
-                Behavior on opacity {
-                    NumberAnimation { duration: 100 }
-                }
-            }
-
-            RadioList {
-                id: sessionList
-                focus: parent.showList
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                    bottomMargin: 40
-                }
-                opacity: 1 - sessionButton.opacity
-
-                model: sessionsModel
-                dataRole: "key"
-                currentIndex: indexForData(usersList.currentItem.usersession)
-                onCurrentIndexChanged: {
-                    if (parent.showList) {
-                        parent.showList = false;
-                    }
-                }
-            }
-
-            function onShowListChanged() {
-                if (showList) {
-                    sessionButton.opacity = 0;
-                } else {
-                    sessionButton.opacity = 1;
-                }
+        function onShowListChanged() {
+            if (showList) {
+                sessionButton.opacity = 0;
+            } else {
+                sessionButton.opacity = 1;
             }
         }
     }
