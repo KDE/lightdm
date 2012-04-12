@@ -220,8 +220,9 @@ Item {
         }
     }
 
-    // Bottom "Settings" bar
+    // Bottom "Power" bar
     PlasmaCore.FrameSvgItem {
+        id: powerBar
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         width: childrenRect.width + margins.left
