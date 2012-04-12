@@ -298,6 +298,7 @@ FocusScope {
         color: theme.textColor
         enabled: textField.enabled
         clip: true
+        focus: true
         onActiveFocusChanged: {
             if (!textField.activeFocus) {
                 textInput.closeSoftwareInputPanel()
