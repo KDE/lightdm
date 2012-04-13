@@ -13,17 +13,20 @@ X-KDE-System-Settings-Parent-Category=system-administration
 X-KDE-Keywords=lightdm,display manager,face,user,users,login,greeting,theme,language,session,sessions,shutdown,restart,guest,auto login
 X-KDE-Keywords[nl]=lightdm,schermbeheerder,gezicht, gebruiker,gebruikers,aanmelden,begroeting,thema,taal,sessie,sessies,afsluiten,herstart,gast,automatisch aanmelden
 X-KDE-Keywords[pt]=lightdm,gestor de autenticação,cara,utilizador,utilizadores,conta,boas-vindas,tema,língua,sessão,sessões,encerramento,reinício,convidado,autenticação automática
+X-KDE-Keywords[sv]=lightdm,inloggningshanterare,ansikte,användare,inloggning,hälsning,tema,språk,session,sessioner,avstängning,omstart,gäst,automatisk inloggning
 X-KDE-Keywords[uk]=lightdm,display manager,face,user,users,login,greeting,theme,language,session,sessions,shutdown,restart,guest,auto login, керування екраном,обличчя,користувач,користувачі,вхід,вітання,тема,мова,сеанс,сеанси,вимикання,перезапуск,перезапустити,гість,гостьовий,автовхід,автоматичний вхід
 X-KDE-Keywords[x-test]=xxlightdm,display manager,face,user,users,login,greeting,theme,language,session,sessions,shutdown,restart,guest,auto loginxx
 
 Name=Login Screen (LightDM)
 Name[nl]=Aanmeldscherm (LightDM)
 Name[pt]=Ecrã de Autenticação (LightDM)
+Name[sv]=Inloggningsskärm (LightDM)
 Name[uk]=Екран вітання (LightDM)
 Name[x-test]=xxLogin Screen (LightDM)xx
 
 Comment=Select login theme, adjust login features
 Comment[nl]=Aanmeldthema selecteren, aanmeldfuncties aanpassen
 Comment[pt]=Seleccionar o tema de autenticação, ajustar as funcionalidades de autenticação
+Comment[sv]=Välj inloggningstema, justera inloggningsfunktioner
 Comment[uk]=Вибрати тему екрана вітання, скоригувати параметри вітання
 Comment[x-test]=xxSelect login theme, adjust login featuresxx
