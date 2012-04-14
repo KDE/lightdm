@@ -136,14 +136,14 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter;
                 spacing:10;
 
-                PlasmaWidgets.PushButton {
+                PlasmaComponents.Button {
                     text: i18n("Login");
                     onClicked: {
                         login();
                     }
                 }
 
-                PlasmaWidgets.PushButton {
+                PlasmaComponents.Button  {
                     text: i18n("Power");
                     onClicked: {
                         if (powerDialog.opacity == 1) {
@@ -156,7 +156,7 @@ Item {
                     }
                 }
 
-                PlasmaWidgets.PushButton {
+                PlasmaComponents.Button  {
                     text: i18n("Options");
                     onClicked: {
                         if (optionsDialog.opacity == 1) {
