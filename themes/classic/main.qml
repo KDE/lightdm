@@ -79,7 +79,7 @@ Item {
             }
 
 
-            Text {
+            PlasmaComponents.Label {
                 anchors.horizontalCenter: parent.horizontalCenter;
                 id: feedbackLabel;
                 font.pointSize: 9
@@ -239,7 +239,7 @@ Item {
             spacing: 5
             anchors.centerIn: parent
 
-            Text {
+            PlasmaComponents.Label {
                 text: i18n("Session")
                 anchors.verticalCenter: parent.verticalCenter;
             }
@@ -254,8 +254,7 @@ Item {
                 }
             }
 
-
-            Text {
+            PlasmaComponents.Label {
                 text: i18n("Language:")
                 anchors.verticalCenter: parent.verticalCenter;
             }
