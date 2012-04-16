@@ -17,10 +17,11 @@ You should have received a copy of the GNU General Public License
 along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 */
 import QtQuick 1.0
+//TODO phase this out
 import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
 import org.kde.plasma.components 0.1 as PlasmaComponents
+import org.kde.qtextracomponents 0.1 as ExtraComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
-import MyLibrary 1.0 as LightDMPlasmaWidgets
 
 Item {
     width: screenSize.width;
@@ -62,7 +63,7 @@ Item {
         imagePath: "translucent/dialogs/background"
         anchors.centerIn: parent;
 
-        width: childrenRect.width + 80;
+        width: childrenRect.width + 40;
         height: childrenRect.height + 40;
 
         Column {
@@ -87,88 +88,95 @@ Item {
             }
 
             Row {
-                Image {
-                    source: "image://icon/meeting-participant"
-                    height: usernameInput.height;
-                    fillMode: Image.PreserveAspectFit
-
-                }
-
-                //not actually a password!
-                LightDMPlasmaWidgets.LineEdit {
-                    id: usernameInput;
-                    width: 250;
-                    height: 30;
-                    clickMessage: "Username";
-                    clearButtonShown: true;
-                    onReturnPressed: {
-                        passwordInput.setFocus();
-                    }
+                spacing: 10
+                width: childrenRect.width
+                height: childRect.height
+                
+                Grid {
+                    columns: 2
+                    spacing: 5
                     
-                     Component.onCompleted: {
-                        usernameInput.setFocus();
+                    ExtraComponents.QIconItem {
+                        icon: "meeting-participant"
+                        height: passwordInput.height;
+                        width: passwordInput.height;
+                    }
+
+                    /*PlasmaComponents.*/TextField {
+                        id: usernameInput;
+                        placeholderText: i18n("Username");
+                        onAccepted: {
+                            passwordInput.focus = true;
+                        }
+                        
+                        KeyNavigation.tab: passwordInput
+                    }
+
+                    ExtraComponents.QIconItem {
+                        icon: "object-locked"
+                        height: passwordInput.height;
+                        width: passwordInput.height;
+                    }
+
+                    /*PlasmaComponents.*/TextField {
+                        id: passwordInput
+                        echoMode: TextInput.Password
+                        placeholderText: i18n("Password")
+                        onAccepted: {
+                            login();
+                        }
+                        KeyNavigation.backtab: usernameInput
+                        KeyNavigation.tab: loginButton
                     }
                 }
-            }
-
-
-            Row {
+                
                 Image {
-                    source: "image://icon/object-locked.png"
-                    height: passwordInput.height;
+                    id: loginButton
+                    source: mousearea.containsMouse ? "login_active.png" : "login_normal.png" 
+                    anchors.verticalCenter: parent.verticalCenter
+                    height: parent.height
                     fillMode: Image.PreserveAspectFit
+                    smooth: true
 
-                }
-
-                LightDMPlasmaWidgets.LineEdit {
-                    id: passwordInput;
-                    width: 250;
-                    height: 30;
-                    clickMessage: i18n("Password");
-                    passwordMode: true;
-                    onReturnPressed: {
-                        login();
+                    MouseArea {
+                        id: mousearea
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        
+                        onClicked: {
+                            login();
+                        }
                     }
                 }
             }
 
-            Row {
-                anchors.horizontalCenter: parent.horizontalCenter;
-                spacing:10;
+            Row {               
+                spacing: 5;
 
-                PlasmaComponents.Button {
-                    text: i18n("Login");
-                    onClicked: {
-                        login();
-                    }
-                }
-
-                PlasmaComponents.Button  {
-                    text: i18n("Power");
+                IconButton {
+                    icon: "system-shutdown"                    
                     onClicked: {
                         if (powerDialog.opacity == 1) {
                             powerDialog.opacity = 0;
                         } else {
                             powerDialog.opacity = 1;
                         }
-
                         optionsDialog.opacity = 0;
                     }
                 }
 
-                PlasmaComponents.Button  {
-                    text: i18n("Options");
+                
+                IconButton {
+                    icon: "system-log-out"
                     onClicked: {
                         if (optionsDialog.opacity == 1) {
                             optionsDialog.opacity = 0;
                         } else {
                             optionsDialog.opacity = 1;
                         }
-
                         powerDialog.opacity = 0;
                     }
                 }
-
             }
         }
     }
@@ -244,15 +252,15 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter;
             }
 
-            LightDMPlasmaWidgets.ModelComboBox {
-                id: sessionCombo
-                model: sessionsModel;
-                anchors.verticalCenter: parent.verticalCenter;
-                width: 200;
-                Component.onCompleted : {
-                    sessionCombo.currentIndex = sessionCombo.indexForData("", sessionsModel.key);
-                }
-            }
+//             LightDMPlasmaWidgets.ModelComboBox {
+//                 id: sessionCombo
+//                 model: sessionsModel;
+//                 anchors.verticalCenter: parent.verticalCenter;
+//                 width: 200;
+//                 Component.onCompleted : {
+//                     sessionCombo.currentIndex = sessionCombo.indexForData("", sessionsModel.key);
+//                 }
+//             }
 
             PlasmaComponents.Label {
                 text: i18n("Language:")
