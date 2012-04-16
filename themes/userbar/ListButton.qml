@@ -53,6 +53,7 @@ FocusScope {
     }
 
     PlasmaCore.FrameSvgItem {
+        id: mainFrame
         width: parent.width
         height: column.height + margins.top + margins.bottom
         imagePath: "widgets/button"
@@ -95,6 +96,25 @@ FocusScope {
                     root.state = "opened";
                 }
             }
+        }
+    }
+
+    PlasmaCore.FrameSvgItem {
+        id: hoverFrame
+        anchors {
+            fill: mainFrame
+            leftMargin: -margins.left
+            topMargin: -margins.top
+            rightMargin: -margins.right
+            bottomMargin: -margins.bottom
+        }
+        width: parent.width
+        height: column.height + margins.top + margins.bottom
+        imagePath: "widgets/button"
+        prefix: "hover"
+        opacity: root.activeFocus ? 1 : 0
+        Behavior on opacity {
+            PropertyAnimation { duration: 100 }
         }
     }
 
