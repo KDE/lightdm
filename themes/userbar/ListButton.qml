@@ -81,15 +81,16 @@ FocusScope {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                if (state == "opened") {
+                if (root.state == "opened") {
                     var item = column.childAt(mouse.x, mouse.y);
                     var index = indexForItem(item);
                     if (index >= 0) {
                         root.currentIndex = index;
-                        state = "closed";
+                        root.state = "closed";
                     }
                 } else {
                     root.forceActiveFocus();
+                    root.state = "opened";
                 }
             }
         }
