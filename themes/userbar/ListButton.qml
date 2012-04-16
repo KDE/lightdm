@@ -58,6 +58,7 @@ FocusScope {
         height: column.height + margins.top + margins.bottom
         imagePath: "widgets/button"
         prefix: "normal"
+        clip: true
 
         PlasmaComponents.ButtonColumn {
             id: column
@@ -79,6 +80,10 @@ FocusScope {
                     visible: isCurrent || root.state == "opened"
                 }
             }
+        }
+
+        Behavior on height {
+            NumberAnimation { duration: 100 }
         }
 
         MouseArea {
