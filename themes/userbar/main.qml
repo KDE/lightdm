@@ -27,6 +27,8 @@ Item {
     width: screenSize.width;
     height: screenSize.height;
 
+    property string guestLogin: "*guest"
+
     Image {
         fillMode: Image.PreserveAspectCrop
         source: plasmaTheme.wallpaperPath()
@@ -42,7 +44,8 @@ Item {
         }
 
         onAuthenticationComplete: {
-            var session = sessionCombo.itemData(sessionCombo.currentIndex);
+            var session = sessionButton.itemData(sessionButton.currentIndex);
+            console.log("session: " + session);
             if (session == "") {
                 session = "default";
             }
@@ -52,6 +55,21 @@ Item {
                 feedbackLabel.text = i18n("Sorry, incorrect password. Please try again.");
                 feedbackLabel.showFeedback();
             }
+        }
+    }
+
+    Component.onCompleted: {
+        setTabOrder([usersList, loginButtonItem, sessionButton, suspendButton, hibernateButton, restartButton, shutdownButton]);
+        usersList.forceActiveFocus();
+    }
+
+    function setTabOrder(lst) {
+        var idx;
+        var lastIdx = lst.length - 1;
+        for (idx = 0; idx <= lastIdx; ++idx) {
+            var item = lst[idx];
+            item.KeyNavigation.backtab = lst[idx > 0 ? idx - 1 : lastIdx];
+            item.KeyNavigation.tab = lst[idx < lastIdx ? idx + 1 : 0];
         }
     }
 
@@ -74,6 +92,7 @@ Item {
 
     property int userItemWidth: 150
     property int userItemHeight: 150
+    property int userFaceSize: 48
 
     property int padding: 20
 
@@ -84,6 +103,7 @@ Item {
             id: wrapper
 
             property bool isCurrent: ListView.isCurrentItem
+            property bool activeFocus: ListView.view.activeFocus
 
             /* Expose current item info to the outer world. I can't find
              * another way to access this from outside the list. */
@@ -102,11 +122,35 @@ Item {
             }
 
             PlasmaCore.FrameSvgItem {
+                id: frame
                 anchors.centerIn: face
                 width: face.width + padding * 2
                 height: face.height + padding * 2
-                imagePath: "opaque/dialogs/background"
-                opacity: 0.618
+                imagePath: "widgets/lineedit"
+                prefix: "base"
+            }
+
+            PlasmaCore.FrameSvgItem {
+                id: frameFocus
+                anchors.fill: frame
+                imagePath: "widgets/lineedit"
+                prefix: "focus"
+                visible: wrapper.isCurrent
+                opacity: wrapper.activeFocus ? 1 : 0
+                Behavior on opacity {
+                    NumberAnimation { duration: 100 }
+                }
+            }
+
+            PlasmaCore.FrameSvgItem {
+                id: frameHover
+                anchors.fill: frame
+                imagePath: "widgets/lineedit"
+                prefix: "hover"
+                opacity: (mouseArea.containsMouse && !(wrapper.isCurrent && wrapper.activeFocus)) ? 1 : 0
+                Behavior on opacity {
+                    NumberAnimation { duration: 100 }
+                }
             }
 
             Face {
@@ -114,10 +158,11 @@ Item {
                 anchors.bottom: loginText.top
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottomMargin: padding * 1.5
-                width: 48
-                height: 48
+                width: userFaceSize
+                height: userFaceSize
                 source: "image://face/" + name
             }
+
             Text {
                 id: loginText
                 anchors.bottom: parent.bottom
@@ -126,101 +171,125 @@ Item {
             }
 
             MouseArea {
+                id: mouseArea
                 anchors.fill: parent
-                enabled: !isCurrent
-                onClicked: wrapper.ListView.view.currentIndex = index;
+                hoverEnabled: true
+                onClicked: {
+                    wrapper.ListView.view.currentIndex = index;
+                    wrapper.ListView.view.forceActiveFocus();
+                }
             }
         }
     }
 
     function startLogin() {
         var username = usersList.currentItem.username;
-        if (username == "*guest") {
+        if (username == guestLogin) {
             greeter.authenticateAsGuest();
         } else {
             greeter.authenticate(username);
         }
     }
 
-    // Central item. This item is used to position the main items in the screen.
-    Item {
-        property int widgetHeight: 30
-
-        anchors.horizontalCenter: parent.horizontalCenter
-        /* Hack: we want to have 1/3 space above and 2/3 space below the main
-         * items. We could use (parent.height - childrenRect.height) / 3 but
-         * that causes the view to move down when selecting the guest session
-         * because childrenRect.height decreases. Instead we compute a static
-         * height for our items.
-         */
-        y: (parent.height -
-            (usersList.height
-            + fixedWidgetsColumn.anchors.topMargin
-            + 3 * widgetHeight
-            + 2 * fixedWidgetsColumn.spacing
-            )) / 3
-        width: parent.width
-
-        ListView {
-            id: usersList
-            anchors.horizontalCenter: parent.horizontalCenter
-            y: 0
-            focus: true
-            width: parent.width
-            height: userItemHeight
-
-            model: usersModel
-
-            cacheBuffer: count * 80
-
-            delegate: userDelegate
-
-            orientation: ListView.Horizontal
-
-            highlightRangeMode: ListView.StrictlyEnforceRange
-            preferredHighlightBegin: width / 2 - userItemWidth / 2
-            preferredHighlightEnd: width / 2 + userItemWidth / 2
+    ListView {
+        id: usersList
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            bottom: loginButtonItem.top
+            bottomMargin: 24
         }
+        width: parent.width
+        height: userItemHeight
 
-        // Fixed widgets
-        Column {
-            id: fixedWidgetsColumn
-            anchors.top: usersList.bottom
+        model: usersModel
+
+        cacheBuffer: count * 80
+
+        delegate: userDelegate
+
+        orientation: ListView.Horizontal
+
+        highlightRangeMode: ListView.StrictlyEnforceRange
+        preferredHighlightBegin: width / 2 - userItemWidth / 2
+        preferredHighlightEnd: width / 2 + userItemWidth / 2
+    }
+
+    FocusScope {
+        id: loginButtonItem
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            bottom: parent.verticalCenter
+        }
+        height: 30
+
+        property bool isGuestLogin: usersList.currentItem.username == guestLogin
+
+        /*PlasmaComponents.*/TextField {
+            id: passwordInput
             anchors.horizontalCenter: parent.horizontalCenter
             width: 200
-            anchors.topMargin: 2 * padding
-            spacing: padding
+            height: parent.height
+            focus: !loginButtonItem.isGuestLogin
+            opacity: loginButtonItem.isGuestLogin ? 0 : 1
 
-            PlasmaComponents.TextField {
-                id: passwordInput
-                width: parent.width
-                height: widgetHeight
-                echoMode: TextInput.Password
-                placeholderText: i18n("Password")
-//                onReturnPressed: startLogin();
-                visible: usersList.currentItem.username != "*guest"
-            }
+            echoMode: TextInput.Password
+            placeholderText: i18n("Password")
+            onAccepted: startLogin();
 
-            LightDMPlasmaWidgets.ModelComboBox {
-                id: sessionCombo
-                width: parent.width
-                height: widgetHeight
-                model: sessionsModel
-                currentIndex: indexForData(usersList.currentItem.usersession, sessionsModel.key)
-            }
-
-            PlasmaComponents.Button {
+            PlasmaComponents.ToolButton {
                 id: loginButton
-                anchors.horizontalCenter: parent.horizontalCenter
-                height: widgetHeight
-                text: i18n("Login")
+                anchors {
+                    right: parent.right
+                    rightMargin: y
+                    verticalCenter: parent.verticalCenter
+                }
+                width: implicitWidth
+                height: width
+
+                iconSource: "go-jump-locationbar"
                 onClicked: startLogin();
+            }
+
+            Behavior on opacity {
+                NumberAnimation { duration: 100 }
+            }
+        }
+
+        PlasmaComponents.Button {
+            id: guestLoginButton
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: userFaceSize + 2 * padding
+            height: parent.height
+            focus: loginButtonItem.isGuestLogin
+            opacity: 1 - passwordInput.opacity
+
+            iconSource: loginButton.iconSource
+            text: "Login"
+            onClicked: startLogin();
+
+            Behavior on opacity {
+                NumberAnimation { duration: 100 }
             }
         }
     }
 
-    // Bottom "Settings" bar
+    ListButton {
+        id: sessionButton
+        anchors {
+            top: loginButtonItem.bottom
+            topMargin: 24
+            bottom: powerBar.top
+            horizontalCenter: parent.horizontalCenter
+        }
+
+        model: sessionsModel
+        dataRole: "key"
+        currentIndex: indexForData(usersList.currentItem.usersession)
+    }
+
+    // Bottom "Power" bar
     PlasmaCore.FrameSvgItem {
+        id: powerBar
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         width: childrenRect.width + margins.left
@@ -235,30 +304,34 @@ Item {
             x: parent.margins.left
             y: parent.margins.top
 
-            PowerButton {
+            /*PlasmaComponents.*/ToolButton {
+                id: suspendButton
                 text: i18n("Suspend")
-                icon: QIcon("system-suspend")
+                iconSource: "system-suspend"
                 enabled: power.canSuspend;
                 onClicked: power.suspend();
             }
 
-            PowerButton {
+            /*PlasmaComponents.*/ToolButton {
+                id: hibernateButton
                 text: i18n("Hibernate")
-                icon: QIcon("system-suspend-hibernate")
+                iconSource: "system-suspend-hibernate"
                 enabled: power.canHibernate
                 onClicked: power.hibernate();
             }
 
-            PowerButton {
+            /*PlasmaComponents.*/ToolButton {
+                id: restartButton
                 text: i18n("Restart")
-                icon: QIcon("system-reboot")
+                iconSource: "system-reboot"
                 enabled: power.canRestart
                 onClicked: power.restart();
             }
 
-            PowerButton {
+            /*PlasmaComponents.*/ToolButton {
+                id: shutdownButton
                 text: i18n("Shutdown")
-                icon: QIcon("system-shutdown")
+                iconSource: "system-shutdown"
                 enabled: power.canShutdown
                 onClicked: power.shutDown();
             }
