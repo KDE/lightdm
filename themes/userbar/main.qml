@@ -281,7 +281,6 @@ Item {
             bottom: powerBar.top
             horizontalCenter: parent.horizontalCenter
         }
-        width: 200
 
         model: sessionsModel
         dataRole: "key"

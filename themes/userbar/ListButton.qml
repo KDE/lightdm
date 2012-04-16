@@ -54,7 +54,8 @@ FocusScope {
 
     PlasmaCore.FrameSvgItem {
         id: mainFrame
-        width: parent.width
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: column.width + margins.left + margins.right
         height: column.height + margins.top + margins.bottom
         imagePath: "widgets/button"
         prefix: "normal"
@@ -66,7 +67,7 @@ FocusScope {
 
             x: parent.margins.left
             y: parent.margins.top
-            width: parent.width - parent.margins.left - parent.margins.right
+            width: childrenRect.width
 
             Repeater {
                 id: repeater
@@ -75,13 +76,15 @@ FocusScope {
                     property bool isCurrent: root.currentIndex == model.index
 
                     text: model.display
-                    width: parent.width
                     font.bold: isCurrent && root.state == "opened"
                     visible: isCurrent || root.state == "opened"
                 }
             }
         }
 
+        Behavior on width {
+            NumberAnimation { duration: 100 }
+        }
         Behavior on height {
             NumberAnimation { duration: 100 }
         }
@@ -90,7 +93,7 @@ FocusScope {
             anchors.fill: parent
             onClicked: {
                 if (root.state == "opened") {
-                    var item = column.childAt(mouse.x, mouse.y);
+                    var item = column.childAt(parent.margins.left, mouse.y);
                     var index = indexForItem(item);
                     if (index >= 0) {
                         root.currentIndex = index;
