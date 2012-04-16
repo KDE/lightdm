@@ -54,16 +54,16 @@ FocusScope {
 
     PlasmaCore.FrameSvgItem {
         width: parent.width
-        height: column.height
-        anchors {
-            margins: 6
-        }
+        height: column.height + margins.top + margins.bottom
         imagePath: "widgets/button"
         prefix: "normal"
 
         PlasmaComponents.ButtonColumn {
             id: column
             spacing: 2 // Give some room
+
+            x: parent.margins.left
+            y: parent.margins.top
 
             Repeater {
                 id: repeater
