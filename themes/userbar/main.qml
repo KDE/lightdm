@@ -44,7 +44,8 @@ Item {
         }
 
         onAuthenticationComplete: {
-            var session = sessionList.itemData(sessionList.currentIndex);
+            var session = sessionButton.itemData(sessionButton.currentIndex);
+            console.log("session: " + session);
             if (session == "") {
                 session = "default";
             }
@@ -58,7 +59,7 @@ Item {
     }
 
     Component.onCompleted: {
-        setTabOrder([usersList, loginButtonItem, sessionFocusScope, suspendButton, hibernateButton, restartButton, shutdownButton]);
+        setTabOrder([usersList, loginButtonItem, sessionButton, suspendButton, hibernateButton, restartButton, shutdownButton]);
         usersList.forceActiveFocus();
     }
 
@@ -272,62 +273,19 @@ Item {
         }
     }
 
-    FocusScope {
-        id: sessionFocusScope
-
-        property bool showList: false
-
+    ListButton {
+        id: sessionButton
         anchors {
             top: loginButtonItem.bottom
             topMargin: 24
             bottom: powerBar.top
             horizontalCenter: parent.horizontalCenter
         }
+        width: 200
 
-        PlasmaComponents.Button {
-            id: sessionButton
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-            }
-            focus: !parent.showList
-
-            text: sessionList.itemText(sessionList.currentIndex) + " ⌄"
-
-            onClicked: parent.showList = true
-
-            opacity: parent.showList ? 0 : 1
-
-            Behavior on opacity {
-                NumberAnimation { duration: 100 }
-            }
-        }
-
-        RadioList {
-            id: sessionList
-            focus: parent.showList
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                bottomMargin: 40
-            }
-            opacity: 1 - sessionButton.opacity
-
-            model: sessionsModel
-            dataRole: "key"
-            currentIndex: indexForData(usersList.currentItem.usersession)
-            onCurrentIndexChanged: {
-                if (parent.showList) {
-                    parent.showList = false;
-                }
-            }
-        }
-
-        function onShowListChanged() {
-            if (showList) {
-                sessionButton.opacity = 0;
-            } else {
-                sessionButton.opacity = 1;
-            }
-        }
+        model: sessionsModel
+        dataRole: "key"
+        currentIndex: indexForData(usersList.currentItem.usersession)
     }
 
     // Bottom "Power" bar
