@@ -64,6 +64,7 @@ FocusScope {
 
             x: parent.margins.left
             y: parent.margins.top
+            width: parent.width - parent.margins.left - parent.margins.right
 
             Repeater {
                 id: repeater
@@ -72,6 +73,7 @@ FocusScope {
                     property bool isCurrent: root.currentIndex == model.index
 
                     text: model.display
+                    width: parent.width
                     font.bold: isCurrent && root.state == "opened"
                     visible: isCurrent || root.state == "opened"
                 }
