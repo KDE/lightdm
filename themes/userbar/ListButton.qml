@@ -69,9 +69,7 @@ FocusScope {
             onClicked: {
                 if (root.activeFocus) {
                     var item = column.childAt(mouse.x, mouse.y);
-                    console.log("item:" + item);
                     var index = indexForItem(item);
-                    console.log("index:" + index);
                     if (index >= 0) {
                         root.currentIndex = index;
                     }
