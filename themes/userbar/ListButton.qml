@@ -100,7 +100,7 @@ FocusScope {
     }
 
     PlasmaCore.FrameSvgItem {
-        id: hoverFrame
+        id: focusFrame
         anchors {
             fill: mainFrame
             leftMargin: -margins.left
