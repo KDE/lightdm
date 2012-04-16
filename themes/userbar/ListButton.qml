@@ -38,6 +38,20 @@ FocusScope {
         return -1;
     }
 
+    states: [
+        State {
+            name: "closed"
+        },
+        State {
+            name: "opened"
+        }
+    ]
+    state: "closed"
+
+    onActiveFocusChanged: {
+        root.state = activeFocus ? "opened" : "closed";
+    }
+
     PlasmaCore.FrameSvgItem {
         width: parent.width
         height: column.height
@@ -58,8 +72,8 @@ FocusScope {
                     property bool isCurrent: root.currentIndex == model.index
 
                     text: model.display
-                    font.bold: isCurrent && root.activeFocus
-                    visible: isCurrent || root.activeFocus
+                    font.bold: isCurrent && root.state == "opened"
+                    visible: isCurrent || root.state == "opened"
                 }
             }
         }
@@ -67,11 +81,12 @@ FocusScope {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                if (root.activeFocus) {
+                if (state == "opened") {
                     var item = column.childAt(mouse.x, mouse.y);
                     var index = indexForItem(item);
                     if (index >= 0) {
                         root.currentIndex = index;
+                        state = "closed";
                     }
                 } else {
                     root.forceActiveFocus();
