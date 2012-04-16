@@ -105,4 +105,9 @@ FocusScope {
             root.currentIndex++;
         }
     }
+    Keys.onReturnPressed: {
+        if (root.state == "opened") {
+            root.state = "closed";
+        }
+    }
 }
