@@ -253,16 +253,6 @@ Item {
                     sessionCombo.currentIndex = sessionCombo.indexForData("", sessionsModel.key);
                 }
             }
-
-            PlasmaComponents.Label {
-                text: i18n("Language:")
-                anchors.verticalCenter: parent.verticalCenter;
-            }
-
-            PlasmaWidgets.ComboBox {
-                anchors.verticalCenter: parent.verticalCenter;
-            }
-
         }
     }
 }
