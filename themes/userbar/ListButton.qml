@@ -27,19 +27,19 @@ FocusScope {
     property alias model: repeater.model
 
     function itemData(index) {
-        var button = column.children[index];
+        var button = repeater.itemAt(index);
         return button.data;
     }
 
     function itemText(index) {
-        var button = column.children[index];
+        var button = repeater.itemAt(index);
         return button.text;
     }
 
     function indexForData(data) {
         var index;
-        for (index = 0; index < column.children.length; ++index) {
-            if (column.children[index].data == data) {
+        for (index = 0; index < repeater.count; ++index) {
+            if (repeater.itemAt(index).data == data) {
                 return index;
             }
         }
@@ -48,8 +48,8 @@ FocusScope {
 
     function indexForItem(item) {
         var index;
-        for (index = 0; index < column.children.length; ++index) {
-            if (column.children[index] == item) {
+        for (index = 0; index < repeater.count; ++index) {
+            if (repeater.itemAt(index) == item) {
                 return index;
             }
         }
@@ -150,7 +150,7 @@ FocusScope {
         }
     }
     Keys.onDownPressed: {
-        if (root.currentIndex < column.children.length - 1) {
+        if (root.currentIndex < repeater.count - 1) {
             root.currentIndex++;
         }
     }
