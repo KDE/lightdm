@@ -44,7 +44,7 @@ Item {
         }
 
         onAuthenticationComplete: {
-            var session = sessionButton.itemData(sessionButton.currentIndex);
+            var session = sessionButton.dataForIndex(sessionButton.currentIndex);
             console.log("session: " + session);
             if (session == "") {
                 session = "default";

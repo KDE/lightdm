@@ -26,7 +26,7 @@ FocusScope {
     property string dataRole: ""
     property alias model: repeater.model
 
-    function itemData(index) {
+    function dataForIndex(index) {
         var button = repeater.itemAt(index);
         return button.data;
     }
