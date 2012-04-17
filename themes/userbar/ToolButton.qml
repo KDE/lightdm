@@ -195,6 +195,7 @@ FocusScope {
                 bottom: parent.bottom
                 left: icon.valid ? icon.right : parent.left
                 right: parent.right
+                leftMargin: icon.valid ? surface.margins.left : 0
             }
             font.capitalization: theme.defaultFont.capitalization
             font.family: theme.defaultFont.family
