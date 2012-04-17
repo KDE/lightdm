@@ -84,7 +84,7 @@ FocusScope {
         if (label.paintedWidth == 0) {
             return implicitHeight
         } else {
-            return Math.max(theme.defaultFont.mSize.width*12, icon.width + label.paintedWidth + surface.margins.left + surface.margins.right) + ((icon.valid) ? surface.margins.left : 0)
+            return icon.width + label.paintedWidth + surface.margins.left + surface.margins.right + ((icon.valid) ? surface.margins.left : 0)
         }
     }
     implicitHeight: Math.max(theme.defaultFont.mSize.height*1.6, Math.max(icon.height, label.paintedHeight) + surface.margins.top/2 + surface.margins.bottom/2)
