@@ -31,11 +31,6 @@ FocusScope {
         return button.data;
     }
 
-    function itemText(index) {
-        var button = repeater.itemAt(index);
-        return button.text;
-    }
-
     function indexForData(data) {
         var index;
         for (index = 0; index < repeater.count; ++index) {
