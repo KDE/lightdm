@@ -92,9 +92,9 @@ Item {
 
     property int userItemWidth: 150
     property int userItemHeight: 150
-    property int userFaceSize: 48
+    property int userFaceSize: 128
 
-    property int padding: 20
+    property int padding: 4
 
     Component {
         id: userDelegate
@@ -158,8 +158,8 @@ Item {
                 anchors.bottom: loginText.top
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottomMargin: padding * 1.5
-                width: userFaceSize
-                height: userFaceSize
+                sourceSize.width: userFaceSize
+                sourceSize.height: userFaceSize
                 source: "image://face/" + name
             }
 

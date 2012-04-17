@@ -48,7 +48,8 @@ QPixmap FaceImageProvider::requestPixmap(const QString& id, QSize* size, const Q
     }
     QPixmap pix = userIndex.data(Qt::DecorationRole).value<QPixmap>();
     if (pix.isNull()) {
-        pix = DesktopIcon("user-identity");
+        int iconSize = requestedSize.isValid() ? requestedSize.width() : 0;
+        pix = DesktopIcon("user-identity", iconSize);
     }
     if (size) {
         *size = pix.size();
