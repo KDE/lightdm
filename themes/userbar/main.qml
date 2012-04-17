@@ -90,11 +90,11 @@ Item {
         font.pointSize: 14
     }
 
-    property int userItemWidth: 150
+    property int userItemWidth: 180
     property int userItemHeight: 150
     property int userFaceSize: 128
 
-    property int padding: 4
+    property int padding: 6
 
     Component {
         id: userDelegate
@@ -122,24 +122,31 @@ Item {
             }
 
             PlasmaCore.FrameSvgItem {
+                id: frameFocus
+                anchors {
+                    fill: frame
+                    leftMargin: -margins.left
+                    topMargin: -margins.top
+                    bottomMargin: -margins.bottom
+                    rightMargin: -margins.right
+                }
+                imagePath: "widgets/button"
+                prefix: "hover"
+                visible: wrapper.isCurrent
+                opacity: wrapper.activeFocus ? 1 : 0
+                Behavior on opacity {
+                    NumberAnimation { duration: 100 }
+                }
+            }
+
+            PlasmaCore.FrameSvgItem {
                 id: frame
                 anchors.centerIn: face
                 width: face.width + padding * 2
                 height: face.height + padding * 2
                 imagePath: "widgets/lineedit"
                 prefix: "base"
-            }
-
-            PlasmaCore.FrameSvgItem {
-                id: frameFocus
-                anchors.fill: frame
-                imagePath: "widgets/lineedit"
-                prefix: "focus"
-                visible: wrapper.isCurrent
-                opacity: wrapper.activeFocus ? 1 : 0
-                Behavior on opacity {
-                    NumberAnimation { duration: 100 }
-                }
+                enabledBorders: "NoBorder"
             }
 
             PlasmaCore.FrameSvgItem {
