@@ -90,9 +90,9 @@ Item {
         font.pointSize: 14
     }
 
-    property int userItemWidth: 180
-    property int userItemHeight: 150
-    property int userFaceSize: 128
+    property int userItemWidth: 120
+    property int userItemHeight: 80
+    property int userFaceSize: 64
 
     property int padding: 6
 
