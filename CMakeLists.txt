@@ -1,5 +1,31 @@
 project(greeter-app)
 
+# Versions
+set(LIGHTDM_KDE_VERSION_MAJOR 0)
+set(LIGHTDM_KDE_VERSION_MINOR 1)
+set(LIGHTDM_KDE_VERSION_PATCH 0)
+set(LIGHTDM_KDE_VERSION ${LIGHTDM_KDE_VERSION_MAJOR}.${LIGHTDM_KDE_VERSION_MINOR}.${LIGHTDM_KDE_VERSION_PATCH})
+
+# Packaging
+set(ARCHIVE_NAME lightdm-kde-${LIGHTDM_KDE_VERSION})
+add_custom_target(dist
+    COMMAND git archive --prefix=${ARCHIVE_NAME}/ HEAD
+    | bzip2 > ${CMAKE_BINARY_DIR}/${ARCHIVE_NAME}.tar.bz2
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    )
+
+add_custom_target(distcheck
+    COMMAND cd ${CMAKE_BINARY_DIR}
+    && rm -rf ${ARCHIVE_NAME}
+    && tar xf ${ARCHIVE_NAME}.tar.bz2
+    && mkdir ${ARCHIVE_NAME}/build
+    && cd ${ARCHIVE_NAME}/build
+    && cmake -DCMAKE_INSTALL_PREFIX=/usr ..
+    && make
+    && make install DESTDIR=../install
+    )
+add_dependencies(distcheck dist)
+
 SET(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules" ${CMAKE_MODULE_PATH})
 
 set(LIGHTDM_CONFIG_DIR "/etc/lightdm"
