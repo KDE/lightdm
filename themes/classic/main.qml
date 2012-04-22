@@ -23,6 +23,8 @@ import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1 as ExtraComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
 
+import MyLibrary 1.0 as LightDMPlasmaWidgets
+
 Item {
     width: screenSize.width;
     height: screenSize.height;
@@ -130,30 +132,26 @@ Item {
                     }
                 }
                 
-                Image {
+                /*PlasmaComponents.*/ToolButton {
                     id: loginButton
-                    source: mousearea.containsMouse ? "login_active.png" : "login_normal.png" 
                     anchors.verticalCenter: parent.verticalCenter
-                    height: parent.height
-                    fillMode: Image.PreserveAspectFit
-                    smooth: true
-
-                    MouseArea {
-                        id: mousearea
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        
-                        onClicked: {
-                            login();
-                        }
+                    iconSource: "go-next"
+                    onClicked: {
+                        login();
                     }
+                    KeyNavigation.backtab: passwordInput
+                    KeyNavigation.tab: usernameInput
                 }
             }
 
+            Item {
+                height: 10
+            }
+            
+            
             Row {               
                 spacing: 5;
-
-                IconButton {
+                  IconButton {
                     icon: "system-shutdown"                    
                     onClicked: {
                         if (powerDialog.opacity == 1) {
@@ -252,25 +250,15 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter;
             }
 
-//             LightDMPlasmaWidgets.ModelComboBox {
-//                 id: sessionCombo
-//                 model: sessionsModel;
-//                 anchors.verticalCenter: parent.verticalCenter;
-//                 width: 200;
-//                 Component.onCompleted : {
-//                     sessionCombo.currentIndex = sessionCombo.indexForData("", sessionsModel.key);
-//                 }
-//             }
-
-            PlasmaComponents.Label {
-                text: i18n("Language:")
+            LightDMPlasmaWidgets.ModelComboBox {
+                id: sessionCombo
+                model: sessionsModel;
                 anchors.verticalCenter: parent.verticalCenter;
+                width: 200;
+                Component.onCompleted : {
+                    sessionCombo.currentIndex = sessionCombo.indexForData("", sessionsModel.key);
+                }
             }
-
-            PlasmaWidgets.ComboBox {
-                anchors.verticalCenter: parent.verticalCenter;
-            }
-
         }
     }
 }
