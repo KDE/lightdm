@@ -52,6 +52,8 @@ Item {
             }
             else {
                 feedbackLabel.text = i18n("Sorry, incorrect password please try again.");
+                passwordInput.selectAll()
+                passwordInput.forceActiveFocus()
             }
         }
     }
