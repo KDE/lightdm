@@ -23,6 +23,7 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include <KDebug>
 #include <KIconLoader>
 
+#include <QIcon>
 #include <QPixmap>
 
 FaceImageProvider::FaceImageProvider(QAbstractItemModel* model)
@@ -46,11 +47,18 @@ QPixmap FaceImageProvider::requestPixmap(const QString& id, QSize* size, const Q
         kWarning() << "Couldn't find user" << id << "in UsersModel";
         return QPixmap();
     }
-    QPixmap pix = userIndex.data(Qt::DecorationRole).value<QPixmap>();
-    if (pix.isNull()) {
-        int iconSize = requestedSize.isValid() ? requestedSize.width() : 0;
-        pix = DesktopIcon("user-identity", iconSize);
+
+    // Get user face pixmap
+    QPixmap pix;
+    int extent = requestedSize.isValid() ? requestedSize.width() : 0;
+    QIcon icon = userIndex.data(Qt::DecorationRole).value<QIcon>();
+    if (!icon.isNull()) {
+        pix = icon.pixmap(extent);
     }
+    if (pix.isNull()) {
+        pix = DesktopIcon("user-identity", extent);
+    }
+
     if (size) {
         *size = pix.size();
     }
