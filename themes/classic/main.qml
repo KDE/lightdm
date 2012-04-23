@@ -17,9 +17,12 @@ You should have received a copy of the GNU General Public License
 along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 */
 import QtQuick 1.0
+//TODO phase this out
 import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
 import org.kde.plasma.components 0.1 as PlasmaComponents
+import org.kde.qtextracomponents 0.1 as ExtraComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
+
 import MyLibrary 1.0 as LightDMPlasmaWidgets
 
 Item {
@@ -49,6 +52,8 @@ Item {
             }
             else {
                 feedbackLabel.text = i18n("Sorry, incorrect password please try again.");
+                passwordInput.selectAll()
+                passwordInput.forceActiveFocus()
             }
         }
     }
@@ -62,7 +67,7 @@ Item {
         imagePath: "translucent/dialogs/background"
         anchors.centerIn: parent;
 
-        width: childrenRect.width + 80;
+        width: childrenRect.width + 40;
         height: childrenRect.height + 40;
 
         Column {
@@ -87,88 +92,91 @@ Item {
             }
 
             Row {
-                Image {
-                    source: "image://icon/meeting-participant"
-                    height: usernameInput.height;
-                    fillMode: Image.PreserveAspectFit
-
-                }
-
-                //not actually a password!
-                LightDMPlasmaWidgets.LineEdit {
-                    id: usernameInput;
-                    width: 250;
-                    height: 30;
-                    clickMessage: "Username";
-                    clearButtonShown: true;
-                    onReturnPressed: {
-                        passwordInput.setFocus();
-                    }
+                spacing: 10
+                width: childrenRect.width
+                height: childRect.height
+                
+                Grid {
+                    columns: 2
+                    spacing: 5
                     
-                     Component.onCompleted: {
-                        usernameInput.setFocus();
+                    ExtraComponents.QIconItem {
+                        icon: "meeting-participant"
+                        height: passwordInput.height;
+                        width: passwordInput.height;
+                    }
+
+                    /*PlasmaComponents.*/TextField {
+                        id: usernameInput;
+                        placeholderText: i18n("Username");
+                        onAccepted: {
+                            passwordInput.focus = true;
+                        }
+                        
+                        KeyNavigation.tab: passwordInput
+                    }
+
+                    ExtraComponents.QIconItem {
+                        icon: "object-locked"
+                        height: passwordInput.height;
+                        width: passwordInput.height;
+                    }
+
+                    /*PlasmaComponents.*/TextField {
+                        id: passwordInput
+                        echoMode: TextInput.Password
+                        placeholderText: i18n("Password")
+                        onAccepted: {
+                            login();
+                        }
+                        KeyNavigation.backtab: usernameInput
+                        KeyNavigation.tab: loginButton
                     }
                 }
-            }
-
-
-            Row {
-                Image {
-                    source: "image://icon/object-locked.png"
-                    height: passwordInput.height;
-                    fillMode: Image.PreserveAspectFit
-
-                }
-
-                LightDMPlasmaWidgets.LineEdit {
-                    id: passwordInput;
-                    width: 250;
-                    height: 30;
-                    clickMessage: i18n("Password");
-                    passwordMode: true;
-                    onReturnPressed: {
-                        login();
-                    }
-                }
-            }
-
-            Row {
-                anchors.horizontalCenter: parent.horizontalCenter;
-                spacing:10;
-
-                PlasmaComponents.Button {
-                    text: i18n("Login");
+                
+                /*PlasmaComponents.*/ToolButton {
+                    id: loginButton
+                    anchors.verticalCenter: parent.verticalCenter
+                    iconSource: "go-next"
                     onClicked: {
                         login();
                     }
+                    KeyNavigation.backtab: passwordInput
+                    KeyNavigation.tab: usernameInput
                 }
+            }
 
-                PlasmaComponents.Button  {
-                    text: i18n("Power");
+            Item {
+                height: 10
+            }
+            
+            
+            Row {               
+                spacing: 5;
+                  IconButton {
+                    icon: "system-shutdown"                    
                     onClicked: {
                         if (powerDialog.opacity == 1) {
                             powerDialog.opacity = 0;
                         } else {
                             powerDialog.opacity = 1;
                         }
-
                         optionsDialog.opacity = 0;
                     }
                 }
 
-                PlasmaComponents.Button  {
-                    text: i18n("Options");
+                
+                IconButton {
+                    icon: "system-log-out"
                     onClicked: {
                         if (optionsDialog.opacity == 1) {
                             optionsDialog.opacity = 0;
                         } else {
                             optionsDialog.opacity = 1;
                         }
-
                         powerDialog.opacity = 0;
                     }
                 }
-
             }
         }
     }

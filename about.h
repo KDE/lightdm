@@ -19,11 +19,13 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef ABOUT_H
 #define ABOUT_H
 
+#include <config.h>
+
 // Helper function to factorize common part s of KAboutData definition between
 // greeter and kcm
 static void initAboutData(KAboutData* aboutData)
 {
-    aboutData->setVersion("0.1");
+    aboutData->setVersion(LIGHTDM_KDE_VERSION);
 
     aboutData->setShortDescription(ki18n("Login screen using the LightDM framework"));
     aboutData->setLicense(KAboutData::License_GPL);

@@ -2,6 +2,7 @@
 Name=LightDM KDE Greeter
 Name[da]=KDE-velkomstskærm til LightDM
 Name[et]=LightDM KDE tervitusekraan
+Name[fr]=Écran de connexion LightDM pour KDE
 Name[nl]=KDE-begroeting van LightDM
 Name[pl]=Program pozdrawiający LightDM KDE
 Name[pt]=Ecrã de Boas-Vindas do LightDM para o KDE
@@ -12,6 +13,7 @@ Name[x-test]=xxLightDM KDE Greeterxx
 Comment=This runs the KDE greeter, it should only be run from LightDM
 Comment[da]=Dette kører KDE-velkomstskærmen, den skal kun køres fra LightDM
 Comment[et]=KDE tervitusekraani käivitamine, mis tuleb käivitada ainult LightDM-ist
+Comment[fr]=Cette application lance l'écran de connexion et ne doit être exécutée que depuis LightDM
 Comment[nl]=Dit voert de KDE-begroeting uit, het zou alleen uitgevoerd moeten worden vanuit LightDM
 Comment[pl]=Uruchamia to program pozdrawiający dla KDE, powinien on być uruchamiany z LightDM
 Comment[pt]=Isto executa o ecrã de boas-vindas do KDE, que só deverá ser corrido a partir do LightDM
