@@ -50,7 +50,7 @@ QPixmap FaceImageProvider::requestPixmap(const QString& id, QSize* size, const Q
 
     // Get user face pixmap
     QPixmap pix;
-    int extent = requestedSize.isValid() ? requestedSize.width() : 0;
+    int extent = requestedSize.isValid() ? requestedSize.width() : KIconLoader::SizeEnormous;
     QIcon icon = userIndex.data(Qt::DecorationRole).value<QIcon>();
     if (!icon.isNull()) {
         pix = icon.pixmap(extent);

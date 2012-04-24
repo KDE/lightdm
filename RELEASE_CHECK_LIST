@@ -1,0 +1,37 @@
+# Create branch if necessary
+git checkout -b v$x.$y
+
+# Or switch to the current branch
+git checkout v$x.$y
+
+# Verify copy is clean and up to date
+git status
+git pull
+
+# Update NEWS
+
+# Bump version in CMakeLists.txt
+
+# Commit
+
+# Create tarball
+make distcheck
+
+# Test
+
+# If ok, create tag
+git tag v$x.$y.$z
+
+# Push
+git push
+git push --tags
+
+# Merge back to master
+git checkout master
+git merge --no-ff v$x.$y
+
+# Push
+git push
+
+# Upload to KDE FTP server
+
