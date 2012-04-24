@@ -20,7 +20,7 @@ make distcheck
 # Test
 
 # If ok, create tag
-git tag v$x.$y.$z
+git tag -a v$x.$y.$z
 
 # Push
 git push
