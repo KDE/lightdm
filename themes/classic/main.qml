@@ -259,6 +259,7 @@ Item {
                 width: 200;
                 Component.onCompleted : {
                     sessionCombo.currentIndex = sessionCombo.indexForData("", sessionsModel.key);
+                    model.showLastUsedSession = true
                 }
             }
         }

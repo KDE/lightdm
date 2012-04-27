@@ -14,6 +14,7 @@ set(GREETER_SRCS
     greeterwindow.cpp
     main.cpp
     configwrapper.cpp
+    sessionsmodel.cpp
     components/modelcombobox.cpp
     components/lineedit.cpp
 )
