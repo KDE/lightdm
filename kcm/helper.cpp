@@ -51,21 +51,6 @@ static QSharedPointer<KConfig> openConfig(WhichConfig which)
     return QSharedPointer<KConfig>(new KConfig(file.fileName(), KConfig::SimpleConfig));
 }
 
-KAuth::ActionReply Helper::savethemedetails(const QVariantMap &args)
-{
-    KAuth::ActionReply reply;
-    QSharedPointer<KConfig> config = openConfig(GreeterConfig);
-    KConfigGroup configGroup = config->group("greeter-settings");
-
-    QMap<QString, QVariant>::const_iterator i;
-    for (i = args.constBegin() ; i != args.constEnd() ; i++) {
-        configGroup.writeEntry(i.key(), i.value());
-    }
-    config->sync();
-
-    return reply;
-}
-
 KAuth::ActionReply Helper::save(const QVariantMap &args)
 {
     KAuth::ActionReply errorReply = KAuth::ActionReply::HelperErrorReply;
