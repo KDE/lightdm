@@ -145,44 +145,7 @@ border: 1px solid #888;</string>
       </widget>
      </item>
      <item>
-      <widget class="QWidget" name="optionsWidget" native="true"/>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <spacer name="horizontalSpacer_4">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="configureButton">
-         <property name="text">
-          <string>Configure</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
+      <widget class="ConfigOptions" name="options" native="true"/>
      </item>
      <item>
       <spacer name="verticalSpacer">
@@ -200,14 +163,19 @@ border: 1px solid #888;</string>
        </property>
       </spacer>
      </item>
-     <item>
-      <widget class="QWidget" name="widget" native="true"/>
-     </item>
     </layout>
    </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ConfigOptions</class>
+   <extends>QWidget</extends>
+   <header>configoptions.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

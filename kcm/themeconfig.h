@@ -45,11 +45,10 @@ signals:
 
 private slots:
     void onThemeSelected(const QModelIndex &index);
-    void onConfigureClicked();
 
 private:
-    KSharedConfigPtr m_config;
     Ui::ThemeConfig *ui;
+    KSharedConfigPtr m_config;
 
     QDir themeDir() const;
     QModelIndex findIndexForTheme(const QString& theme) const;

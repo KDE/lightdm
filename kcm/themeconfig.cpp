@@ -34,63 +34,24 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include <KConfigDialog>
 #include <KConfigSkeletonItem>
 
-
 #include <KAuth/Action>
-
-#include <Plasma/ConfigLoader>
 
 #include "config.h"
 
-class AuthKitConfigLoader : public Plasma::ConfigLoader {
-public:
-    AuthKitConfigLoader(KSharedConfigPtr config, QIODevice *xml, QObject *parent=0);
-protected:
-    void usrWriteConfig();
-};
-
-AuthKitConfigLoader::AuthKitConfigLoader(KSharedConfigPtr config, QIODevice *xml, QObject *parent)
-    : Plasma::ConfigLoader(config, xml, parent)
-{}
-
-//using the normal KConfigSkeleton we can't write to the config, so we need to use authkit.
-void AuthKitConfigLoader::usrWriteConfig() {
-    kDebug() << "user write config";
-
-    KAuth::Action saveAction("org.kde.kcontrol.kcmlightdm.savethemedetails");
-    saveAction.setHelperID("org.kde.kcontrol.kcmlightdm");
-
-    QVariantMap args;
-    foreach(KConfigSkeletonItem* item, items()) {
-        args[item->key()] = item->property();
-    }
-
-    saveAction.setArguments(args);
-
-    KAuth::ActionReply reply = saveAction.execute();
-    if (reply.failed()) {
-        qDebug() << reply.errorCode();
-        qDebug() << KAuth::ActionReply::NoSuchAction;
-        qDebug() << reply.errorDescription();
-        qDebug() << "save failed :-(";
-    } else {
-        qDebug() << "save ok!";
-    }
-}
-
 ThemeConfig::ThemeConfig(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::ThemeConfig)
+    ui(new Ui::ThemeConfig),
+    m_config(KSharedConfig::openConfig(LIGHTDM_CONFIG_DIR "/lightdm-kde-greeter.conf", KConfig::SimpleConfig))
 {
-    m_config = KSharedConfig::openConfig(LIGHTDM_CONFIG_DIR "/lightdm-kde-greeter.conf", KConfig::SimpleConfig);
-
     ui->setupUi(this);
+    ui->options->setConfig(m_config);
 
     ThemesModel *model = new ThemesModel(this);
     ui->themesList->setModel(model);
 
     connect(ui->themesList, SIGNAL(activated(QModelIndex)), SLOT(onThemeSelected(QModelIndex)));
     connect(ui->themesList, SIGNAL(clicked(QModelIndex)), SLOT(onThemeSelected(QModelIndex)));
-    connect(ui->configureButton, SIGNAL(released()), SLOT(onConfigureClicked()));
+    connect(ui->options, SIGNAL(changed(bool)), SIGNAL(changed(bool)));
 
     QString theme = m_config->group("greeter").readEntry("theme-name", "classic");
 
@@ -144,11 +105,7 @@ void ThemeConfig::onThemeSelected(const QModelIndex &index)
         ui->preview->setPixmap(QPixmap());
     }
 
-    QDir dir = themeDir();
-    ui->configureButton->setVisible(
-        dir.exists(QLatin1String("main.xml"))
-        && dir.exists(QLatin1String("config.ui"))
-        );
+    ui->options->setTheme(themeDir());
 
     emit changed(true);
 }
@@ -156,28 +113,6 @@ void ThemeConfig::onThemeSelected(const QModelIndex &index)
 QDir ThemeConfig::themeDir() const
 {
     return QDir(ui->themesList->currentIndex().data(ThemesModel::PathRole).toString());
-}
-
-void ThemeConfig::onConfigureClicked()
-{
-    kDebug();
-
-    //FIXME I'd like to replace to have the widgets inline rather than in a dialog.
-
-    QDir dir = themeDir();
-
-    QFile kcfgFile(dir.filePath(QLatin1String("main.xml")));
-    kcfgFile.open(QFile::ReadOnly);
-    AuthKitConfigLoader configLoader(m_config, &kcfgFile, this);
-
-    QUiLoader loader;
-    QFile uiFile(dir.filePath(QLatin1String("config.ui")));
-    QWidget* widget = loader.load(&uiFile, this);
-
-    KConfigDialog dialog(this, QLatin1String("theme-config"), &configLoader);
-    dialog.setFaceType(KPageDialog::Plain);
-    dialog.addPage(widget, i18n("Configure Theme"));
-    dialog.exec();
 }
 
 QVariantMap ThemeConfig::save()
@@ -188,6 +123,8 @@ QVariantMap ThemeConfig::save()
     }
     QVariantMap args;
     args["greeter/greeter/theme-name"] = currentIndex.data(ThemesModel::IdRole);
+
+    args.unite(ui->options->save());
     return args;
 }
 

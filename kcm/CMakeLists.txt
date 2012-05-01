@@ -25,6 +25,7 @@ set(LIGHTDM_KCM_SRCS
     themesmodel.cpp
     coreconfig.cpp
     lightdmkcm.cpp
+    configoptions.cpp
     ${GREETER_DIR}/extrarowproxymodel.cpp
 )
 
