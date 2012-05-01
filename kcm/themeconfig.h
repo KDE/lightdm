@@ -39,6 +39,7 @@ public:
     ~ThemeConfig();
 
     QVariantMap save();
+    void defaults();
 
 signals:
     void changed(bool);

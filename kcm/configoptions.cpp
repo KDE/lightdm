@@ -102,3 +102,12 @@ QVariantMap ConfigOptions::save()
     m_manager->updateSettings();
     return m_configLoader->entryMap();
 }
+
+void ConfigOptions::defaults()
+{
+    if(m_wrapperWidget.isNull()) {
+        return;
+    }
+
+    m_manager->updateWidgetsDefault();
+}

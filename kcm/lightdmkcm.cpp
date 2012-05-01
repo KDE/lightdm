@@ -88,3 +88,8 @@ void LightDMKcm::save()
         changed(false);
     }
 }
+
+void LightDMKcm::defaults()
+{
+    m_themeConfig->defaults();
+}

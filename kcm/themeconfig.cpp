@@ -128,4 +128,9 @@ QVariantMap ThemeConfig::save()
     return args;
 }
 
+void ThemeConfig::defaults()
+{
+    ui->options->defaults();
+}
+
 #include "moc_themeconfig.cpp"

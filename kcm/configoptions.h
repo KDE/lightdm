@@ -22,6 +22,7 @@ public:
     void setTheme(const QDir &themeDir);
 
     QVariantMap save();
+    void defaults();
 
 signals:
     void changed(bool);

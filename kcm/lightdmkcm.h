@@ -34,6 +34,7 @@ signals:
 
 public slots:
     void save();
+    void defaults();
 
 private:
     CoreConfig *m_coreConfig;
