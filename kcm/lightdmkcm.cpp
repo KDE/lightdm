@@ -57,14 +57,14 @@ LightDMKcm::LightDMKcm(QWidget *parent, const QVariantList &args) :
     KTabWidget* tabWidget = new KTabWidget(this);
     layout->addWidget(tabWidget);
 
+    //make our configwidgets work with KConfigXT
+    KConfigDialogManager::changedMap()->insert("SelectImageButton", SIGNAL(imagePathChanged(QString)));
+
     m_coreConfig = new CoreConfig(this);
     m_themeConfig = new ThemeConfig(this);
 
     connect(m_themeConfig, SIGNAL(changed(bool)), SIGNAL(changed(bool)));
     connect(m_coreConfig, SIGNAL(changed(bool)), SIGNAL(changed(bool)));
-
-    //make our configwidgets work with KConfigXT
-    KConfigDialogManager::changedMap()->insert("SelectImageButton", SIGNAL(imagePathChanged(QString)));
 
     tabWidget->addTab(m_themeConfig, i18n("Theme"));
     tabWidget->addTab(m_coreConfig, i18n("General"));
