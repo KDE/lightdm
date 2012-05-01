@@ -77,9 +77,10 @@ void ConfigOptions::setTheme(const QDir &themeDir)
 
         //both the following get deleted when the wrapped widget is deleted.
         //FIXME I don't really like having so many dangly pointers about...
+        m_config->reparseConfiguration();
         m_configLoader = new AuthKitConfigLoader(m_config, &kcfgFile, m_wrapperWidget.data());
         m_manager = new KConfigDialogManager(m_wrapperWidget.data(), m_configLoader);
-        connect(m_manager, SIGNAL(settingsChanged()), SLOT(onSettingsChanged()));
+        connect(m_manager, SIGNAL(widgetModified()), SLOT(onSettingsChanged()));
 
         layout()->addWidget(m_wrapperWidget.data());
     }
