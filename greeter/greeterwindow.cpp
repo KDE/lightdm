@@ -52,6 +52,7 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include "configwrapper.h"
 #include "sessionsmodel.h"
 #include "usersmodel.h"
+#include "screensmodel.h"
 
 #include <config.h>
 
@@ -106,6 +107,7 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     rootContext()->setContextProperty("greeter", m_greeter);
     rootContext()->setContextProperty("usersModel", usersModel);
     rootContext()->setContextProperty("sessionsModel", new SessionsModel(this));
+    rootContext()->setContextProperty("screensModel", new ScreensModel(this));
     rootContext()->setContextProperty("power", new QLightDM::PowerInterface(this));
     rootContext()->setContextProperty("plasmaTheme", Plasma::Theme::defaultTheme());
 
