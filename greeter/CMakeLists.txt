@@ -17,6 +17,7 @@ set(GREETER_SRCS
     configwrapper.cpp
     sessionsmodel.cpp
     usersmodel.cpp
+    screensmodel.cpp
     components/modelcombobox.cpp
     components/lineedit.cpp
 )
