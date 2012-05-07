@@ -29,11 +29,14 @@ Item {
     width: screenSize.width;
     height: screenSize.height;
 
-    Image {
-        fillMode: Image.PreserveAspectCrop
-        anchors.fill: parent
-        //read from config, if there's no entry use plasma theme
-        source: config.readEntry("Background") ? config.readEntry("Background"): plasmaTheme.wallpaperPath();
+    Repeater {
+        model: screensModel
+        delegate: Image {
+            fillMode: Image.PreserveAspectCrop
+            anchors.fill: parent
+            //read from config, if there's no entry use plasma theme
+            source: config.readEntry("Background") ? config.readEntry("Background"): plasmaTheme.wallpaperPath();
+        }
     }
 
     Connections {
