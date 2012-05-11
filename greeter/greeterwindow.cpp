@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "greeterwindow.h"
+#include "powermanagement.h"
 
 #include <QtGui/QWidget>
 #include <QApplication>
@@ -61,7 +62,7 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     setGeometry(screen);
     
     m_greeter->connectSync();
-    
+
     //add a new plasma widget which is a plasma line edit in password mode.
     qmlRegisterType<LineEdit>("MyLibrary", 1, 0, "LineEdit");
     qmlRegisterType<ModelComboBox>("MyLibrary", 1, 0, "ModelComboBox");
@@ -121,6 +122,8 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     QShortcut* cut = new QShortcut(this);
     cut->setKey(Qt::CTRL + Qt::ALT + Qt::Key_S);
     connect(cut, SIGNAL(activated()), SLOT(screenshot()));
+
+    new PowerManagement(this);
 }
 
 GreeterWindow::~GreeterWindow()

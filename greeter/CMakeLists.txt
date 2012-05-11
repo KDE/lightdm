@@ -12,11 +12,17 @@ set(GREETER_SRCS
     extrarowproxymodel.cpp
     faceimageprovider.cpp
     greeterwindow.cpp
+    powermanagement.cpp
     main.cpp
     configwrapper.cpp
     sessionsmodel.cpp
     components/modelcombobox.cpp
     components/lineedit.cpp
+)
+
+qt4_add_dbus_interface(GREETER_SRCS
+    org.freedesktop.UPower.xml
+    upower
 )
 
 # Create the plasmoid
