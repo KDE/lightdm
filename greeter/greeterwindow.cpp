@@ -115,6 +115,9 @@ GreeterWindow::GreeterWindow(QWidget *parent)
 
 
     setSource(source);
+    // Prevent screen flickering when the greeter starts up. This really needs to be sorted out in QML/Qt...
+    setAttribute(Qt::WA_OpaquePaintEvent);
+    setAttribute(Qt::WA_NoSystemBackground);
 
     // Shortcut to take a screenshot of the screen. Handy because it is not
     // possible to take a screenshot of the greeter in test mode without
