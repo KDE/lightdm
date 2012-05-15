@@ -30,9 +30,10 @@ Item {
 
     Image {
         fillMode: Image.PreserveAspectCrop
-        source: plasmaTheme.wallpaperPath()
+        source: config.readEntry("Background") ? config.readEntry("Background"): plasmaTheme.wallpaperPath();
         anchors.fill: parent
         visible: source != ""
+        smooth: true
     }
 
     Connections {
