@@ -93,10 +93,10 @@ void ThemesModel::load()
     //get a list of possible theme directories, loop through each of these finding themes.
     //FIXME I think this can be simplified to return all possible themes directly
 
-    foreach(const QString themeDirPath, themeDirPaths)
+    foreach(const QString &themeDirPath, themeDirPaths)
     {
         QDir themeDir(themeDirPath);
-        foreach(const QString dirPath, themeDir.entryList(QDir::NoDotAndDotDot | QDir::Dirs)) {
+        foreach(const QString &dirPath, themeDir.entryList(QDir::NoDotAndDotDot | QDir::Dirs)) {
             qDebug() << themeDir.filePath(dirPath + "/theme.rc");
             if (QFile::exists(themeDir.filePath(dirPath + "/theme.rc"))) {
                 loadTheme(QDir(themeDir.filePath(dirPath)));
