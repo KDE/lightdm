@@ -59,7 +59,7 @@ KAuth::ActionReply Helper::save(const QVariantMap &args)
 
     QMap<QString, QVariant>::const_iterator i;
     for (i = args.constBegin() ; i != args.constEnd() ; i++) {
-        QStringList lst = i.key().split("/");
+        QStringList lst = i.key().split('/');
         if (lst.size() != 3) {
             errorReply.setErrorDescription(QString("Invalid key format: %1").arg(i.key()));
             return errorReply;
