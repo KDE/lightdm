@@ -123,7 +123,7 @@ QVariantMap CoreConfig::save()
         bool guest;
         if (user == GUEST_NAME) {
             guest = true;
-            user = QString();
+            user.clear();
         } else {
             guest = false;
         }
@@ -133,7 +133,7 @@ QVariantMap CoreConfig::save()
         //args["core/SeatDefaults/autologin-session"] = currentItemData(ui->autoLoginSession, QLightDM::SessionsModel::IdRole);
         //args["core/SeatDefaults/autologin-user-timeout"] = ui->autoLoginTimeout->value() * 60;
     } else {
-        args["core/SeatDefaults/autologin-user"] = QString();
+        args["core/SeatDefaults/autologin-user"].clear();
         args["core/SeatDefaults/autologin-guest"] = false;
     }
     args["core/SeatDefaults/allow-guest"] = ui->allowGuest->isChecked();
