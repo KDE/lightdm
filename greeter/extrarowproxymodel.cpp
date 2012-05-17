@@ -46,18 +46,18 @@ void ExtraRowProxyModel::setRowText(int id, int column, const QVariant& value)
 void ExtraRowProxyModel::setSourceModel(QAbstractItemModel* model)
 {
     if (! m_model.isNull()) {
-        disconnect(m_model.data(), SIGNAL(rowsInserted(QModelIndex, int, int)), this, SLOT(onSourceRowsInserted(QModelIndex,int,int)));
-        disconnect(m_model.data(), SIGNAL(rowsRemoved(QModelIndex, int, int)), this, SLOT(onSourceRowsRemoved(QModelIndex,int,int)));
-        disconnect(m_model.data(), SIGNAL(dataChanged(QModelIndex, QModelIndex)), this, SLOT(onSourceDataChanged(QModelIndex,QModelIndex)));
+        disconnect(m_model.data(), SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(onSourceRowsInserted(QModelIndex,int,int)));
+        disconnect(m_model.data(), SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(onSourceRowsRemoved(QModelIndex,int,int)));
+        disconnect(m_model.data(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(onSourceDataChanged(QModelIndex,QModelIndex)));
     }
 
     m_model = QWeakPointer<QAbstractItemModel>(model);
     reset();
     setRoleNames(m_model.data()->roleNames());
 
-    connect(m_model.data(), SIGNAL(rowsInserted(QModelIndex, int, int)), SLOT(onSourceRowsInserted(QModelIndex,int,int)));
-    connect(m_model.data(), SIGNAL(rowsRemoved(QModelIndex, int, int)), SLOT(onSourceRowsRemoved(QModelIndex,int,int)));
-    connect(m_model.data(), SIGNAL(dataChanged(QModelIndex, QModelIndex)), SLOT(onSourceDataChanged(QModelIndex,QModelIndex)));
+    connect(m_model.data(), SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(onSourceRowsInserted(QModelIndex,int,int)));
+    connect(m_model.data(), SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(onSourceRowsRemoved(QModelIndex,int,int)));
+    connect(m_model.data(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), SLOT(onSourceDataChanged(QModelIndex,QModelIndex)));
 }
 
 int ExtraRowProxyModel::rowCount(const QModelIndex &) const
