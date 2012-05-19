@@ -33,7 +33,11 @@ Item {
         model: screensModel
         delegate: Image {
             fillMode: Image.PreserveAspectCrop
-            anchors.fill: parent
+            x: geometry.x
+            width: geometry.width
+            y: geometry.y
+            height: geometry.heigh
+            
             //read from config, if there's no entry use plasma theme
             source: config.readEntry("Background") ? config.readEntry("Background"): plasmaTheme.wallpaperPath();
         }
