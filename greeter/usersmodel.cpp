@@ -1,0 +1,50 @@
+/*
+This file is part of LightDM-KDE.
+
+Copyright 2012 David Edmundson <kde@davidedmundson.co.uk>
+
+LightDM-KDE is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+LightDM-KDE is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+#include "usersmodel.h"
+
+#include <QLightDM/UsersModel>
+
+#include <KLocalizedString>
+
+UsersModel::UsersModel(QObject *parent) :
+    ExtraRowProxyModel(parent),
+    m_showGuest(false)
+{
+    setSourceModel(new QLightDM::UsersModel(this));
+}
+
+void UsersModel::setShowLastUsedSession(bool showGuest)
+{
+    if (showGuest == m_showGuest) {
+        return;
+    }
+    m_showGuest = showGuest;
+
+    if (m_showGuest) {
+        int guestRowId = usersModel->appendRow();
+        usersModel->setRowText(guestRowId, 0, i18n("Guest"));
+        usersModel->setRowData(guestRowId, 0, "*guest", QLightDM::UsersModel::NameRole);
+    }
+}
+
+bool UsersModel::showGuest() const
+{
+    return m_showGuest;
+}

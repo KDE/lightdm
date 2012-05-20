@@ -77,9 +77,7 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     usersModel->setSourceModel(new QLightDM::UsersModel(this));
 
     if (m_greeter->hasGuestAccountHint()) {
-        int guestRowId = usersModel->appendRow();
-        usersModel->setRowText(guestRowId, 0, i18n("Guest"));
-        usersModel->setRowData(guestRowId, 0, "*guest", QLightDM::UsersModel::NameRole);
+
     }
 
 
