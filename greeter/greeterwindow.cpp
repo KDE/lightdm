@@ -98,6 +98,7 @@ GreeterWindow::GreeterWindow(QWidget *parent)
 
     if (source.isEmpty()) {
         kError() << "Cannot find QML file for" << theme << "theme. Falling back to \"classic\" theme.";
+        theme = "classic";
         source = KGlobal::dirs()->locate("appdata", "themes/classic/main.qml");
         if (source.isEmpty()) {
             kFatal() << "Cannot find QML file for \"classic\" theme. Something is wrong with this installation. Aborting.";
@@ -105,6 +106,8 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     }
     kDebug() << "Loading" << source;
 
+    KGlobal::locale()->insertCatalog("lightdm_theme_" + theme);
+    
     rootContext()->setContextProperty("config", new ConfigWrapper(KGlobal::dirs()->locate("appdata", "themes/" + theme + "/main.xml"), this));
     rootContext()->setContextProperty("screenSize", size());
     rootContext()->setContextProperty("greeter", m_greeter);
