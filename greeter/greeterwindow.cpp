@@ -85,11 +85,6 @@ GreeterWindow::GreeterWindow(QWidget *parent)
 
     engine()->addImageProvider("face", new FaceImageProvider(usersModel));
 
-//     scriptEngine = kdeclarative.scriptEngine();
-//     registerDataEngineMetaTypes(scriptEngine);
-   
-    //FIXME set the engine to ban ALL network activity.
-
     KConfig config(LIGHTDM_CONFIG_DIR "/lightdm-kde-greeter.conf");
     KConfigGroup configGroup = config.group("greeter");
 
