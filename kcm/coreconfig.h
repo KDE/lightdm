@@ -26,6 +26,8 @@ namespace Ui {
     class CoreConfig;
 }
 
+class UsersModel;
+
 class CoreConfig : public QWidget
 {
     Q_OBJECT
@@ -39,9 +41,12 @@ public:
 Q_SIGNALS:
     void changed(bool state=true);
 
+private Q_SLOTS:
+    void onAllowGuestChanged(bool allow);
 private:
     void loadFromConfig();
 
+    UsersModel *m_usersModel;
     Ui::CoreConfig *ui;
 };
 

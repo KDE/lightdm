@@ -30,7 +30,7 @@ UsersModel::UsersModel(QObject *parent) :
     setSourceModel(new QLightDM::UsersModel(this));
 }
 
-void UsersModel::setShowLastUsedSession(bool showGuest)
+void UsersModel::setShowGuest(bool showGuest)
 {
     if (showGuest == m_showGuest) {
         return;
@@ -38,9 +38,9 @@ void UsersModel::setShowLastUsedSession(bool showGuest)
     m_showGuest = showGuest;
 
     if (m_showGuest) {
-        int guestRowId = usersModel->appendRow();
-        usersModel->setRowText(guestRowId, 0, i18n("Guest"));
-        usersModel->setRowData(guestRowId, 0, "*guest", QLightDM::UsersModel::NameRole);
+        int guestRowId = appendRow();
+        setRowText(guestRowId, 0, i18n("Guest"));
+        setRowData(guestRowId, 0, "*guest", QLightDM::UsersModel::NameRole);
     }
 }
 

@@ -18,7 +18,8 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "coreconfig.h"
 #include "ui_coreconfig.h"
-#include "extrarowproxymodel.h"
+//#include "extrarowproxymodel.h"
+#include "usersmodel.h"
 
 #include "config.h"
 
@@ -62,18 +63,15 @@ CoreConfig::CoreConfig(QWidget *parent) :
     // Hide for now: implementation is not complete
     ui->serverWidget->hide();
 
-    ExtraRowProxyModel* usersModel = new ExtraRowProxyModel(this);
-    usersModel->setSourceModel(new QLightDM::UsersModel(this));
-    int guestId = usersModel->appendRow();
-    usersModel->setRowText(guestId, 0, i18n("Guest"));
-    usersModel->setRowData(guestId, 0, GUEST_NAME, QLightDM::UsersModel::NameRole);
-    ui->autoLoginUser->setModel(usersModel);
+    m_usersModel = new UsersModel(this);
+    ui->autoLoginUser->setModel(m_usersModel);
 
     ui->autoLoginSession->setModel(new QLightDM::SessionsModel(this));
 
     loadFromConfig();
 
     connect(ui->allowGuest, SIGNAL(toggled(bool)), SIGNAL(changed()));
+    connect(ui->allowGuest, SIGNAL(toggled(bool)), SLOT(onAllowGuestChanged(bool)));
     connect(ui->autoLogin, SIGNAL(toggled(bool)), SIGNAL(changed()));
     connect(ui->autoLoginUser, SIGNAL(currentIndexChanged(int)), SIGNAL(changed()));
     connect(ui->autoLoginSession, SIGNAL(currentIndexChanged(int)), SIGNAL(changed()));
@@ -93,6 +91,8 @@ void CoreConfig::loadFromConfig()
 
     KConfigGroup seatDefaultsGroup = config.group("SeatDefaults");
     ui->allowGuest->setChecked(seatDefaultsGroup.readEntry("allow-guest", true));
+
+    m_usersModel->setShowGuest(ui->allowGuest->isChecked());
 
     QString user = seatDefaultsGroup.readEntry("autologin-user");
     if (user.isEmpty() && seatDefaultsGroup.readEntry("autologin-guest", false)) {
@@ -140,4 +140,9 @@ QVariantMap CoreConfig::save()
     args["core/XDMCPServer/enabled"] = ui->enableXdmcp->isChecked();
     args["core/VNCServer/enabled"] = ui->enableVnc->isChecked();
     return args;
+}
+
+void CoreConfig::onAllowGuestChanged(bool allow)
+{
+    m_usersModel->setShowGuest(allow);
 }

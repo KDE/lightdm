@@ -27,6 +27,7 @@ set(LIGHTDM_KCM_SRCS
     lightdmkcm.cpp
     configoptions.cpp
     ${GREETER_DIR}/extrarowproxymodel.cpp
+    ${GREETER_DIR}/usersmodel.cpp
 )
 
 set(LIGHTDM_KCM_UI

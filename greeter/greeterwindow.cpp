@@ -51,6 +51,7 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include "faceimageprovider.h"
 #include "configwrapper.h"
 #include "sessionsmodel.h"
+#include "usersmodel.h"
 
 #include <config.h>
 
@@ -73,11 +74,10 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     //binds things like kconfig and icons
     kdeclarative.setupBindings();
 
-    ExtraRowProxyModel* usersModel = new ExtraRowProxyModel(this);
-    usersModel->setSourceModel(new QLightDM::UsersModel(this));
+    UsersModel* usersModel = new UsersModel(this);
 
     if (m_greeter->hasGuestAccountHint()) {
-
+        usersModel->setShowGuest(true);
     }
 
 
