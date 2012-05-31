@@ -23,6 +23,7 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include <QHash>
 #include <QVector>
 #include <QWeakPointer>
+#include <QStandardItemModel>
 
 /**
  * A proxy model which makes it possible to append extra rows at the end
@@ -33,30 +34,33 @@ class ExtraRowProxyModel : public QAbstractListModel
 public:
     ExtraRowProxyModel(QObject *parent = 0);
 
-    /**
-     * Append a row, returns a row id
-     */
-    int appendRow();
-
-    void setRowData(int id, int column, const QVariant &value, int role);
-    void setRowText(int id, int column, const QVariant &value);
-
     int rowCount(const QModelIndex &parent = QModelIndex()) const; // reimp
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const; // reimp
 
     void setSourceModel(QAbstractItemModel* model);
+
+    /** Returns a pointer to the extra row model, which can be edited as appropriate*/
+    QStandardItemModel* extraRowModel() const;
 
 private slots:
     void onSourceRowsInserted(const QModelIndex &parent,int start,int end);
     void onSourceRowsRemoved(const QModelIndex &parent,int start,int end);
     void onSourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
 
+    void onExtraRowsInserted(const QModelIndex &parent,int start,int end);
+    void onExtraRowsRemoved(const QModelIndex &parent,int start,int end);
+    void onExtraDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
+
+
 private:
     typedef QHash<int, QVariant> Item; //role, item.
     typedef QHash<int, Item> Row; //column, item
     typedef QVector<Row> Rows;
 
+    int sourceRowCount() const;
+
     QWeakPointer<QAbstractItemModel> m_model;
+    QStandardItemModel *m_extraRowModel;
     Rows m_rows;
 };
 

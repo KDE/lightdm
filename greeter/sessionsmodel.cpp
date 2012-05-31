@@ -39,14 +39,13 @@ void SessionsModel::setShowLastUsedSession(bool showLastUsedSession)
     }
     m_showLastUsedSession = showLastUsedSession;
 
-
     if (m_showLastUsedSession) {
-        int lastSessionId = appendRow();
-        setRowText(lastSessionId, 0, i18n("Previously Used Session"));
-        //if lightDM is given an empty session parameter it will just guess something sensible. (l
-        setRowData(lastSessionId, 0, "", QLightDM::SessionsModel::KeyRole);
-        //don't set any data.. no session ID = "", which means LightDM will default to whatever it
-    } //else ...
+        QStandardItem *guest = new QStandardItem(i18n("Previously Used Session"));
+        guest->setData("", QLightDM::SessionsModel::KeyRole);
+        extraRowModel()->appendRow(guest);
+    } else {
+        extraRowModel()->removeRow(0);
+    }
 }
 
 bool SessionsModel::showLastUsedSession() const

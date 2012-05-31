@@ -29,7 +29,7 @@ class UsersModel : public ExtraRowProxyModel
     Q_PROPERTY(bool showGuest READ showGuest WRITE setShowGuest)
 public:
     explicit UsersModel(QObject *parent = 0);
-    
+
     /** Add a row to the sessions model titled "Last Used Session" */
     void setShowGuest(bool showGuest);
     bool showGuest() const;

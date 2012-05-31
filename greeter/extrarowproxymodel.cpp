@@ -22,25 +22,12 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include <QAbstractItemModel>
 
 ExtraRowProxyModel::ExtraRowProxyModel(QObject* parent)
-: QAbstractListModel(parent)
-{}
-
-int ExtraRowProxyModel::appendRow()
+: QAbstractListModel(parent),
+  m_extraRowModel(new QStandardItemModel(this))
 {
-    Row row;
-    m_rows.append(row);
-    return m_rows.count() - 1;
-}
-
-void ExtraRowProxyModel::setRowData(int id, int column, const QVariant& value, int role)
-{
-    Q_ASSERT(id < m_rows.count());
-    m_rows[id][column][role] = value;
-}
-
-void ExtraRowProxyModel::setRowText(int id, int column, const QVariant& value)
-{
-    setRowData(id, column, value, Qt::DisplayRole);
+    connect(m_extraRowModel, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(onExtraRowsInserted(QModelIndex,int,int)));
+    connect(m_extraRowModel, SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(onExtraRowsRemoved(QModelIndex,int,int)));
+    connect(m_extraRowModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), SLOT(onExtraDataChanged(QModelIndex,QModelIndex)));
 }
 
 void ExtraRowProxyModel::setSourceModel(QAbstractItemModel* model)
@@ -60,33 +47,25 @@ void ExtraRowProxyModel::setSourceModel(QAbstractItemModel* model)
     connect(m_model.data(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), SLOT(onSourceDataChanged(QModelIndex,QModelIndex)));
 }
 
+QStandardItemModel *ExtraRowProxyModel::extraRowModel() const
+{
+    return m_extraRowModel;
+}
+
 int ExtraRowProxyModel::rowCount(const QModelIndex &) const
 {
-    if (m_model.isNull()) {
-        return m_rows.count();
-    } else {
-        return m_model.data()->rowCount() + m_rows.count();
-    }
-
+    return sourceRowCount() + m_extraRowModel->rowCount();
 }
 
 QVariant ExtraRowProxyModel::data(const QModelIndex &index, int role) const
 {
-    int count = 0;
-    if (!m_model.isNull()) {
-        count = m_model.data()->rowCount();
-        if (index.row() < count) {
-            return m_model.data()->data(index, role);
-        }
+    if (index.row() < sourceRowCount()) {
+        return m_model.data()->index(index.row(), 0).data(role);
     }
-
-    int extraRow = index.row() - count;
-    if (extraRow >= m_rows.count()) {
-        return QVariant();
+    else {
+        int row = index.row() - sourceRowCount();
+        return m_extraRowModel->index(row, 0).data(role);
     }
-
-    const Item& item = m_rows[extraRow][index.column()];
-    return item.value(role);
 }
 
 void ExtraRowProxyModel::onSourceRowsInserted(const QModelIndex &parent, int start, int end)
@@ -106,6 +85,34 @@ void ExtraRowProxyModel::onSourceRowsRemoved(const QModelIndex &parent, int star
 void ExtraRowProxyModel::onSourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight)
 {
     dataChanged(createIndex(topLeft.row(), 0)   , createIndex(bottomRight.row(), 0));
+}
+
+void ExtraRowProxyModel::onExtraRowsInserted(const QModelIndex &parent, int start, int end)
+{
+    Q_UNUSED(parent);
+    beginInsertRows(QModelIndex(), sourceRowCount() + start, sourceRowCount() + end);
+    endInsertRows();
+}
+
+void ExtraRowProxyModel::onExtraRowsRemoved(const QModelIndex &parent, int start, int end)
+{
+    Q_UNUSED(parent);
+    beginRemoveRows(QModelIndex(), sourceRowCount() + start, sourceRowCount() + end);
+    endRemoveRows();
+}
+
+void ExtraRowProxyModel::onExtraDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight)
+{
+    dataChanged(createIndex(sourceRowCount() + topLeft.row(), 0), createIndex(sourceRowCount() + bottomRight.row(), 0));
+}
+
+int ExtraRowProxyModel::sourceRowCount() const
+{
+    if (m_model.isNull()) {
+        return 0;
+    } else {
+        return m_model.data()->rowCount();
+    }
 }
 
 

@@ -20,6 +20,7 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include "usersmodel.h"
 
 #include <QLightDM/UsersModel>
+#include <QDebug>
 
 #include <KLocalizedString>
 
@@ -38,9 +39,11 @@ void UsersModel::setShowGuest(bool showGuest)
     m_showGuest = showGuest;
 
     if (m_showGuest) {
-        int guestRowId = appendRow();
-        setRowText(guestRowId, 0, i18n("Guest"));
-        setRowData(guestRowId, 0, "*guest", QLightDM::UsersModel::NameRole);
+        QStandardItem *guest = new QStandardItem(i18n("Guest"));
+        guest->setData("*guest", QLightDM::UsersModel::NameRole);
+        extraRowModel()->appendRow(guest);
+    } else {
+        extraRowModel()->removeRow(0);
     }
 }
 

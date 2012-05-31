@@ -18,7 +18,6 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "coreconfig.h"
 #include "ui_coreconfig.h"
-//#include "extrarowproxymodel.h"
 #include "usersmodel.h"
 
 #include "config.h"
