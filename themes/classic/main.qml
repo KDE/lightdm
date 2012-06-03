@@ -223,7 +223,7 @@ Item {
                 text: i18n("Shutdown")
                 icon: QIcon("system-shutdown")
                 enabled: power.canShutdown;
-                onClicked: {power.shutDown();}
+                onClicked: {power.shutdown();}
             }     
         }
 

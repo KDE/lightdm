@@ -340,7 +340,7 @@ Item {
                 text: i18n("Shutdown")
                 iconSource: "system-shutdown"
                 enabled: power.canShutdown
-                onClicked: power.shutDown();
+                onClicked: power.shutdown();
             }
         }
     }
