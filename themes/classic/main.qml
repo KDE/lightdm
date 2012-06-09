@@ -36,7 +36,7 @@ Item {
             x: geometry.x
             width: geometry.width
             y: geometry.y
-            height: geometry.heigh
+            height: geometry.height
             
             //read from config, if there's no entry use plasma theme
             source: config.readEntry("Background") ? config.readEntry("Background"): plasmaTheme.wallpaperPath();
