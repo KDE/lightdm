@@ -22,6 +22,7 @@ X-KDE-Keywords[uk]=lightdm,display manager,face,user,users,login,greeting,theme,
 X-KDE-Keywords[x-test]=xxlightdm,display manager,face,user,users,login,greeting,theme,language,session,sessions,shutdown,restart,guest,auto loginxx
 
 Name=Login Screen (LightDM)
+Name[cs]=Přihlašovací obrazovka (LightDM)
 Name[da]=Login-skærm (LightDM)
 Name[et]=Sisselogimisdialoog (LightDM)
 Name[nl]=Aanmeldscherm (LightDM)

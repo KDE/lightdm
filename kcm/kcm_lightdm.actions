@@ -33,6 +33,7 @@ Name[sv]=Spara temainställningen
 Name[uk]=Зберегти параметри теми
 Name[x-test]=xxSave Theme Detailsxx
 Description=Save Theme Details in LightDM
+Description[cs]=Uložit podrobnosti v LightDM
 Description[da]=Gem temadetaljer i LightDM
 Description[de]=Design-Details in LightDM speichern
 Description[es]=Guardar los detalles del tema en LightDM
@@ -50,6 +51,7 @@ Persistence=session
 
 [org.kde.kcontrol.kcmlightdm.save]
 Name=Save Settings
+Name[cs]=Uložit nastavení
 Name[da]=Gem indstillinger
 Name[es]=Guardar preferencias
 Name[et]=Seadistuste salvestamine
@@ -63,6 +65,7 @@ Name[sv]=Spara inställningar
 Name[uk]=Зберегти параметри
 Name[x-test]=xxSave Settingsxx
 Description=Save Settings in LightDM
+Description[cs]=Uložit nastavení v LightDM
 Description[da]=Gem indstillinger i LightDM
 Description[es]=Guardar preferencias en LightDM
 Description[et]=Seadistuste salvestamine LightDM-is
