@@ -197,6 +197,16 @@ Item {
             greeter.authenticate(username);
         }
     }
+    
+    function indexForUserName(name) {
+        var index;
+        for (index = 0; index < usersList.count; ++index) {
+            if (usersList.contentItem.children[index].username == name) {
+                return index;
+            }
+        }
+        return 0;
+    }
 
     ListView {
         id: usersList
@@ -207,7 +217,7 @@ Item {
         }
         width: parent.width
         height: userItemHeight
-
+        currentIndex: indexForUserName(greeter.selectGuest ? guestLogin : greeter.selectUser)
         model: usersModel
 
         cacheBuffer: count * 80
