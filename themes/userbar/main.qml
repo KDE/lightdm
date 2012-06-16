@@ -301,7 +301,17 @@ Item {
 
         model: sessionsModel
         dataRole: "key"
-        currentIndex: indexForData(usersList.currentItem.usersession)
+        currentIndex: {
+            index = indexForData(usersList.currentItem.usersession)
+            if (index >= 0) {
+                return index;
+            }
+            index = indexForData(greeter.defaultSession)
+            if (index >= 0) {
+                return index;
+            }
+            return 0;
+        }
     }
 
     // Bottom "Power" bar
