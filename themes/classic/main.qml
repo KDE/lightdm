@@ -109,8 +109,18 @@ Item {
                     /*PlasmaComponents.*/TextField {
                         id: usernameInput;
                         placeholderText: i18n("Username");
+                        text: greeter.selectUser
                         onAccepted: {
                             passwordInput.focus = true;
+                        }
+                        
+                        Component.onCompleted: {
+                            //if the username field has text, focus the password, else focus the username
+                            if (parent.text) {
+                                passwordInput.focus = true
+                            } else {
+                                usernameInput.focus = true
+                            }
                         }
                         
                         KeyNavigation.tab: passwordInput
