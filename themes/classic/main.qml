@@ -29,19 +29,23 @@ Item {
     width: screenSize.width;
     height: screenSize.height;
 
-    Repeater {
-        model: screensModel
-        delegate: Image {
-            fillMode: Image.PreserveAspectCrop
-            x: geometry.x
-            width: geometry.width
-            y: geometry.y
-            height: geometry.height
-            
+    ScreenManager {
+        id: screenManager
+        Image {
+            fillMode: Image.PreserveAspectCrop          
             //read from config, if there's no entry use plasma theme
             source: config.readEntry("Background") ? config.readEntry("Background"): plasmaTheme.wallpaperPath();
         }
     }
+    
+    Item { //recreate active screen at a level which we can anchor in.
+        id: activeScreen
+        x: screenManager.activeScreen.x
+        y: screenManager.activeScreen.y
+        width: screenManager.activeScreen.width
+        height: screenManager.activeScreen.height
+    }
+
 
     Connections {
         target: greeter;
@@ -72,7 +76,7 @@ Item {
     PlasmaCore.FrameSvgItem {
         id: dialog;
         imagePath: "translucent/dialogs/background"
-        anchors.centerIn: parent;
+        anchors.centerIn: activeScreen;
 
         width: childrenRect.width + 40;
         height: childrenRect.height + 40;
@@ -202,7 +206,7 @@ Item {
         id: powerDialog;
         anchors.top: dialog.bottom
         anchors.topMargin: 3
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenter: activeScreen.horizontalCenter
         imagePath: "translucent/dialogs/background"
         opacity: 0
 
