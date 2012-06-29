@@ -1,6 +1,6 @@
 [theme]
 Name = Classic
-Description = A pretty looking greeter
+Description = A classic login prompt
 Version = 0.1
 Author = David Edmundson
 Homepage = http://kde.org
