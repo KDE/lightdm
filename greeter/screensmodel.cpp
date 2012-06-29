@@ -40,21 +40,28 @@ QVariant ScreensModel::data(const QModelIndex &index, int role) const
 
 void ScreensModel::onScreenResized(int screen)
 {
-    reset();
-    loadScreens();
+    QDesktopWidget *dw = QApplication::desktop();
+
+    if (screen >= 0 && screen < m_screens.size()) {
+        m_screens[screen] = dw->screenGeometry(screen);
+    }
+    QModelIndex index = createIndex(screen,0);
+    dataChanged(index, index);
 }
 
 void ScreensModel::onScreenCountChanged(int newCount)
 {
-    reset();
+    Q_UNUSED(newCount);
     loadScreens();
 }
 
 void ScreensModel::loadScreens()
 {
+    beginResetModel();
     m_screens.clear();
     QDesktopWidget *dw = QApplication::desktop();
     for (int i=0;i<dw->screenCount();i++) {
         m_screens.append(dw->screenGeometry(i));
     }
+    endResetModel();
 }
