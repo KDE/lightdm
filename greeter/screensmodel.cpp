@@ -8,8 +8,8 @@ ScreensModel::ScreensModel(QObject *parent) :
 {
     loadScreens();
     QDesktopWidget *dw = QApplication::desktop();
-    connect(dw, SIGNAL(screenCountChanged(int)), SLOT(screenCountChanged()));
-    connect(dw, SIGNAL(resized(int)), SLOT(onResized()));
+    connect(dw, SIGNAL(screenCountChanged(int)), SLOT(onScreenCountChanged(int)));
+    connect(dw, SIGNAL(resized(int)), SLOT(onResized(int)));
 
     QHash<int, QByteArray> roles;
     roles[Qt::UserRole] = "geometry";
@@ -36,13 +36,13 @@ QVariant ScreensModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-void ScreensModel::onResized()
+void ScreensModel::onScreenResized(int screen)
 {
     reset();
     loadScreens();
 }
 
-void ScreensModel::screenCountChanged()
+void ScreensModel::onScreenCountChanged(int newCount)
 {
     reset();
     loadScreens();

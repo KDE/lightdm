@@ -14,8 +14,8 @@ public:
     QVariant data(const QModelIndex &index, int role) const;
 
 private slots:
-    void onResized();
-    void screenCountChanged();
+    void onScreenResized(int screen);
+    void onScreenCountChanged(int newCount);
 
 private:
     void loadScreens();
