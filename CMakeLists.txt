@@ -42,6 +42,4 @@ configure_file(config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h @ONLY)
 
 add_subdirectory(greeter)
 add_subdirectory(kcm)
-
-install(DIRECTORY themes
-        DESTINATION ${DATA_INSTALL_DIR}/lightdm-kde-greeter)
+add_subdirectory(themes)
