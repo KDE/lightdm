@@ -31,14 +31,14 @@ Item {
 
     ScreenManager {
         id: screenManager
-        Image {
+        delegate: Image {
             fillMode: Image.PreserveAspectCrop          
             //read from config, if there's no entry use plasma theme
             source: config.readEntry("Background") ? config.readEntry("Background"): plasmaTheme.wallpaperPath();
         }
     }
-    
-    Item { //recreate active screen at a level which we can anchor in.
+
+    Item { //recreate active screen at a sibling level which we can anchor in.
         id: activeScreen
         x: screenManager.activeScreen.x
         y: screenManager.activeScreen.y

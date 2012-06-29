@@ -4,8 +4,7 @@ import QtQuick 1.1
 Item {
     id: manager
     property Item activeScreen
-    property Component content
-    default property alias bodgeHack: manager.content //workaround for a bug where you can't assign a default property to a component
+    property Component delegate
 
     Repeater {
         id: repeater
