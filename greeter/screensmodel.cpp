@@ -28,7 +28,9 @@ QVariant ScreensModel::data(const QModelIndex &index, int role) const
 {
     int row = index.row();
 
-    Q_ASSERT(row > 0 && row < rowCount());
+    if(row < 0 || row >= m_screens.size()) {
+        return QVariant();
+    }
 
     if (role == Qt::UserRole) {
         return m_screens[row];
