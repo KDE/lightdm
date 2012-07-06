@@ -280,7 +280,7 @@ Item {
             opacity: 1 - passwordInput.opacity
 
             iconSource: loginButton.iconSource
-            text: "Login"
+            text: i18n("Login")
             onClicked: startLogin();
 
             Behavior on opacity {
