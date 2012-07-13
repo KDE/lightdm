@@ -255,7 +255,7 @@ Item {
         id: optionsDialog;
         anchors.top: dialog.bottom
         anchors.topMargin: 3
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenter: activeScreen.horizontalCenter
         imagePath: "translucent/dialogs/background"
         opacity: 0
 
