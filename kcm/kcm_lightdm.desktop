@@ -27,6 +27,7 @@ X-KDE-Keywords[x-test]=xxlightdm,display manager,face,user,users,login,greeting,
 Name=Login Screen (LightDM)
 Name[cs]=Přihlašovací obrazovka (LightDM)
 Name[da]=Login-skærm (LightDM)
+Name[de]=Anmeldebildschirm (LightDM)
 Name[et]=Sisselogimisdialoog (LightDM)
 Name[fi]=Kirjautumisruutu (LightDM)
 Name[fr]=Écran de connexion (LightDM)
