@@ -57,10 +57,10 @@ ThemeConfig::ThemeConfig(QWidget *parent) :
 
     QModelIndex index = findIndexForTheme(theme);
     if (!index.isValid()) {
-        kWarning() << "Could not find" << theme << "in theme list. Falling back to \"classic\" theme.";
-        index = findIndexForTheme("classic");
+        kWarning() << "Could not find" << theme << "in theme list. Falling back to \"userbar\" theme.";
+        index = findIndexForTheme("userbar");
         if (!index.isValid()) {
-            kWarning() << "Could not find \"classic\" theme. Something is wrong with this installation. Falling back to first available theme.";
+            kWarning() << "Could not find \"userbar\" theme. Something is wrong with this installation. Falling back to first available theme.";
             index = model->index(0);
         }
     }
