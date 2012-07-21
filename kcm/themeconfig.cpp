@@ -53,7 +53,7 @@ ThemeConfig::ThemeConfig(QWidget *parent) :
     connect(ui->themesList, SIGNAL(clicked(QModelIndex)), SLOT(onThemeSelected(QModelIndex)));
     connect(ui->options, SIGNAL(changed(bool)), SIGNAL(changed(bool)));
 
-    QString theme = m_config->group("greeter").readEntry("theme-name", "classic");
+    QString theme = m_config->group("greeter").readEntry("theme-name", "userbar");
 
     QModelIndex index = findIndexForTheme(theme);
     if (!index.isValid()) {

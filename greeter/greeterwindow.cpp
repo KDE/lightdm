@@ -91,8 +91,8 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     KUrl source = KGlobal::dirs()->locate("appdata", "themes/" + theme + "/main.qml");
 
     if (source.isEmpty()) {
-        kError() << "Cannot find QML file for" << theme << "theme. Falling back to \"classic\" theme.";
-        theme = "classic";
+        kError() << "Cannot find QML file for" << theme << "theme. Falling back to \"userbar\" theme.";
+        theme = "userbar";
         source = KGlobal::dirs()->locate("appdata", "themes/classic/main.qml");
         if (source.isEmpty()) {
             kFatal() << "Cannot find QML file for \"classic\" theme. Something is wrong with this installation. Aborting.";
