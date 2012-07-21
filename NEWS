@@ -1,3 +1,15 @@
+# 0.2.0 - 2012.07.21
+- Suspend when closing lid (Bug #295693)
+- Config should be saved only once (Bug #294964)
+- Need a port to Plasma Components (Bug #294965)
+- User pictures are not shown in greeters which support them (Bug #296303)
+- Selecting "Previously Used Session" with Guest causes login to fail (Bug #298658)
+- Nothing is translated (Bug #299381)
+- Shutdown button in the login screen does nothing (Bug #299881)
+- One can select to auto login as guest, even if guest is not enabled (Bug #300329)
+- Set default LightDM greeter to userbar (Bug #303014)
+- Misc visual improvements
+
 # 0.1.1 - 2012.04.24
 - Fix loading of user pictures (Bug #296303)
 
