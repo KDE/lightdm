@@ -35,7 +35,7 @@ Item {
             }
 
             Loader {
-                sourceComponent: manager.content
+                sourceComponent: manager.delegate
                 anchors.fill: parent
             }
         }
