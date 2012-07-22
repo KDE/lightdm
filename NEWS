@@ -1,3 +1,7 @@
+# 0.2.1 -2012.07.22
+ - Add missing license
+ - Fix broken code in classic theme (Bug #303915)
+
 # 0.2.0 - 2012.07.21
 - Suspend when closing lid (Bug #295693)
 - Config should be saved only once (Bug #294964)
