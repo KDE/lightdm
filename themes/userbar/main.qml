@@ -27,12 +27,21 @@ Item {
 
     property string guestLogin: "*guest"
 
-    Image {
-        fillMode: Image.PreserveAspectCrop
-        source: config.readEntry("Background") ? config.readEntry("Background"): plasmaTheme.wallpaperPath();
-        anchors.fill: parent
-        visible: source != ""
-        smooth: true
+    ScreenManager {
+        id: screenManager
+        delegate: Image {
+            fillMode: Image.PreserveAspectCrop          
+            //read from config, if there's no entry use plasma theme
+            source: config.readEntry("Background") ? config.readEntry("Background"): plasmaTheme.wallpaperPath();
+        }
+    }
+
+    Item { //recreate active screen at a sibling level which we can anchor in.
+        id: activeScreen
+        x: screenManager.activeScreen.x
+        y: screenManager.activeScreen.y
+        width: screenManager.activeScreen.width
+        height: screenManager.activeScreen.height
     }
 
     Connections {
@@ -74,8 +83,8 @@ Item {
 
     PlasmaComponents.Label {
         id: welcomeLabel
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
+        anchors.horizontalCenter: activeScreen.horizontalCenter
+        anchors.top: activeScreen.top
         anchors.topMargin: 5
         font.pointSize: 14
         text: i18n("Welcome to %1", greeter.hostname);
@@ -83,7 +92,7 @@ Item {
 
     FeedbackLabel {
         id: feedbackLabel
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenter: activeScreen.horizontalCenter
         anchors.top: welcomeLabel.bottom
         anchors.topMargin: 5
         font.pointSize: 14
@@ -210,11 +219,11 @@ Item {
     ListView {
         id: usersList
         anchors {
-            horizontalCenter: parent.horizontalCenter
+            horizontalCenter: activeScreen.horizontalCenter
             bottom: loginButtonItem.top
             bottomMargin: 24
         }
-        width: parent.width
+        width: activeScreen.width
         height: userItemHeight
         currentIndex: indexForUserName(greeter.selectGuest ? guestLogin : greeter.selectUser)
         model: usersModel
@@ -233,8 +242,8 @@ Item {
     FocusScope {
         id: loginButtonItem
         anchors {
-            horizontalCenter: parent.horizontalCenter
-            bottom: parent.verticalCenter
+            horizontalCenter: activeScreen.horizontalCenter
+            bottom: activeScreen.verticalCenter
         }
         height: 30
 
@@ -295,7 +304,7 @@ Item {
             top: loginButtonItem.bottom
             topMargin: 24
             bottom: powerBar.top
-            horizontalCenter: parent.horizontalCenter
+            horizontalCenter: activeScreen.horizontalCenter
         }
 
         model: sessionsModel
@@ -316,8 +325,8 @@ Item {
     // Bottom "Power" bar
     PlasmaCore.FrameSvgItem {
         id: powerBar
-        anchors.bottom: parent.bottom
-        anchors.right: parent.right
+        anchors.bottom: activeScreen.bottom
+        anchors.right: activeScreen.right
         width: childrenRect.width + margins.left
         height: childrenRect.height + margins.top * 2
         imagePath: "translucent/widgets/panel-background"
