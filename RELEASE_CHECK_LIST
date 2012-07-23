@@ -33,5 +33,11 @@ git merge --no-ff v$x.$y
 # Push
 git push
 
+# Create tarball from our newly tagged release
+git archive -o ../lightdm-kde-$x.$y.$z.tar v$x.$y.$z
+cd ..
+# Compress this
+bzip2 lightdm-kde-$x.$y.$z.tar
+
 # Upload to KDE FTP server
 
