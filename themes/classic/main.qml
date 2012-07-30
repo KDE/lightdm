@@ -280,6 +280,10 @@ Item {
             spacing: 5
             anchors.centerIn: parent
 
+            LightDM.Power {
+                id: power
+            }
+
             PlasmaWidgets.IconWidget {
                 text: i18n("Suspend")
                 icon: QIcon("system-suspend")

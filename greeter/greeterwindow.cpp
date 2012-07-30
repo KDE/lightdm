@@ -35,7 +35,8 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include <QPixmap>
 #include <QProcess>
 
-#include <QLightDM/Power>
+#include <QLightDM/Greeter>
+#include <QLightDM/UsersModel>
 
 #include <kdeclarative.h>
 
@@ -99,7 +100,6 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     rootContext()->setContextProperty("greeter", m_greeter);
     rootContext()->setContextProperty("usersModel", usersModel);
     rootContext()->setContextProperty("sessionsModel", new SessionsModel(this));
-    rootContext()->setContextProperty("power", new QLightDM::PowerInterface(this));
     rootContext()->setContextProperty("plasmaTheme", Plasma::Theme::defaultTheme());
 
     setSource(source);

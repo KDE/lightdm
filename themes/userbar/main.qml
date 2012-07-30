@@ -379,6 +379,10 @@ Item {
             x: parent.margins.left
             y: parent.margins.top
 
+            LightDM.Power {
+                id: power
+            }
+
             /*PlasmaComponents.*/ToolButton {
                 id: suspendButton
                 text: i18n("Suspend")

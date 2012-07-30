@@ -35,7 +35,7 @@ void QmlPlugin::registerTypes(const char *uri)
     qmlRegisterType<ScreensModel> (uri, 0, 1, "ScreensModel");
     
     qmlRegisterType<QLightDM::Greeter> (uri, 0, 1, "Greeter");
-//     qmlRegisterType<QLightDM::PowerInterface> (uri, 0, 1, "Power");   
+    qmlRegisterType<QLightDM::PowerInterface> (uri, 0, 1, "Power");
 }
 
 Q_EXPORT_PLUGIN2(klightdm, QmlPlugin);
