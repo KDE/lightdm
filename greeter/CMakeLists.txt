@@ -22,7 +22,6 @@ set(GREETER_SRCS
     configwrapper.cpp
     ${LIB_DIR}/usersmodel.cpp
     ${LIB_DIR}/sessionsmodel.cpp
-    ${LIB_DIR}/screensmodel.cpp
     ${LIB_DIR}/extrarowproxymodel.cpp
 )
 

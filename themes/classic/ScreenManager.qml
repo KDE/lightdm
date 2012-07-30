@@ -1,5 +1,6 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
+import org.kde.lightdm 0.1 as LightDM
 
 Item {
     id: manager
@@ -8,7 +9,7 @@ Item {
 
     Repeater {
         id: repeater
-        model: screensModel
+        model: LightDM.ScreensModel{}
         delegate : delegateItem
     }
 
