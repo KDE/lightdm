@@ -40,6 +40,7 @@ include(MacroLibrary)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 configure_file(config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h @ONLY)
 
+add_subdirectory(lib)
 add_subdirectory(greeter)
 add_subdirectory(kcm)
 add_subdirectory(themes)

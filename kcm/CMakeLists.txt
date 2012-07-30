@@ -3,9 +3,9 @@ find_package(KDE4 REQUIRED)
 include(KDE4Defaults)
 include(MacroLibrary)
 
-# Makes it easy to reuse code from the greeter. A bit ugly but I don't feel
+# Makes it easy to reuse code from the qml lib. A bit ugly but I don't feel
 # like setting up a static library for one class.
-set(GREETER_DIR ${CMAKE_SOURCE_DIR}/greeter)
+set(LIB_DIR ${CMAKE_SOURCE_DIR}/lib)
 
 # Add the compiler flags
 add_definitions (${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
@@ -14,7 +14,7 @@ include_directories(
   ${CMAKE_BINARY_DIR}
   ${KDE4_INCLUDES}
   ${QLIGHTDM_INCLUDE_DIR}
-  ${GREETER_DIR}
+  ${LIB_DIR}
 )
 
 add_subdirectory(configwidgets)
@@ -26,8 +26,8 @@ set(LIGHTDM_KCM_SRCS
     coreconfig.cpp
     lightdmkcm.cpp
     configoptions.cpp
-    ${GREETER_DIR}/extrarowproxymodel.cpp
-    ${GREETER_DIR}/usersmodel.cpp
+    ${LIB_DIR}/extrarowproxymodel.cpp
+    ${LIB_DIR}/usersmodel.cpp
 )
 
 set(LIGHTDM_KCM_UI
