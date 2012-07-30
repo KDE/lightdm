@@ -22,12 +22,13 @@ import org.kde.plasma.graphicswidgets 0.1 as PlasmaWidgets
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1 as ExtraComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.lightdm 0.1 as LightDM
 
 Item {
     width: screenSize.width;
     height: screenSize.height;
 
-    ScreenManager {
+    LightDM.ScreenManager {
         id: screenManager
         delegate: Image {
             // default to keeping aspect ratio

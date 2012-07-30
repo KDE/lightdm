@@ -19,13 +19,15 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 import QtQuick 1.0
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.lightdm 0.1 as LightDM
+
 
 Item {
     id: screen
     width: screenSize.width;
     height: screenSize.height;
 
-    ScreenManager {
+    LightDM.ScreenManager {
         id: screenManager
         delegate: Image {
              // default to keeping aspect ratio

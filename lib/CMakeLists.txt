@@ -26,6 +26,8 @@ target_link_libraries(klightdmqmlplugin
 
 install(TARGETS klightdmqmlplugin DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/lightdm/)
 install(FILES qmldir DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/lightdm/)
+install(FILES qml/ScreenManager.qml DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/lightdm/)
+
 
 macro_display_feature_log()
 
