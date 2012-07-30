@@ -255,6 +255,26 @@ Item {
         highlightRangeMode: ListView.StrictlyEnforceRange
         preferredHighlightBegin: width / 2 - userItemWidth / 2
         preferredHighlightEnd: width / 2 + userItemWidth / 2
+
+        //if the user presses down or enter, focus password
+        //if user presses any normal key
+        //copy that character pressed to the pasword box and force focus
+
+        //can't use forwardTo as I want to switch focus. Also it doesn't work.
+        Keys.onPressed: {
+            if (event.key == Qt.Key_Left || event.key == Qt.Key_Right) {
+                event.accept();
+            } else if (event.key == Qt.Key_Down ||
+                event.key == Qt.Key_Enter ||
+                event.key == Qt.Key_Return) {
+                passwordInput.forceActiveFocus();
+            } else if (event.key & Qt.Key_Escape) {
+                //if special key, do nothing. Qt.Escape is 0x10000000 which happens to be a mask used for all special keys in Qt.
+            } else {
+                passwordInput.text += event.text;
+                passwordInput.forceActiveFocus();
+            }
+        }
     }
 
     FocusScope {
@@ -278,6 +298,10 @@ Item {
             echoMode: TextInput.Password
             placeholderText: i18n("Password")
             onAccepted: startLogin();
+
+            Keys.onEscapePressed: {
+                usersList.forceActiveFocus()
+            }
 
             PlasmaComponents.ToolButton {
                 id: loginButton
