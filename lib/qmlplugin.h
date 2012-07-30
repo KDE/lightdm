@@ -22,10 +22,10 @@
 
 #include <QtDeclarative/QDeclarativeExtensionPlugin>
 
-class QmlPlugins : public QDeclarativeExtensionPlugin
+class QmlPlugin : public QDeclarativeExtensionPlugin
 {
 public:
     virtual void registerTypes(const char *uri);
 };
 
-#endif // QML_PLUGINS_H
+#endif // QML_PLUGIN_H

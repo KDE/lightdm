@@ -17,7 +17,7 @@
 */
 
 
-#include "qml-plugin.h"
+#include "qmlplugin.h"
 
 #include <QtDeclarative/QDeclarativeItem>
 
@@ -25,11 +25,11 @@
 #include "usersmodel.h"
 #include "screensmodel.h"
 
-void QmlPlugins::registerTypes(const char *uri)
+void QmlPlugin::registerTypes(const char *uri)
 {
     qmlRegisterType<SessionsModel> (uri, 0, 1, "SessionsModel");
     qmlRegisterType<UsersModel> (uri, 0, 1, "UsersModel");
     qmlRegisterType<ScreensModel> (uri, 0, 1, "ScreensModel");
 }
 
-Q_EXPORT_PLUGIN2(klightdm, QmlPlugins);
+Q_EXPORT_PLUGIN2(klightdm, QmlPlugin);

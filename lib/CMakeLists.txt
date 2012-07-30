@@ -7,6 +7,7 @@ include_directories(
 )
 
 set(LIB_SRCS
+    qmlplugin.cpp
     extrarowproxymodel.cpp
 #     faceimageprovider.cpp
     sessionsmodel.cpp
