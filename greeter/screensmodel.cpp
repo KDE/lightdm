@@ -28,7 +28,7 @@ ScreensModel::ScreensModel(QObject *parent) :
     loadScreens();
     QDesktopWidget *dw = QApplication::desktop();
     connect(dw, SIGNAL(screenCountChanged(int)), SLOT(onScreenCountChanged(int)));
-    connect(dw, SIGNAL(resized(int)), SLOT(onResized(int)));
+    connect(dw, SIGNAL(resized(int)), SLOT(onScreenResized(int)));
 
     QHash<int, QByteArray> roles;
     roles[Qt::UserRole] = "geometry";
