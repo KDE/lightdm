@@ -28,8 +28,14 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include <QDir>
 #include <QPixmap>
 #include <QShortcut>
+#include <QProcess>
 #include <QtCore/QDebug>
 #include <QtDeclarative/qdeclarative.h>
+#include <QPainter>
+#include <QPixmap>
+#include <QProcess>
+
+
 
 #include <QLightDM/Greeter>
 #include <QLightDM/UsersModel>
@@ -42,11 +48,12 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include <KStandardDirs>
 #include <KUrl>
 #include <KDebug>
+#include <KGlobal>
 #include <Plasma/Theme>
-
 
 #include "components/lineedit.h"
 #include "components/modelcombobox.h"
+
 #include "extrarowproxymodel.h"
 #include "faceimageprovider.h"
 #include "configwrapper.h"
@@ -81,7 +88,6 @@ GreeterWindow::GreeterWindow(QWidget *parent)
         usersModel->setShowGuest(true);
     }
 
-
     engine()->addImageProvider("face", new FaceImageProvider(usersModel));
 
     KConfig config(LIGHTDM_CONFIG_DIR "/lightdm-kde-greeter.conf");
@@ -110,7 +116,7 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     rootContext()->setContextProperty("screensModel", new ScreensModel(this));
     rootContext()->setContextProperty("power", new QLightDM::PowerInterface(this));
     rootContext()->setContextProperty("plasmaTheme", Plasma::Theme::defaultTheme());
-
+    rootContext()->setContextProperty("xhandler", this);
 
     setSource(source);
     // Prevent screen flickering when the greeter starts up. This really needs to be sorted out in QML/Qt...
@@ -138,9 +144,21 @@ void GreeterWindow::resizeEvent(QResizeEvent *event)
     setSceneRect(QRectF(0, 0, width(), height()));
 }
 
+void GreeterWindow::setRootImage()
+{
+    qDebug() << "close event";
+    QPixmap pix = QPixmap::grabWindow(winId());
+    QProcess process;
+    process.start(QFile::encodeName(KGlobal::dirs()->findExe("lightdm-kde-greeter-rootimage")).data(), QIODevice::WriteOnly);
+    pix.save(&process, "xpm"); //write pixmap to rootimage
+    process.closeWriteChannel();
+    process.waitForFinished();
+}
+
 void GreeterWindow::screenshot()
 {
     QPixmap pix = QPixmap::grabWindow(winId());
+
     QString path = QDir::temp().absoluteFilePath("lightdm-kde-greeter-screenshot.png");
     bool ok = pix.save(path);
     if (ok) {

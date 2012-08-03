@@ -45,6 +45,8 @@ int main(int argc, char *argv[])
     GreeterWindow *w = new GreeterWindow();
     w->show();
 
+    QObject::connect(&app, SIGNAL(aboutToQuit()), w, SLOT(shutDown()));
+
     return app.exec();
 }
 

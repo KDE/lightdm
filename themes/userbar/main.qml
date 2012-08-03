@@ -58,6 +58,7 @@ Item {
                 session = "default";
             }
             if(greeter.authenticated) {
+                xhandler.setRootImage();
                 greeter.startSessionSync(session);
             } else {
                 feedbackLabel.text = i18n("Sorry, incorrect password. Please try again.");

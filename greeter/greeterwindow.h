@@ -34,6 +34,9 @@ public:
 
     ~GreeterWindow();
 
+public Q_SLOTS:
+    void setRootImage();
+
 protected:
     void resizeEvent(QResizeEvent *);
 
