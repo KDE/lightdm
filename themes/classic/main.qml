@@ -82,7 +82,7 @@ Item {
         height: childrenRect.height + 40;
 
         Column {
-            spacing: 5
+            spacing: 15
             anchors.centerIn: parent
 
             Image {
@@ -109,12 +109,12 @@ Item {
                 
                 Grid {
                     columns: 2
-                    spacing: 5
+                    spacing: 15
                     
                     ExtraComponents.QIconItem {
                         icon: "meeting-participant"
-                        height: passwordInput.height;
-                        width: passwordInput.height;
+                        height: usernameInput.height;
+                        width: usernameInput.height;
                     }
 
                     /*PlasmaComponents.*/TextField {
@@ -124,6 +124,7 @@ Item {
                         onAccepted: {
                             passwordInput.focus = true;
                         }
+                        width: 160
                         
                         Component.onCompleted: {
                             //if the username field has text, focus the password, else focus the username
@@ -150,6 +151,7 @@ Item {
                         onAccepted: {
                             login();
                         }
+                        width: 160
                         KeyNavigation.backtab: usernameInput
                         KeyNavigation.tab: loginButton
                     }
@@ -173,7 +175,7 @@ Item {
             
             
             Row {               
-                spacing: 5;
+                spacing: 8;
                   IconButton {
                     icon: "system-shutdown"                    
                     onClicked: {
