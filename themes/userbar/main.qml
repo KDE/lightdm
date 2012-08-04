@@ -52,14 +52,8 @@ Item {
         }
 
         onAuthenticationComplete: {
-            var session = sessionButton.dataForIndex(sessionButton.currentIndex);
-            console.log("session: " + session);
-            if (session == "") {
-                session = "default";
-            }
             if(greeter.authenticated) {
-                xhandler.setRootImage();
-                greeter.startSessionSync(session);
+                loginAnimation.start();
             } else {
                 feedbackLabel.text = i18n("Sorry, incorrect password. Please try again.");
                 feedbackLabel.showFeedback();
@@ -67,6 +61,26 @@ Item {
                 passwordInput.forceActiveFocus()
             }
         }
+    }
+
+    function doSessionSync() {
+       var session = sessionButton.dataForIndex(sessionButton.currentIndex);
+       if (session == "") {
+           session = "default";
+       }
+       xhandler.setRootImage();
+       greeter.startSessionSync(session);
+    }
+
+    ParallelAnimation {
+        id: loginAnimation
+        NumberAnimation { target: welcomeLabel; property: "opacity"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: feedbackLabel; property: "opacity"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: usersList; property: "opacity"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: loginButtonItem; property: "opacity"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: sessionButton; property: "opacity"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: powerBar; property: "opacity"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
+        onCompleted: doSessionSync()
     }
 
     Component.onCompleted: {
