@@ -59,7 +59,7 @@ Item {
 
         onAuthenticationComplete: {
             if(greeter.authenticated) {
-                greeter.startSessionSync(sessionCombo.itemData(sessionCombo.currentIndex));
+                loginAnimation.start();
             }
             else {
                 feedbackLabel.text = i18n("Sorry, incorrect password please try again.");
@@ -71,6 +71,23 @@ Item {
 
     function login() {
         greeter.authenticate(usernameInput.text);
+    }
+
+    function doSessionSync() {
+        var session = sessionCombo.itemData(sessionCombo.currentIndex);
+        if (session == "") {
+            session = "default";
+        }
+        xhandler.setRootImage();
+        greeter.startSessionSync(session);
+    }
+
+    ParallelAnimation {
+        id: loginAnimation
+        NumberAnimation { target: dialog; property: "opacity"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: powerdialog; property: "opacity"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: optionsDialog; property: "opacity"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
+        onCompleted: doSessionSync()
     }
 
     PlasmaCore.FrameSvgItem {
