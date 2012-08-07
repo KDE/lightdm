@@ -12,6 +12,7 @@ X-KDE-System-Settings-Parent-Category=system-administration
 
 X-KDE-Keywords=lightdm,display manager,face,user,users,login,greeting,theme,language,session,sessions,shutdown,restart,guest,auto login
 X-KDE-Keywords[da]=lightdm,display manager,ansigt,bruger,brugere,login,velkomst,tema,sprog,session,sessioner,nedlukning,genstart,gæst,autologin
+X-KDE-Keywords[el]=lightdm,διαχειριστής απεικόνισης,πρόσωπο,χρήστης,χρήστες,σύνδεση,καλωσόρισμα, θέμα,γλώσσα,συνεδρία,συνεδρίες,τερματισμός,επανεκκίνηση,επισκέπτης,αυτόματη σύνδεση
 X-KDE-Keywords[et]=lightdm,kuvahaldur,kasutaja,kasutajad,sisselogimine,tervitusekraan,teema,keel,seanss,seansid,seiskamine,taaskäivitamine,restart,külaline,guest,automaatne sisselogimine
 X-KDE-Keywords[fr]=lightdm,gestionnaire d'affichage,face,utilisateur,utilisateurs,identifiant de connexion,accueil,thème,langue,session,sessions,arrêt,redémarrage,invité,connexion automatique
 X-KDE-Keywords[hu]=lightdm,bejelentkezéskezelő,arc,felhasználó,felhasználók,bejelentkezés,üdvözlés, téma,nyelv,munkamenet,munkamenetek,leállítás,újraindítás,vendég,automatikus bejelentkezés
@@ -28,6 +29,7 @@ Name=Login Screen (LightDM)
 Name[cs]=Přihlašovací obrazovka (LightDM)
 Name[da]=Login-skærm (LightDM)
 Name[de]=Anmeldebildschirm (LightDM)
+Name[el]=Οθόνη εισόδου (LightDM)
 Name[et]=Sisselogimisdialoog (LightDM)
 Name[fi]=Kirjautumisruutu (LightDM)
 Name[fr]=Écran de connexion (LightDM)
@@ -43,6 +45,7 @@ Name[x-test]=xxLogin Screen (LightDM)xx
 
 Comment=Select login theme, adjust login features
 Comment[da]=Vælg login-tema, tilpas login-funktioner
+Comment[el]=Επιλογή θέματος σύνδεσης, προσαρμογή χαρακτηριστικών
 Comment[et]=Sisselogimisteema valimine, võimaluste kohandamine
 Comment[fi]=Valitse kirjautumisteema ja määritä kirjautumisen asetuksia
 Comment[fr]=Sélectionne les thèmes de connexion, ajuste les fonctionnalités de connexion
