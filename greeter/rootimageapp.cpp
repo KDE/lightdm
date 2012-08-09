@@ -51,10 +51,9 @@ void RootImageApp::setBackground()
 {
     QFile stdIn;
     stdIn.open(0, QIODevice::ReadOnly);
-    QByteArray imageData = stdIn.readAll();
 
-    QPixmap image;
-    image.loadFromData(imageData, "xpm");
+    QImage image;
+    image.load(&stdIn, "xpm");
 
     QPalette palette;
     palette.setBrush(desktop()->backgroundRole(), QBrush(image));
