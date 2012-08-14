@@ -18,6 +18,7 @@ set(GREETER_SRCS
     sessionsmodel.cpp
     usersmodel.cpp
     screensmodel.cpp
+    greeterwrapper.cpp
 )
 
 qt4_add_dbus_interface(GREETER_SRCS

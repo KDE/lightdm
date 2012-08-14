@@ -80,7 +80,6 @@ Item {
         if (session == "") {
             session = "default";
         }
-        xhandler.setRootImage();
         greeter.startSessionSync(session);
     }
 
@@ -147,7 +146,7 @@ Item {
                     /*PlasmaComponents.*/TextField {
                         id: usernameInput;
                         placeholderText: i18n("Username");
-                        text: greeter.selectUser
+                        text: greeter.lastLoggedInUser
                         onAccepted: {
                             passwordInput.focus = true;
                         }

@@ -1,7 +1,7 @@
 /*
 This file is part of LightDM-KDE.
 
-Copyright 2011, 2012 David Edmundson <kde@davidedmundson.co.uk>
+Copyright 2012 David Edmundson <kde@davidedmundson.co.uk>
 
 LightDM-KDE is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,35 +16,32 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef GREETER_WINDOW_H
-#define GREETER_WINDOW_H
 
-#include <QDeclarativeView>
+#ifndef GREETERWRAPPER_H
+#define GREETERWRAPPER_H
 
-class GreeterWrapper;
+#include <QLightDM/Greeter>
+#include <KSharedConfig>
 
-class GreeterWindow: public QDeclarativeView
+class GreeterWrapper : public QLightDM::Greeter
 {
     Q_OBJECT
 
+    Q_PROPERTY(QString lastLoggedInUser READ lastLoggedInUser CONSTANT)
 public:
-    GreeterWindow(QWidget *parent = 0);
+    explicit GreeterWrapper(QObject *parent = 0);
+    
+    QString lastLoggedInUser() const;
 
-    ~GreeterWindow();
-
-public Q_SLOTS:
-    void setRootImage();
-
-protected:
-    void resizeEvent(QResizeEvent *);
-
-private Q_SLOTS:
-    void screenshot();
+signals:
+    void aboutToLogin();
+    
+public slots:
+    bool startSessionSync(const QString &session=QString());
 
 private:
-    GreeterWrapper *m_greeter;
-
+    void saveLastUser(const QString &user);
+    KSharedConfig::Ptr m_config;
 };
 
-#endif  //  GREETER_WINDOW_H
-
+#endif // GREETERWRAPPER_H

@@ -68,7 +68,6 @@ Item {
        if (session == "") {
            session = "default";
        }
-       xhandler.setRootImage();
        greeter.startSessionSync(session);
     }
 

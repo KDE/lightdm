@@ -35,10 +35,6 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include <QPixmap>
 #include <QProcess>
 
-
-
-#include <QLightDM/Greeter>
-#include <QLightDM/UsersModel>
 #include <QLightDM/Power>
 
 #include <kdeclarative.h>
@@ -51,27 +47,23 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include <KGlobal>
 #include <Plasma/Theme>
 
-#include "components/lineedit.h"
-#include "components/modelcombobox.h"
-
 #include "extrarowproxymodel.h"
 #include "faceimageprovider.h"
 #include "configwrapper.h"
 #include "sessionsmodel.h"
 #include "usersmodel.h"
 #include "screensmodel.h"
+#include "greeterwrapper.h"
 
 #include <config.h>
 
 GreeterWindow::GreeterWindow(QWidget *parent)
     : QDeclarativeView(parent),
-      m_greeter(new QLightDM::Greeter(this))
+      m_greeter(new GreeterWrapper(this))
 {
     QRect screen = QApplication::desktop()->rect();
     setGeometry(screen);
     
-    m_greeter->connectSync();
-
     KDeclarative kdeclarative;
     kdeclarative.setDeclarativeEngine(engine());
     kdeclarative.initialize();
@@ -112,7 +104,6 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     rootContext()->setContextProperty("screensModel", new ScreensModel(this));
     rootContext()->setContextProperty("power", new QLightDM::PowerInterface(this));
     rootContext()->setContextProperty("plasmaTheme", Plasma::Theme::defaultTheme());
-    rootContext()->setContextProperty("xhandler", this);
 
     setSource(source);
     // Prevent screen flickering when the greeter starts up. This really needs to be sorted out in QML/Qt...
@@ -125,6 +116,8 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     QShortcut* cut = new QShortcut(this);
     cut->setKey(Qt::CTRL + Qt::ALT + Qt::Key_S);
     connect(cut, SIGNAL(activated()), SLOT(screenshot()));
+
+    connect(m_greeter, SIGNAL(aboutToLogin()), SLOT(setRootImage()));
 
     new PowerManagement(this);
 }
@@ -142,7 +135,6 @@ void GreeterWindow::resizeEvent(QResizeEvent *event)
 
 void GreeterWindow::setRootImage()
 {
-    qDebug() << "close event";
     QPixmap pix = QPixmap::grabWindow(winId());
     QProcess process;
     process.start(QFile::encodeName(KGlobal::dirs()->findExe("lightdm-kde-greeter-rootimage")).data(), QIODevice::WriteOnly);
