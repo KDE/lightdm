@@ -47,10 +47,6 @@ Item {
 
     Connections {
         target: greeter;
-        onConnected: {
-            console.log("connected");
-        }
-
         onShowPrompt: {
             greeter.respond(passwordInput.text);
         }
