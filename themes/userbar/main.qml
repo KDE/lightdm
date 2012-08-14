@@ -368,7 +368,8 @@ Item {
                 id: hibernateButton
                 text: i18n("Hibernate")
                 iconSource: "system-suspend-hibernate"
-                enabled: power.canHibernate
+                //Hibernate is a special case, lots of distros disable it, so if it's not enabled don't show it
+                visible: power.canHibernate
                 onClicked: power.hibernate();
             }
 
