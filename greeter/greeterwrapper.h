@@ -30,12 +30,12 @@ class GreeterWrapper : public QLightDM::Greeter
     Q_PROPERTY(QString lastLoggedInUser READ lastLoggedInUser CONSTANT)
 public:
     explicit GreeterWrapper(QObject *parent = 0);
-    
+
     QString lastLoggedInUser() const;
 
 signals:
     void aboutToLogin();
-    
+
 public slots:
     bool startSessionSync(const QString &session=QString());
 

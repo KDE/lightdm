@@ -54,5 +54,5 @@ void GreeterWrapper::saveLastUser(const QString &user)
 {
     m_config->group("lightdm").writeEntry("lastUser", user);
     //force a sync as our greeter gets killed
-    return m_config->sync();
+    m_config->sync();
 }
