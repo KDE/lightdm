@@ -23,8 +23,6 @@ import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1 as ExtraComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
 
-import MyLibrary 1.0 as LightDMPlasmaWidgets
-
 Item {
     width: screenSize.width;
     height: screenSize.height;
@@ -70,11 +68,15 @@ Item {
     }
 
     function login() {
-        greeter.authenticate(usernameInput.text);
+        if (useGuestOption.checked) {
+            greeter.authenticateAsGuest();
+        } else {
+            greeter.authenticate(usernameInput.text);
+        }
     }
 
     function doSessionSync() {
-        var session = sessionCombo.itemData(sessionCombo.currentIndex);
+        var session = optionsMenu.currentSession;
         if (session == "") {
             session = "default";
         }
@@ -119,7 +121,14 @@ Item {
                 text: config.readEntry("GreetMessage").replace("%hostname%", greeter.hostname);
             }
 
+            PlasmaComponents.Button {
+                visible: useGuestOption.checked
+                text: i18n("Login");
+                onClicked: login()
+            }
+
             Row {
+                visible: !useGuestOption.checked
                 spacing: 10
                 width: childrenRect.width
                 height: childRect.height
@@ -190,10 +199,9 @@ Item {
                 height: 10
             }
             
-            
             Row {               
                 spacing: 8;
-                  IconButton {
+                IconButton {
                     icon: "system-shutdown"                    
                     onClicked: {
                         if (powerDialog.opacity == 1) {
@@ -201,20 +209,61 @@ Item {
                         } else {
                             powerDialog.opacity = 1;
                         }
-                        optionsDialog.opacity = 0;
                     }
                 }
 
-                
+                PlasmaComponents.ContextMenu {
+                    id: sessionMenu
+                    visualParent: sessionMenuOption
+                }
+
+                Repeater {
+                    parent: sessionMenu
+                    model: sessionsModel
+                    delegate : PlasmaComponents.MenuItem {
+                        text: model.display
+                        checkable: true
+                        checked: model.key === optionsMenu.currentSession
+                        onClicked : {
+                            optionsMenu.currentSession = model.key;
+                        }
+
+                        Component.onCompleted: {
+                            parent = sessionMenu
+                        }
+                    }
+                    Component.onCompleted: {
+                        model.showLastUsedSession = true
+                    }
+                }
+
+                PlasmaComponents.ContextMenu {
+                    id: optionsMenu
+                    visualParent: optionsButton
+                    property string currentSession: greeter.defaultSession
+
+                    PlasmaComponents.MenuItem {
+                        id: useGuestOption
+                        text: i18n("Log in as guest")
+                        checkable: true
+                        enabled: greeter.hasGuestAccount
+                    }
+                    PlasmaComponents.MenuItem {
+                        separator: true
+                    }
+
+                    PlasmaComponents.MenuItem {
+                        text: i18n("Session")
+                        id: sessionMenuOption
+                        onClicked: sessionMenu.open()
+                    }
+                }
+
                 IconButton {
+                    id: optionsButton
                     icon: "system-log-out"
                     onClicked: {
-                        if (optionsDialog.opacity == 1) {
-                            optionsDialog.opacity = 0;
-                        } else {
-                            optionsDialog.opacity = 1;
-                        }
-                        powerDialog.opacity = 0;
+                        optionsMenu.open();
                     }
                 }
             }
@@ -267,41 +316,5 @@ Item {
             }     
         }
 
-    }
-
-
-    PlasmaCore.FrameSvgItem {
-        id: optionsDialog;
-        anchors.top: dialog.bottom
-        anchors.topMargin: 3
-        anchors.horizontalCenter: activeScreen.horizontalCenter
-        imagePath: "translucent/dialogs/background"
-        opacity: 0
-
-        Behavior on opacity { PropertyAnimation { duration: 500} }
-
-        width: childrenRect.width + 30;
-        height: childrenRect.height + 30;
-
-        Row {
-            spacing: 5
-            anchors.centerIn: parent
-
-            PlasmaComponents.Label {
-                text: i18n("Session")
-                anchors.verticalCenter: parent.verticalCenter;
-            }
-
-            LightDMPlasmaWidgets.ModelComboBox {
-                id: sessionCombo
-                model: sessionsModel;
-                anchors.verticalCenter: parent.verticalCenter;
-                width: 200;
-                Component.onCompleted : {
-                    sessionCombo.currentIndex = sessionCombo.indexForData("", sessionsModel.key);
-                    model.showLastUsedSession = true
-                }
-            }
-        }
     }
 }
