@@ -18,8 +18,6 @@ set(GREETER_SRCS
     sessionsmodel.cpp
     usersmodel.cpp
     screensmodel.cpp
-    components/modelcombobox.cpp
-    components/lineedit.cpp
 )
 
 qt4_add_dbus_interface(GREETER_SRCS
