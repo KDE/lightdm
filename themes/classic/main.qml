@@ -121,9 +121,10 @@ Item {
                 text: config.readEntry("GreetMessage").replace("%hostname%", greeter.hostname);
             }
 
+            //if guest checked, replace the normal "user/pass" textboxes with a big login button
             PlasmaComponents.Button {
                 visible: useGuestOption.checked
-                text: i18n("Login");
+                text: i18n("Log in as guest");
                 onClicked: login()
             }
 
