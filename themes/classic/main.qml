@@ -127,7 +127,7 @@ Item {
                 visible: !useGuestOption.checked
                 spacing: 10
                 width: childrenRect.width
-                height: childRect.height
+                height: childrenRect.height
                 
                 Grid {
                     columns: 2
