@@ -82,8 +82,7 @@ Item {
     ParallelAnimation {
         id: loginAnimation
         NumberAnimation { target: dialog; property: "opacity"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
-        NumberAnimation { target: powerdialog; property: "opacity"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
-        NumberAnimation { target: optionsDialog; property: "opacity"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: powerDialog; property: "opacity"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
         onCompleted: doSessionSync()
     }
 
@@ -267,7 +266,7 @@ Item {
     }
 
     PlasmaCore.FrameSvgItem {
-        id: powerDialog;
+        id: powerDialog
         anchors.top: dialog.bottom
         anchors.topMargin: 3
         anchors.horizontalCenter: activeScreen.horizontalCenter
