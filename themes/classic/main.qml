@@ -73,9 +73,6 @@ Item {
 
     function doSessionSync() {
         var session = optionsMenu.currentSession;
-        if (session == "") {
-            session = "default";
-        }
         greeter.startSessionSync(session);
     }
 
