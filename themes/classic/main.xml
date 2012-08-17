@@ -9,6 +9,9 @@
     <entry name="Background" type="String">
       <default></default>
     </entry>
+    <entry name="BackgroundKeepAspectRatio" type="Bool">
+      <default>true</default>
+    </entry>
     <entry name="Logo" type="String">
         <default></default>
     </entry>
