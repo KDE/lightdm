@@ -233,8 +233,8 @@ Item {
                 PlasmaComponents.ContextMenu {
                     id: optionsMenu
                     visualParent: optionsButton
-                    property string currentSession: greeter.defaultSession
-
+                    //in LightDM  "" means "last user session". whereas NULL is default.
+                    property string currentSession: ""
                     PlasmaComponents.MenuItem {
                         id: useGuestOption
                         text: i18n("Log in as guest")
