@@ -147,13 +147,12 @@ Item {
                         
                         Component.onCompleted: {
                             //if the username field has text, focus the password, else focus the username
-                            if (parent.text) {
-                                passwordInput.focus = true
+                            if (usernameInput.text) {
+                                passwordInput.focus = true;
                             } else {
-                                usernameInput.focus = true
+                                usernameInput.focus = true;
                             }
                         }
-                        
                         KeyNavigation.tab: passwordInput
                     }
 
