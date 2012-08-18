@@ -99,6 +99,7 @@ Item {
     }
 
     PlasmaComponents.Label {
+        visible: false
         id: welcomeLabel
         anchors.horizontalCenter: activeScreen.horizontalCenter
         anchors.top: activeScreen.top
