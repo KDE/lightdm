@@ -243,7 +243,7 @@ Item {
         }
         width: activeScreen.width
         height: userItemHeight
-        currentIndex: indexForUserName(greeter.selectGuest ? guestLogin : greeter.selectUser)
+        currentIndex: indexForUserName(greeter.lastLoggedInUser)
         model: usersModel
 
         cacheBuffer: count * 80
