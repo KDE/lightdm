@@ -43,6 +43,11 @@ QString GreeterWrapper::lastLoggedInUser() const
     return m_config->group("lightdm").readEntry("lastUser");
 }
 
+QString GreeterWrapper::guestLoginName() const
+{
+    return QLatin1String("*guest");
+}
+
 bool GreeterWrapper::startSessionSync(const QString &session)
 {
     Q_EMIT aboutToLogin();

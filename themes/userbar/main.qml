@@ -25,8 +25,6 @@ Item {
     width: screenSize.width;
     height: screenSize.height;
 
-    property string guestLogin: "*guest"
-
     ScreenManager {
         id: screenManager
         delegate: Image {
@@ -217,7 +215,7 @@ Item {
 
     function startLogin() {
         var username = usersList.currentItem.username;
-        if (username == guestLogin) {
+        if (username == greeter.guestLoginName) {
             greeter.authenticateAsGuest();
         } else {
             greeter.authenticate(username);
@@ -285,7 +283,7 @@ Item {
         }
         height: 30
 
-        property bool isGuestLogin: usersList.currentItem.username == guestLogin
+        property bool isGuestLogin: usersList.currentItem.username == greeter.guestLoginName
 
         /*PlasmaComponents.*/TextField {
             id: passwordInput

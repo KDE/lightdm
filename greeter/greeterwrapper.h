@@ -28,10 +28,13 @@ class GreeterWrapper : public QLightDM::Greeter
     Q_OBJECT
 
     Q_PROPERTY(QString lastLoggedInUser READ lastLoggedInUser CONSTANT)
+    Q_PROPERTY(QString guestLoginName READ guestLoginName CONSTANT)
+
 public:
     explicit GreeterWrapper(QObject *parent = 0);
 
     QString lastLoggedInUser() const;
+    QString guestLoginName() const;
 
 signals:
     void aboutToLogin();
