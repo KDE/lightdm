@@ -11,6 +11,7 @@ git pull
 # Update NEWS
 
 # Bump version in CMakeLists.txt
+# Bump version in theme.rc files
 
 # Commit
 
