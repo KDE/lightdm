@@ -29,21 +29,14 @@ class GreeterWindow: public QDeclarativeView
 
 public:
     GreeterWindow(QWidget *parent = 0);
-
     ~GreeterWindow();
 
-public Q_SLOTS:
-    void setRootImage();
-
-protected:
-    void resizeEvent(QResizeEvent *);
-
 private Q_SLOTS:
+    void setRootImage();
     void screenshot();
 
 private:
     GreeterWrapper *m_greeter;
-
 };
 
 #endif  //  GREETER_WINDOW_H

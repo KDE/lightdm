@@ -24,8 +24,6 @@ import org.kde.lightdm 0.1 as LightDM
 
 Item {
     id: screen
-//    width: screenSize.width;
-//    height: screenSize.height;
 
     LightDM.ScreenManager {
         id: screenManager
@@ -33,7 +31,7 @@ Item {
              // default to keeping aspect ratio
             fillMode: config.readEntry("BackgroundKeepAspectRatio") == false ? Image.Stretch : Image.PreserveAspectCrop;
             //read from config, if there's no entry use plasma theme
-            //source: config.readEntry("Background") ? config.readEntry("Background"): plasmaTheme.wallpaperPath(Qt.size(width,height));
+            source: config.readEntry("Background") ? config.readEntry("Background"): plasmaTheme.wallpaperPath(Qt.size(width,height));
         }
     }
 
@@ -243,16 +241,10 @@ Item {
         }
         width: activeScreen.width
         height: userItemHeight
-<<<<<<< HEAD
         currentIndex: indexForUserName(greeter.lastLoggedInUser)
-        model: usersModel
-=======
-        currentIndex: indexForUserName(greeter.selectGuest ? guestLogin : greeter.selectUser)
         model: LightDM.UsersModel{
                 showGuest: greeter.hasGuestAccount
             }
->>>>>>> ef5497e... Make userbar not rely on any setRootContexts
-
         cacheBuffer: count * 80
 
         delegate: userDelegate

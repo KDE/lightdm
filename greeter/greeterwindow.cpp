@@ -61,21 +61,13 @@ GreeterWindow::GreeterWindow(QWidget *parent)
       m_greeter(new GreeterWrapper(this))
 {
     QRect screen = QApplication::desktop()->rect();
-    setGeometry(screen);
+    setResizeMode(QDeclarativeView::SizeRootObjectToView);
     
     KDeclarative kdeclarative;
     kdeclarative.setDeclarativeEngine(engine());
     kdeclarative.initialize();
     //binds things like kconfig and icons
     kdeclarative.setupBindings();
-
-    UsersModel* usersModel = new UsersModel(this);
-
-    if (m_greeter->hasGuestAccountHint()) {
-        usersModel->setShowGuest(true);
-    }
-
-    engine()->addImageProvider("face", new FaceImageProvider(usersModel));
 
     KConfig config(LIGHTDM_CONFIG_DIR "/lightdm-kde-greeter.conf");
     KConfigGroup configGroup = config.group("greeter");
@@ -96,10 +88,7 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     KGlobal::locale()->insertCatalog("lightdm_theme_" + theme);
     
     rootContext()->setContextProperty("config", new ConfigWrapper(KGlobal::dirs()->locate("appdata", "themes/" + theme + "/main.xml"), this));
-    rootContext()->setContextProperty("screenSize", size());
     rootContext()->setContextProperty("greeter", m_greeter);
-    rootContext()->setContextProperty("usersModel", usersModel);
-    rootContext()->setContextProperty("sessionsModel", new SessionsModel(this));
     rootContext()->setContextProperty("plasmaTheme", Plasma::Theme::defaultTheme());
 
     setSource(source);
@@ -115,19 +104,13 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     connect(cut, SIGNAL(activated()), SLOT(screenshot()));
 
     connect(m_greeter, SIGNAL(aboutToLogin()), SLOT(setRootImage()));
+    setGeometry(screen);
 
     new PowerManagement(this);
 }
 
 GreeterWindow::~GreeterWindow()
 {
-}
-
-void GreeterWindow::resizeEvent(QResizeEvent *event)
-{
-    Q_UNUSED(event)
-    rootContext()->setContextProperty("screenSize", size());
-    setSceneRect(QRectF(0, 0, width(), height()));
 }
 
 void GreeterWindow::setRootImage()
