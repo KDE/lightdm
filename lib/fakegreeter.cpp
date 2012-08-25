@@ -25,7 +25,7 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 FakeGreeter::FakeGreeter(QObject *parent) :
     QLightDM::Greeter(parent)
 {
-
+    m_isAuthenticated = false;
 }
 
 FakeGreeter::~FakeGreeter()
@@ -43,6 +43,11 @@ QString FakeGreeter::guestLoginName() const
     return QLatin1String("*guest");
 }
 
+bool FakeGreeter::isAuthenticated() const
+{
+    return m_isAuthenticated;
+}
+
 bool FakeGreeter::connectSync()
 {
     return true;
@@ -52,6 +57,18 @@ void FakeGreeter::authenticate(const QString &username)
 {
     kDebug() << "authenticating as " << username;
     Q_EMIT showPrompt("Password:", QLightDM::Greeter::PromptTypeQuestion);
+}
+
+void FakeGreeter::authenticateAsGuest()
+{
+    Q_EMIT authenticationComplete();
+}
+
+void FakeGreeter::respond(const QString &response)
+{
+    Q_UNUSED(response)
+    m_isAuthenticated = true;
+    Q_EMIT authenticationComplete();
 }
 
 bool FakeGreeter::startSessionSync(const QString &session)

@@ -50,14 +50,20 @@ public:
     QString lastLoggedInUser() const;
     QString guestLoginName() const;
 
+    bool isAuthenticated() const;
+
+
 public slots:
     bool connectSync();
     void authenticate(const QString &username=QString());
-//     void authenticateAsGuest();
-//     void respond(const QString &response);
+    void authenticateAsGuest();
+    void respond(const QString &response);
 //     void cancelAuthentication();
 //     void setLanguage (const QString &language);
     bool startSessionSync(const QString &session=QString());
+
+private:
+    bool m_isAuthenticated;
 };
 
 #endif // FAKEGREETER_H
