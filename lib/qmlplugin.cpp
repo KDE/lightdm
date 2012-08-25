@@ -20,13 +20,33 @@
 #include "qmlplugin.h"
 
 #include <QtDeclarative/QDeclarativeItem>
+#include <QtDeclarative/QDeclarativeEngine>
+#include <QtDeclarative/QDeclarativeContext>
 
-#include <QLightDM/Greeter>
+#include <QDebug>
+
 #include <QLightDM/Power>
 
 #include "sessionsmodel.h"
 #include "usersmodel.h"
 #include "screensmodel.h"
+#include "fakegreeter.h"
+
+#include <Plasma/Theme>
+
+void QmlPlugin::initializeEngine(QDeclarativeEngine *engine, const char *uri) {
+    Q_UNUSED(uri)
+
+    if (engine->rootContext()->contextProperty("greeter").isNull()) {
+        engine->rootContext()->setContextProperty("greeter", new FakeGreeter(0));
+    }
+    if (engine->rootContext()->contextProperty("config").isNull()) {
+        qDebug() << "adding fake config";
+        engine->rootContext()->setContextProperty("config", new FakeConfig(0));
+    }
+
+    engine->rootContext()->setContextProperty("plasmaTheme", Plasma::Theme::defaultTheme());
+}
 
 void QmlPlugin::registerTypes(const char *uri)
 {
@@ -34,7 +54,6 @@ void QmlPlugin::registerTypes(const char *uri)
     qmlRegisterType<UsersModel> (uri, 0, 1, "UsersModel");
     qmlRegisterType<ScreensModel> (uri, 0, 1, "ScreensModel");
     
-    qmlRegisterType<QLightDM::Greeter> (uri, 0, 1, "Greeter");
     qmlRegisterType<QLightDM::PowerInterface> (uri, 0, 1, "Power");
 }
 

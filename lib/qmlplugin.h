@@ -25,6 +25,7 @@
 class QmlPlugin : public QDeclarativeExtensionPlugin
 {
 public:
+    virtual void initializeEngine(QDeclarativeEngine *engine, const char *uri);
     virtual void registerTypes(const char *uri);
 };
 

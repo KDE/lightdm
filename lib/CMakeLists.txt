@@ -13,6 +13,7 @@ set(LIB_SRCS
     sessionsmodel.cpp
     usersmodel.cpp
     screensmodel.cpp
+    fakegreeter.cpp
 )
 
 kde4_add_library(klightdmqmlplugin SHARED ${LIB_SRCS})
@@ -22,6 +23,7 @@ target_link_libraries(klightdmqmlplugin
   ${QT_QTDECLARATIVE_LIBRARY}
   ${QLIGHTDM_LIBRARIES}
   ${KDE4_KDEUI_LIBS}
+  ${KDE4_PLASMA_LIBS}
 )
 
 install(TARGETS klightdmqmlplugin DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/lightdm/)

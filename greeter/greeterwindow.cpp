@@ -46,7 +46,7 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include <KUrl>
 #include <KDebug>
 #include <KGlobal>
-#include <Plasma/Theme>
+#include <KLocale>
 
 #include "configwrapper.h"
 #include "greeterwrapper.h"
@@ -85,7 +85,6 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     
     rootContext()->setContextProperty("config", new ConfigWrapper(KGlobal::dirs()->locate("appdata", "themes/" + theme + "/main.xml"), this));
     rootContext()->setContextProperty("greeter", m_greeter);
-    rootContext()->setContextProperty("plasmaTheme", Plasma::Theme::defaultTheme());
 
     setSource(source);
     // Prevent screen flickering when the greeter starts up. This really needs to be sorted out in QML/Qt...
