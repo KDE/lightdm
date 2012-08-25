@@ -77,14 +77,3 @@ bool FakeGreeter::startSessionSync(const QString &session)
     QApplication::instance()->quit();
     return true;
 }
-
-FakeConfig::FakeConfig(QObject *parent) :
-    QObject(parent)
-{
-
-}
-
-QVariant FakeConfig::readEntry(const QString &key) const
-{
-    return QVariant("");
-}

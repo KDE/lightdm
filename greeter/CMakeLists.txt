@@ -1,11 +1,16 @@
 add_definitions (${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
 
+# Makes it easy to reuse code from the qml lib. A bit ugly but I don't feel
+# like setting up a static library for one class.
+set(LIB_DIR ${CMAKE_SOURCE_DIR}/lib)
+
 include_directories(
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_BINARY_DIR}
   ${KDE4_INCLUDES}
   ${QLIGHTDM_INCLUDE_DIR}
   ${KDECLARATIVE_INCLUDE_DIR}
+  ${LIB_DIR}
 )
 
 # Insert your sources here
@@ -14,8 +19,8 @@ set(GREETER_SRCS
     greeterwindow.cpp
     powermanagement.cpp
     main.cpp
-    configwrapper.cpp
     greeterwrapper.cpp
+    ${LIB_DIR}/configwrapper.cpp
 )
 
 qt4_add_dbus_interface(GREETER_SRCS

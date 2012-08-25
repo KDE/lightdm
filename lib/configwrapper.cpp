@@ -16,28 +16,29 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef CONFIGWRAPPER_H
-#define CONFIGWRAPPER_H
+#include "configwrapper.h"
 
-#include <QObject>
+#include "config.h"
+#include <QDebug>
+#include <QFile>
 #include <QDir>
 
-#include <Plasma/ConfigLoader>
-
-
-/** This class exposes the lightdm-kde config to QML*/
-
-class ConfigWrapper : public QObject
+ConfigWrapper::ConfigWrapper(const KUrl &configPath, QObject *parent) :
+    QObject(parent)
 {
-    Q_OBJECT
-public:
-    explicit ConfigWrapper(const KUrl &kcfgPath, QObject *parent = 0);
 
-    Q_INVOKABLE QVariant readEntry(const QString &key) const;
+    qDebug() << "config wrapper loading" << configPath.toLocalFile();
+    KSharedConfigPtr config = KSharedConfig::openConfig(LIGHTDM_CONFIG_DIR "/lightdm-kde-greeter.conf", KConfig::SimpleConfig);
 
-private:
-    Plasma::ConfigLoader *m_config;
+    QFile xmlFile(configPath.toLocalFile());
+    xmlFile.open(QFile::ReadOnly);
 
-};
+    m_config = new Plasma::ConfigLoader(config, &xmlFile, this);
+}
 
-#endif // CONFIGWRAPPER_H
+QVariant ConfigWrapper::readEntry(const QString &key) const
+{
+    //FIXME I should use a KConfigSkeleton which loads the KCFG, then remove the "default" parameter
+
+    return m_config->property(key);
+}

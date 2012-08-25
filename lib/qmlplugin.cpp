@@ -31,6 +31,7 @@
 #include "usersmodel.h"
 #include "screensmodel.h"
 #include "fakegreeter.h"
+#include "configwrapper.h"
 
 #include <Plasma/Theme>
 
@@ -40,9 +41,11 @@ void QmlPlugin::initializeEngine(QDeclarativeEngine *engine, const char *uri) {
     if (engine->rootContext()->contextProperty("greeter").isNull()) {
         engine->rootContext()->setContextProperty("greeter", new FakeGreeter(0));
     }
+
     if (engine->rootContext()->contextProperty("config").isNull()) {
-        qDebug() << "adding fake config";
-        engine->rootContext()->setContextProperty("config", new FakeConfig(0));
+        KUrl configPath(engine->baseUrl());
+        configPath.setPath(configPath.path() + "/main.xml");
+        engine->rootContext()->setContextProperty(QLatin1String("config"), new ConfigWrapper(configPath));
     }
 
     engine->rootContext()->setContextProperty("plasmaTheme", Plasma::Theme::defaultTheme());

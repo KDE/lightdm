@@ -14,6 +14,7 @@ set(LIB_SRCS
     usersmodel.cpp
     screensmodel.cpp
     fakegreeter.cpp
+    configwrapper.cpp
 )
 
 kde4_add_library(klightdmqmlplugin SHARED ${LIB_SRCS})

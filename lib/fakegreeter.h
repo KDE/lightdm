@@ -28,15 +28,6 @@
 //this class wraps the real greeter, but doesn't ever actually connect to the backend
 //so all method calls fail, we then override some here
 
-class FakeConfig : public QObject
-{
-    Q_OBJECT
-public:
-    FakeConfig(QObject *parent);
-    Q_INVOKABLE QVariant readEntry(const QString &key) const;
-};
-
-
 class FakeGreeter : public QLightDM::Greeter
 {
     Q_OBJECT
