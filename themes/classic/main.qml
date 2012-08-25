@@ -25,9 +25,6 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.lightdm 0.1 as LightDM
 
 Item {
-    width: screenSize.width;
-    height: screenSize.height;
-
     LightDM.ScreenManager {
         id: screenManager
         delegate: Image {
@@ -212,7 +209,7 @@ Item {
 
                 Repeater {
                     parent: sessionMenu
-                    model: sessionsModel
+                    model: LightDM.SessionsModel {}
                     delegate : PlasmaComponents.MenuItem {
                         text: model.display
                         checkable: true
