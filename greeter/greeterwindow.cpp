@@ -57,7 +57,6 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     : QDeclarativeView(parent),
       m_greeter(new GreeterWrapper(this))
 {
-    QRect screen = QApplication::desktop()->rect();
     setResizeMode(QDeclarativeView::SizeRootObjectToView);
     
     KDeclarative kdeclarative;
@@ -101,6 +100,8 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     connect(cut, SIGNAL(activated()), SLOT(screenshot()));
 
     connect(m_greeter, SIGNAL(aboutToLogin()), SLOT(setRootImage()));
+
+    QRect screen = QApplication::desktop()->rect();
     setGeometry(screen);
 
     new PowerManagement(this);
