@@ -34,10 +34,6 @@ public:
     void setShowLastUsedSession(bool showLastUsedSession);
     bool showLastUsedSession() const;
 
-signals:
-    
-public slots:
-
 private:
     bool m_showLastUsedSession;
     
