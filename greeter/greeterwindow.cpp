@@ -48,10 +48,7 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include <KGlobal>
 #include <Plasma/Theme>
 
-#include "faceimageprovider.h"
 #include "configwrapper.h"
-#include "sessionsmodel.h"
-#include "usersmodel.h"
 #include "greeterwrapper.h"
 
 #include <config.h>
