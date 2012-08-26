@@ -21,13 +21,12 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include <QString>
 #include <QPixmap>
 #include <QList>
-#include <QDebug>
 #include <QDir>
 #include <QSettings>
 
 #include <KStandardDirs>
 #include <KGlobal>
-
+#include <KDebug>
 
 class ThemeItem {
 public:
@@ -49,6 +48,10 @@ ThemesModel::ThemesModel(QObject *parent) :
     this->load();
 }
 
+ThemesModel::~ThemesModel()
+{
+}
+
 int ThemesModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
@@ -60,25 +63,25 @@ QVariant ThemesModel::data(const QModelIndex &index, int role) const
     int row = index.row();
     switch(role) {
     case Qt::DisplayRole:
-        return m_themes[row]->name;
+        return m_themes[row].name;
     case Qt::DecorationRole:
-        if (m_themes[row]->preview.isNull()) {
+        if (m_themes[row].preview.isNull()) {
             return QVariant();
         }
         //FIXME shouldn't really be scaling here, it's a bit slow - in the delegate is better.
-        return m_themes[row]->preview.scaled(QSize(100,100), Qt::KeepAspectRatio);
+        return m_themes[row].preview.scaled(QSize(100,100), Qt::KeepAspectRatio);
     case ThemesModel::PreviewRole:
-        return m_themes[row]->preview;
+        return m_themes[row].preview;
     case ThemesModel::IdRole:
-        return m_themes[row]->id;
+        return m_themes[row].id;
     case ThemesModel::DescriptionRole:
-        return m_themes[row]->description;
+        return m_themes[row].description;
     case ThemesModel::VersionRole:
-        return m_themes[row]->version;
+        return m_themes[row].version;
     case ThemesModel::AuthorRole:
-        return m_themes[row]->author;
+        return m_themes[row].author;
     case ThemesModel::PathRole:
-        return m_themes[row]->path;
+        return m_themes[row].path;
     }
 
     return QVariant();
@@ -109,17 +112,17 @@ void ThemesModel::loadTheme(const QDir &themePath) {
     QSettings themeInfo(themePath.filePath("theme.rc"), QSettings::IniFormat);
     themeInfo.setIniCodec("UTF-8");
 
-    ThemeItem *theme = new ThemeItem;
-    theme->id = themePath.dirName();
-    theme->name = themeInfo.value("theme/Name").toString();
-    theme->description = themeInfo.value("theme/Description").toString();
-    theme->author = themeInfo.value("theme/Author").toString();
-    theme->version = themeInfo.value("theme/Version").toString();
+    ThemeItem theme;
+    theme.id = themePath.dirName();
+    theme.name = themeInfo.value("theme/Name").toString();
+    theme.description = themeInfo.value("theme/Description").toString();
+    theme.author = themeInfo.value("theme/Author").toString();
+    theme.version = themeInfo.value("theme/Version").toString();
 
-    theme->preview = QPixmap(themePath.absoluteFilePath("preview.png"));
-    theme->path = themePath.path();
+    theme.preview = QPixmap(themePath.absoluteFilePath("preview.png"));
+    theme.path = themePath.path();
 
-    qDebug() << QString("adding theme") << theme->name;
+    kDebug() << QString("adding theme") << theme.name;
 
     beginInsertRows(QModelIndex(), m_themes.size(), m_themes.size()+1);
     m_themes.append(theme);

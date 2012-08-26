@@ -36,6 +36,7 @@ public:
                PathRole};
 
     explicit ThemesModel(QObject *parent = 0);
+    virtual ~ThemesModel();
 
     int rowCount(const QModelIndex &parent) const;
     QVariant data(const QModelIndex &index, int role) const;
@@ -47,7 +48,7 @@ public slots:
 private:
     void load();
     void loadTheme(const QDir &themePath);
-    QList<ThemeItem*> m_themes;
+    QList<ThemeItem> m_themes;
 
 };
 
