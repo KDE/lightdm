@@ -260,9 +260,7 @@ Item {
 
         //can't use forwardTo as I want to switch focus. Also it doesn't work.
         Keys.onPressed: {
-            if (event.key == Qt.Key_Left || event.key == Qt.Key_Right) {
-                event.accept();
-            } else if (event.key == Qt.Key_Down ||
+            if (event.key == Qt.Key_Down ||
                 event.key == Qt.Key_Enter ||
                 event.key == Qt.Key_Return) {
                 passwordInput.forceActiveFocus();
