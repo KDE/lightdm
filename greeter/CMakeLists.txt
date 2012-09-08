@@ -13,9 +13,7 @@ include_directories(
   ${LIB_DIR}
 )
 
-# Insert your sources here
 set(GREETER_SRCS
-    faceimageprovider.cpp
     greeterwindow.cpp
     powermanagement.cpp
     main.cpp

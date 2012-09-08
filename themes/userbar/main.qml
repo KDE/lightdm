@@ -186,12 +186,12 @@ Item {
 
             Face {
                 id: face
+                width: userFaceSize
+                height: userFaceSize
                 anchors.bottom: loginText.top
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottomMargin: padding * 1.5
-                sourceSize.width: userFaceSize
-                sourceSize.height: userFaceSize
-                source: "image://face/" + name
+                source: imagePath
             }
 
             Text {

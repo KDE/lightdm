@@ -17,7 +17,31 @@ You should have received a copy of the GNU General Public License
 along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 */
 import QtQuick 1.0
+import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
-Image {
-    height: width
+Item {
+    id : base
+    property bool useIcon
+    property alias source: image.source
+
+    Image {
+        id: image
+        anchors.fill: parent
+        fillMode: Image.PreserveAspectFit
+        smooth: true
+
+        onStatusChanged: {
+            if (image.status === Image.Error) {
+                image.visible = false;
+                icon.visible = true;
+            }
+        }
+    }
+
+    QtExtraComponents.QIconItem {
+        id: icon
+        anchors.fill: parent
+        icon: "user-identity"
+        visible: false
+    }
 }
