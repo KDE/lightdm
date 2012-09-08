@@ -21,7 +21,6 @@ import org.kde.qtextracomponents 0.1 as QtExtraComponents
 
 Item {
     id : base
-    property bool useIcon
     property alias source: image.source
 
     Image {
