@@ -32,7 +32,7 @@ set(LIGHTDM_CONFIG_DIR "/etc/lightdm"
     CACHE PATH "Directory where LightDM configuration files are kept")
 
 find_package(KDE4 REQUIRED)
-find_package(QLightDM REQUIRED)
+find_package(QLightDM 1.4 REQUIRED)
 find_package(KDeclarative REQUIRED)
 include(KDE4Defaults)
 include(MacroLibrary)
