@@ -18,7 +18,11 @@ set(QLIGHTDM_LIBRARIES_FIND_REQUIRED ${QLightDM_FIND_REQUIRED})
 
 find_package(PkgConfig)
 if(PKG_CONFIG_FOUND)
-     pkg_check_modules(PC_QLIGHTDM liblightdm-qt-2)
+    if (QLIGHTDM_MIN_VERSION)
+        PKG_CHECK_MODULES(PC_QLIGHTDM liblightdm-qt-2>=${QLIGHTDM_MIN_VERSION})
+    else (QLIGHTDM_MIN_VERSION)
+        PKG_CHECK_MODULES(PC_QLIGHTDM liblightdm-qt-2)
+    endif (QLIGHTDM_MIN_VERSION)
 endif(PKG_CONFIG_FOUND)
 
 
