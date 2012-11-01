@@ -50,6 +50,7 @@ Name[uk]=Екран вітання (LightDM)
 Name[x-test]=xxLogin Screen (LightDM)xx
 
 Comment=Select login theme, adjust login features
+Comment[cs]=Zvolte motiv přihlášení, a upravte jeho vlastnosti
 Comment[da]=Vælg login-tema, tilpas login-funktioner
 Comment[el]=Επιλογή θέματος σύνδεσης, προσαρμογή χαρακτηριστικών
 Comment[et]=Sisselogimisteema valimine, võimaluste kohandamine
