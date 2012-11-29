@@ -215,6 +215,7 @@ Item {
 
     function startLogin() {
         var username = usersList.currentItem.username;
+
         if (username == greeter.guestLoginName) {
             greeter.authenticateAsGuest();
         } else {
@@ -284,7 +285,7 @@ Item {
 
         property bool isGuestLogin: usersList.currentItem.username == greeter.guestLoginName
 
-        /*PlasmaComponents.*/TextField {
+        PlasmaComponents.TextField {
             id: passwordInput
             anchors.horizontalCenter: parent.horizontalCenter
             width: 200
@@ -382,7 +383,7 @@ Item {
                 id: power
             }
 
-            /*PlasmaComponents.*/ToolButton {
+            PlasmaComponents.ToolButton {
                 id: suspendButton
                 text: i18n("Suspend")
                 iconSource: "system-suspend"
@@ -390,7 +391,7 @@ Item {
                 onClicked: power.suspend();
             }
 
-            /*PlasmaComponents.*/ToolButton {
+            PlasmaComponents.ToolButton {
                 id: hibernateButton
                 text: i18n("Hibernate")
                 iconSource: "system-suspend-hibernate"
@@ -399,7 +400,7 @@ Item {
                 onClicked: power.hibernate();
             }
 
-            /*PlasmaComponents.*/ToolButton {
+            PlasmaComponents.ToolButton {
                 id: restartButton
                 text: i18n("Restart")
                 iconSource: "system-reboot"
@@ -407,7 +408,7 @@ Item {
                 onClicked: power.restart();
             }
 
-            /*PlasmaComponents.*/ToolButton {
+            PlasmaComponents.ToolButton {
                 id: shutdownButton
                 text: i18n("Shutdown")
                 iconSource: "system-shutdown"

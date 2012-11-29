@@ -134,7 +134,7 @@ Item {
                         width: usernameInput.height;
                     }
 
-                    /*PlasmaComponents.*/TextField {
+                    PlasmaComponents.TextField {
                         id: usernameInput;
                         placeholderText: i18n("Username");
                         text: greeter.lastLoggedInUser
@@ -160,7 +160,7 @@ Item {
                         width: passwordInput.height;
                     }
 
-                    /*PlasmaComponents.*/TextField {
+                    PlasmaComponents.TextField {
                         id: passwordInput
                         echoMode: TextInput.Password
                         placeholderText: i18n("Password")
@@ -173,7 +173,7 @@ Item {
                     }
                 }
                 
-                /*PlasmaComponents.*/ToolButton {
+                PlasmaComponents.ToolButton {
                     id: loginButton
                     anchors.verticalCenter: parent.verticalCenter
                     iconSource: "go-next"
