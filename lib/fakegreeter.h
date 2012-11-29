@@ -53,6 +53,9 @@ public slots:
 //     void setLanguage (const QString &language);
     bool startSessionSync(const QString &session=QString());
 
+private slots:
+    void onAuthenticationTimerExpired();
+
 private:
     bool m_isAuthenticated;
 };

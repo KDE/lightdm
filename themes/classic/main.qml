@@ -51,6 +51,9 @@ Item {
         }
 
         onAuthenticationComplete: {
+            busyIndicator.opacity = 0;
+            loginButton.opacity = 1;
+
             if(greeter.authenticated) {
                 loginAnimation.start();
             }
@@ -63,6 +66,9 @@ Item {
     }
 
     function login() {
+        busyIndicator.opacity = 1;
+        loginButton.opacity = 0;
+
         if (useGuestOption.checked) {
             greeter.authenticateAsGuest();
         } else {
@@ -123,11 +129,11 @@ Item {
                 spacing: 10
                 width: childrenRect.width
                 height: childrenRect.height
-                
+
                 Grid {
                     columns: 2
                     spacing: 15
-                    
+
                     ExtraComponents.QIconItem {
                         icon: "meeting-participant"
                         height: usernameInput.height;
@@ -142,7 +148,7 @@ Item {
                             passwordInput.focus = true;
                         }
                         width: 160
-                        
+
                         Component.onCompleted: {
                             //if the username field has text, focus the password, else focus the username
                             if (usernameInput.text) {
@@ -172,7 +178,7 @@ Item {
                         KeyNavigation.tab: loginButton
                     }
                 }
-                
+
                 PlasmaComponents.ToolButton {
                     id: loginButton
                     anchors.verticalCenter: parent.verticalCenter
@@ -183,16 +189,24 @@ Item {
                     KeyNavigation.backtab: passwordInput
                     KeyNavigation.tab: usernameInput
                 }
+
+                PlasmaComponents.BusyIndicator {
+                    id: busyIndicator
+                    running: (visible ? true : false)
+                    anchors.fill: loginButton
+                    opacity: 0
+                }
+
             }
 
             Item {
                 height: 10
             }
-            
-            Row {               
+
+            Row {
                 spacing: 8;
                 IconButton {
-                    icon: "system-shutdown"                    
+                    icon: "system-shutdown"
                     onClicked: {
                         if (powerDialog.opacity == 1) {
                             powerDialog.opacity = 0;
@@ -287,7 +301,7 @@ Item {
                 enabled: power.canSuspend;
                 onClicked: {power.suspend();}
             }
-            
+
             PlasmaWidgets.IconWidget {
                 text: i18n("Hibernate")
                 icon: QIcon("system-suspend-hibernate")
@@ -302,13 +316,13 @@ Item {
                 enabled: power.canRestart;
                 onClicked: {power.restart();}
             }
-            
+
             PlasmaWidgets.IconWidget {
                 text: i18n("Shutdown")
                 icon: QIcon("system-shutdown")
                 enabled: power.canShutdown;
                 onClicked: {power.shutdown();}
-            }     
+            }
         }
 
     }

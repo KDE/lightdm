@@ -21,6 +21,7 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include <KDebug>
 
 #include <QApplication>
+#include <QTimer>
 
 FakeGreeter::FakeGreeter(QObject *parent) :
     QLightDM::Greeter(parent)
@@ -56,7 +57,8 @@ bool FakeGreeter::connectSync()
 void FakeGreeter::authenticate(const QString &username)
 {
     kDebug() << "authenticating as " << username;
-    Q_EMIT showPrompt("Password:", QLightDM::Greeter::PromptTypeQuestion);
+    //emit showPrompt in 4 seconds
+    QTimer::singleShot(4*1000, this, SLOT(onAuthenticationTimerExpired()));
 }
 
 void FakeGreeter::authenticateAsGuest()
@@ -76,4 +78,9 @@ bool FakeGreeter::startSessionSync(const QString &session)
     kDebug() << "starting session " << session;
     QApplication::instance()->quit();
     return true;
+}
+
+void FakeGreeter::onAuthenticationTimerExpired()
+{
+    Q_EMIT showPrompt("Password:", QLightDM::Greeter::PromptTypeQuestion);
 }
