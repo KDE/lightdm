@@ -25,6 +25,7 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QIcon>
 #include <QPixmap>
+#include <QFile>
 
 FaceImageProvider::FaceImageProvider(QAbstractItemModel* model)
 : QDeclarativeImageProvider(QDeclarativeImageProvider::Pixmap)
@@ -51,10 +52,20 @@ QPixmap FaceImageProvider::requestPixmap(const QString& id, QSize* size, const Q
     // Get user face pixmap
     QPixmap pix;
     int extent = requestedSize.isValid() ? requestedSize.width() : KIconLoader::SizeEnormous;
-    QIcon icon = userIndex.data(Qt::DecorationRole).value<QIcon>();
-    if (!icon.isNull()) {
-        pix = icon.pixmap(extent);
+    QString imagePath = userIndex.data(QLightDM::UsersModel::ImagePathRole).toString();
+
+    //Work around a bug in AccountsService which returns the image path as "~/.face" regardless of whether it exists or not.
+    //we check if it exists, and also search "~/.face.icon"
+
+    //if there is an image path, and the image actually exists
+    if (!imagePath.isNull()) {
+
+        pix.load(imagePath + QLatin1String(".icon"));
+        if (pix.isNull()) {
+            pix.load(imagePath);
+        }
     }
+
     if (pix.isNull()) {
         pix = DesktopIcon("user-identity", extent);
     }
