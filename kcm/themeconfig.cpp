@@ -45,13 +45,17 @@ ThemeConfig::ThemeConfig(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->options->setConfig(m_config);
+    ui->themePreview->setConfig(m_config);
 
     ThemesModel *model = new ThemesModel(this);
     ui->themesList->setModel(model);
 
+    ui->preview->setVisible(false);
+
     connect(ui->themesList, SIGNAL(activated(QModelIndex)), SLOT(onThemeSelected(QModelIndex)));
     connect(ui->themesList, SIGNAL(clicked(QModelIndex)), SLOT(onThemeSelected(QModelIndex)));
     connect(ui->options, SIGNAL(changed(bool)), SIGNAL(changed(bool)));
+    connect(ui->options, SIGNAL(changed(bool)), ui->themePreview, SLOT(reload()));
 
     QString theme = m_config->group("greeter").readEntry("theme-name", "userbar");
 
@@ -106,8 +110,15 @@ void ThemeConfig::onThemeSelected(const QModelIndex &index)
     }
 
     ui->options->setTheme(themeDir());
+    ui->themePreview->setTheme(index.data(ThemesModel::IdRole).toString());
 
     emit changed(true);
+}
+
+void ThemeConfig::onConfigChanged()
+{
+    ui->themePreview->setConfig(ui->options->config());
+    ui->themePreview->reload();
 }
 
 QDir ThemeConfig::themeDir() const

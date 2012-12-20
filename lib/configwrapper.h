@@ -21,6 +21,8 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QObject>
 #include <KUrl>
+#include <KSharedConfig>
+
 
 #include <Plasma/ConfigLoader>
 
@@ -31,7 +33,7 @@ class ConfigWrapper : public QObject
 {
     Q_OBJECT
 public:
-    explicit ConfigWrapper(const KUrl &configPath, QObject *parent = 0);
+    explicit ConfigWrapper(const KUrl &configPath, const KSharedConfigPtr &config, QObject *parent = 0);
 
     Q_INVOKABLE QVariant readEntry(const QString &key) const;
 

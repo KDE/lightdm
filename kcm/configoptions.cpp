@@ -47,7 +47,7 @@ AuthKitConfigLoader::AuthKitConfigLoader(KSharedConfigPtr config, QIODevice *xml
 {}
 
 //normal write fails due to needing root, worse it "readConfig" at the end of a write, deleting any values we once had
-//we overrise the usrWrite event to save all settings to entry map then retrieve that.
+//we override the usrWrite event to save all settings to entry map then retrieve that.
 void AuthKitConfigLoader::usrWriteConfig()
 {
     m_entryMap.clear();
@@ -71,6 +71,11 @@ ConfigOptions::ConfigOptions(QWidget *parent) :
 void ConfigOptions::setConfig(const KSharedConfigPtr &config)
 {
     m_config = config;
+}
+
+KSharedConfigPtr ConfigOptions::config() const
+{
+    return m_config;
 }
 
 void ConfigOptions::setTheme(const QDir &themeDir)
@@ -109,7 +114,6 @@ void ConfigOptions::setTheme(const QDir &themeDir)
 
 void ConfigOptions::onSettingsChanged()
 {
-    qDebug() << "changed";
     Q_EMIT changed(true);
 }
 

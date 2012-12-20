@@ -45,7 +45,7 @@ void QmlPlugin::initializeEngine(QDeclarativeEngine *engine, const char *uri) {
     if (engine->rootContext()->contextProperty("config").isNull()) {
         KUrl configPath(engine->baseUrl());
         configPath.setPath(configPath.path() + "/main.xml");
-        engine->rootContext()->setContextProperty(QLatin1String("config"), new ConfigWrapper(configPath));
+//        engine->rootContext()->setContextProperty(QLatin1String("config"), new ConfigWrapper(configPath);
     }
 
     engine->rootContext()->setContextProperty("plasmaTheme", Plasma::Theme::defaultTheme());

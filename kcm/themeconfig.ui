@@ -90,6 +90,16 @@ border: 1px solid #888;</string>
       </layout>
      </item>
      <item>
+      <widget class="GreeterPreview" name="themePreview" native="true">
+       <property name="minimumSize">
+        <size>
+         <width>400</width>
+         <height>225</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QLabel" name="nameLabel">
        <property name="font">
         <font>
@@ -173,6 +183,12 @@ border: 1px solid #888;</string>
    <class>ConfigOptions</class>
    <extends>QWidget</extends>
    <header>configoptions.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GreeterPreview</class>
+   <extends>QWidget</extends>
+   <header>greeterpreview.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
