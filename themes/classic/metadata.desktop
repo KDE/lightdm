@@ -1,6 +1,10 @@
-[theme]
-Name = Classic
-Description = A classic login prompt
-Version = 0.3
-Author = David Edmundson
-Homepage = http://kde.org
+[Desktop Entry]
+Name=Classic
+Comment=A classic login prompt
+Type=lightdm-theme
+
+X-KDE-PluginInfo-Version=0.3
+X-KDE-PluginInfo-Author=David Edmundson
+X-KDE-PluginInfo-Website=http://kde.org
+X-KDE-PluginInfo-Name=classic
+X-KDE-PluginInfo-License=GPL

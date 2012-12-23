@@ -7,7 +7,7 @@ class LightDMPackageStructure : public Plasma::PackageStructure
 {
     Q_OBJECT
 public:
-    explicit LightDMPackageStructure(QObject *parent = 0);
+    explicit LightDMPackageStructure(QObject *parent = 0, const QVariantList &args = QVariantList());
 };
 
 #endif // LIGHTDMPACKAGESTRUCTURE_H

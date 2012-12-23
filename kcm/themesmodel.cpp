@@ -18,6 +18,8 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "themesmodel.h"
 
+#include "lightdmpackagestructure.h"
+
 #include <QString>
 #include <QPixmap>
 #include <QList>
@@ -27,6 +29,9 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include <KStandardDirs>
 #include <KGlobal>
 #include <KDebug>
+
+#include <Plasma/Package>
+
 
 class ThemeItem {
 public:
@@ -42,9 +47,6 @@ public:
 ThemesModel::ThemesModel(QObject *parent) :
     QAbstractListModel(parent)
 {
-    //FUTURE FIXME: do the single shot trick so we can start displaying the UI
-    //before bothering to do the loading.
-    //will need emit on finished.
     this->load();
 }
 
@@ -61,27 +63,26 @@ int ThemesModel::rowCount(const QModelIndex &parent) const
 QVariant ThemesModel::data(const QModelIndex &index, int role) const
 {
     int row = index.row();
+    const Plasma::Package package(m_themes[row]);
+    const Plasma::PackageMetadata metaData = package.metadata();
+
     switch(role) {
     case Qt::DisplayRole:
-        return m_themes[row].name;
+        return metaData.name();
     case Qt::DecorationRole:
-        if (m_themes[row].preview.isNull()) {
-            return QVariant();
-        }
-        //FIXME shouldn't really be scaling here, it's a bit slow - in the delegate is better.
-        return m_themes[row].preview.scaled(QSize(100,100), Qt::KeepAspectRatio);
+        /* Drop Through*/
     case ThemesModel::PreviewRole:
-        return m_themes[row].preview;
+        return QPixmap(package.filePath("preview"));
     case ThemesModel::IdRole:
-        return m_themes[row].id;
+        return metaData.pluginName();
     case ThemesModel::DescriptionRole:
-        return m_themes[row].description;
+        return metaData.description();
     case ThemesModel::VersionRole:
-        return m_themes[row].version;
+        return metaData.version();
     case ThemesModel::AuthorRole:
-        return m_themes[row].author;
+        return metaData.author();
     case ThemesModel::PathRole:
-        return m_themes[row].path;
+        return package.path();
     }
 
     return QVariant();
@@ -91,40 +92,22 @@ void ThemesModel::load()
 {
     qDebug() << "loading themes";
     QStringList themeDirPaths = KGlobal::dirs()->findDirs("data", "lightdm-kde-greeter/themes");
-    qDebug() << themeDirPaths;
 
-    //get a list of possible theme directories, loop through each of these finding themes.
-    //FIXME I think this can be simplified to return all possible themes directly
-
-    foreach(const QString &themeDirPath, themeDirPaths)
+    foreach(const QString &themeName, Plasma::Package::listInstalledPaths(themeDirPaths.last()))
     {
-        QDir themeDir(themeDirPath);
-        foreach(const QString &dirPath, themeDir.entryList(QDir::NoDotAndDotDot | QDir::Dirs)) {
-            qDebug() << themeDir.filePath(dirPath + "/theme.rc");
-            if (QFile::exists(themeDir.filePath(dirPath + "/theme.rc"))) {
-                loadTheme(QDir(themeDir.filePath(dirPath)));
-            }
+        //A new package structure is apparently needed for each new package, otherwise instances of different packages represent the same object in a horrendously broken way
+        Plasma::PackageStructure::Ptr packageStructure(new LightDMPackageStructure(this));
+
+        Plasma::Package package(themeDirPaths.last(), themeName, packageStructure);
+        if (package.isValid()) {
+            addTheme(package);
         }
     }
 }
 
-void ThemesModel::loadTheme(const QDir &themePath) {
-    QSettings themeInfo(themePath.filePath("theme.rc"), QSettings::IniFormat);
-    themeInfo.setIniCodec("UTF-8");
-
-    ThemeItem theme;
-    theme.id = themePath.dirName();
-    theme.name = themeInfo.value("theme/Name").toString();
-    theme.description = themeInfo.value("theme/Description").toString();
-    theme.author = themeInfo.value("theme/Author").toString();
-    theme.version = themeInfo.value("theme/Version").toString();
-
-    theme.preview = QPixmap(themePath.absoluteFilePath("preview.png"));
-    theme.path = themePath.path();
-
-    kDebug() << QString("adding theme") << theme.name;
-
-    beginInsertRows(QModelIndex(), m_themes.size(), m_themes.size()+1);
-    m_themes.append(theme);
+void ThemesModel::addTheme(const Plasma::Package &package)
+{
+    beginInsertRows(QModelIndex(), m_themes.size(), m_themes.size());
+    m_themes.append(package);
     endInsertRows();
 }

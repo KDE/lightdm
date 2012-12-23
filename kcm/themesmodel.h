@@ -21,7 +21,9 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QAbstractListModel>
 
-class ThemeItem;
+namespace Plasma {
+    class Package;
+}
 class QDir;
 
 class ThemesModel : public QAbstractListModel
@@ -47,8 +49,8 @@ public slots:
 
 private:
     void load();
-    void loadTheme(const QDir &themePath);
-    QList<ThemeItem> m_themes;
+    void addTheme(const Plasma::Package &package);
+    QList<Plasma::Package> m_themes;
 
 };
 

@@ -1,9 +1,11 @@
 #include "lightdmpackagestructure.h"
 
-LightDMPackageStructure::LightDMPackageStructure(QObject *parent) :
-    Plasma::PackageStructure(parent, i18n("LightDM Theme"))
+LightDMPackageStructure::LightDMPackageStructure(QObject *parent, const QVariantList &args) :
+    Plasma::PackageStructure(parent, QLatin1String("LightDM/Theme"))
 {
-    setServicePrefix("lightdm-theme");
+    Q_UNUSED(args)
+
+    setServicePrefix("lightdm-theme-");
     setDefaultPackageRoot("lightdm-kde-greeter/themes/");
 
     addFileDefinition("configfile", "config/main.xml", i18nc("File Definition", "Config structure"));
