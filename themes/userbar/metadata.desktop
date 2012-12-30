@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=User Bar
+Comment=Pick your user from the user bar.
+Type=lightdm-theme
+
+X-KDE-PluginInfo-Version=0.3
+X-KDE-PluginInfo-Author=Aurélien Gâteau
+X-KDE-PluginInfo-Website=http://kde.org
+X-KDE-PluginInfo-Name=userbar
+X-KDE-PluginInfo-License=GPL

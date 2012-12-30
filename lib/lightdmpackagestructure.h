@@ -16,42 +16,17 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef THEMESMODEL_H
-#define THEMESMODEL_H
 
-#include <QAbstractListModel>
+#ifndef LIGHTDMPACKAGESTRUCTURE_H
+#define LIGHTDMPACKAGESTRUCTURE_H
 
-namespace Plasma {
-    class Package;
-}
-class QDir;
+#include <Plasma/PackageStructure>
 
-class ThemesModel : public QAbstractListModel
+class LightDMPackageStructure : public Plasma::PackageStructure
 {
     Q_OBJECT
 public:
-    enum Roles {IdRole = Qt::UserRole,
-               AuthorRole,
-               DescriptionRole,
-               VersionRole,
-               PreviewRole,
-               PathRole};
-
-    explicit ThemesModel(QObject *parent = 0);
-    virtual ~ThemesModel();
-
-    int rowCount(const QModelIndex &parent) const;
-    QVariant data(const QModelIndex &index, int role) const;
-
-signals:
-
-public slots:
-
-private:
-    void load();
-    void addTheme(const Plasma::Package &package);
-    QList<Plasma::Package> m_themes;
-
+    explicit LightDMPackageStructure(QObject *parent = 0, const QVariantList &args = QVariantList());
 };
 
-#endif // THEMESMODEL_H
+#endif // LIGHTDMPACKAGESTRUCTURE_H

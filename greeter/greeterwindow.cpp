@@ -16,8 +16,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 #include "greeterwindow.h"
 #include "powermanagement.h"
+#include "lightdmpackagestructure.h"
 
 #include <QtGui/QWidget>
 #include <QApplication>
@@ -48,6 +50,8 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include <KGlobal>
 #include <KLocale>
 
+#include <Plasma/Package>
+
 #include "configwrapper.h"
 #include "greeterwrapper.h"
 
@@ -69,24 +73,27 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     KConfigGroup configGroup = config.group("greeter");
 
     QString theme = configGroup.readEntry("theme-name", "userbar");
-    KUrl source = KGlobal::dirs()->locate("appdata", "themes/" + theme + "/main.qml");
 
-    if (source.isEmpty()) {
-        kError() << "Cannot find QML file for" << theme << "theme. Falling back to \"userbar\" theme.";
-        theme = "userbar";
-        source = KGlobal::dirs()->locate("appdata", "themes/userbar/main.qml");
-        if (source.isEmpty()) {
-            kFatal() << "Cannot find QML file for \"userbar\" theme. Something is wrong with this installation. Aborting.";
-        }
+    QStringList dirs = KGlobal::dirs()->findDirs("appdata", "themes/");
+
+    Plasma::PackageStructure::Ptr packageStructure(new LightDMPackageStructure(this));
+
+    Plasma::Package package(dirs.last() + "/" + theme, packageStructure);
+
+    if (!package.isValid()) {
+        kError() << theme << " is not a valid theme. Falling back to \"userbar\" theme.";
+        package = Plasma::Package(dirs.last() + "/" + "userbar", packageStructure);
     }
-    kDebug() << "Loading" << source;
+    if (!package.isValid()) {
+        kFatal() << "Cannot find QML file for \"userbar\" theme. Something is wrong with this installation. Aborting.";
+    }
 
     KGlobal::locale()->insertCatalog("lightdm_theme_" + theme);
     
-    rootContext()->setContextProperty("config", new ConfigWrapper(KGlobal::dirs()->locate("appdata", "themes/" + theme + "/main.xml"), this));
+    rootContext()->setContextProperty("config", new ConfigWrapper(package.filePath("configfile"), this));
     rootContext()->setContextProperty("greeter", m_greeter);
 
-    setSource(source);
+    setSource(package.filePath("mainscript"));
     // Prevent screen flickering when the greeter starts up. This really needs to be sorted out in QML/Qt...
     setAttribute(Qt::WA_OpaquePaintEvent);
     setAttribute(Qt::WA_NoSystemBackground);

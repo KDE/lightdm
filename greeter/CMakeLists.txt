@@ -19,6 +19,8 @@ set(GREETER_SRCS
     main.cpp
     greeterwrapper.cpp
     ${LIB_DIR}/configwrapper.cpp
+    ${LIB_DIR}/lightdmpackagestructure.cpp
+
 )
 
 qt4_add_dbus_interface(GREETER_SRCS

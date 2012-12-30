@@ -28,6 +28,7 @@ set(LIGHTDM_KCM_SRCS
     configoptions.cpp
     ${LIB_DIR}/extrarowproxymodel.cpp
     ${LIB_DIR}/usersmodel.cpp
+    ${LIB_DIR}/lightdmpackagestructure.cpp
 )
 
 set(LIGHTDM_KCM_UI
