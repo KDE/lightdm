@@ -368,59 +368,10 @@ Item {
         }
     }
 
-    // Bottom "Power" bar
-    PlasmaCore.FrameSvgItem {
-        id: powerBar
-        anchors.bottom: activeScreen.bottom
-        anchors.right: activeScreen.right
-        width: childrenRect.width + margins.left
-        height: childrenRect.height + margins.top * 2
-        imagePath: "translucent/widgets/panel-background"
-        prefix: "south-mini"
-
-        enabledBorders: "LeftBorder|TopBorder"
-
-        Row {
-            spacing: 5
-            x: parent.margins.left
-            y: parent.margins.top
-
-            LightDM.Power {
-                id: power
-            }
-
-            PlasmaComponents.ToolButton {
-                id: suspendButton
-                text: i18n("Suspend")
-                iconSource: "system-suspend"
-                enabled: power.canSuspend;
-                onClicked: power.suspend();
-            }
-
-            PlasmaComponents.ToolButton {
-                id: hibernateButton
-                text: i18n("Hibernate")
-                iconSource: "system-suspend-hibernate"
-                //Hibernate is a special case, lots of distros disable it, so if it's not enabled don't show it
-                visible: power.canHibernate
-                onClicked: power.hibernate();
-            }
-
-            PlasmaComponents.ToolButton {
-                id: restartButton
-                text: i18n("Restart")
-                iconSource: "system-reboot"
-                enabled: power.canRestart
-                onClicked: power.restart();
-            }
-
-            PlasmaComponents.ToolButton {
-                id: shutdownButton
-                text: i18n("Shutdown")
-                iconSource: "system-shutdown"
-                enabled: power.canShutdown
-                onClicked: power.shutdown();
-            }
-        }
-    }
+   PowerBar {
+       id: powerBar
+       anchors.bottom: activeScreen.bottom
+       anchors.right: activeScreen.right
+       enabledBorders: "LeftBorder|TopBorder"
+   }
 }
