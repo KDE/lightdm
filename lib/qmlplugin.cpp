@@ -26,6 +26,7 @@
 #include <QDebug>
 
 #include <QLightDM/Power>
+#include <QLightDM/Greeter>
 
 #include "sessionsmodel.h"
 #include "usersmodel.h"
@@ -52,8 +53,9 @@ void QmlPlugin::registerTypes(const char *uri)
     qmlRegisterType<SessionsModel> (uri, 0, 1, "SessionsModel");
     qmlRegisterType<UsersModel> (uri, 0, 1, "UsersModel");
     qmlRegisterType<ScreensModel> (uri, 0, 1, "ScreensModel");
-    
+
     qmlRegisterType<QLightDM::PowerInterface> (uri, 0, 1, "Power");
+    qmlRegisterUncreatableType<QLightDM::Greeter>(uri, 0, 1, "Greeter", "Exposed as context property, do no create");
 }
 
 Q_EXPORT_PLUGIN2(klightdm, QmlPlugin);
