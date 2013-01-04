@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 */
-import QtQuick 1.0
+import QtQuick 1.1
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.lightdm 0.1 as LightDM
@@ -189,17 +189,21 @@ Item {
                 id: face
                 width: userFaceSize
                 height: userFaceSize
-                anchors.bottom: loginText.top
+                anchors.top: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
-                anchors.bottomMargin: padding * 1.5
                 source: imagePath
             }
 
             Text {
                 id: loginText
-                anchors.bottom: parent.bottom
-                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: face.bottom
+                anchors.topMargin: padding * 1.5
+                width: parent.width
                 text: display
+                elide: Text.ElideRight
+                horizontalAlignment: Text.AlignHCenter
+                maximumLineCount: 2
+                wrapMode: Text.Wrap
             }
 
             MouseArea {
