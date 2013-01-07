@@ -25,13 +25,15 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.lightdm 0.1 as LightDM
 
 Item {
+    
     LightDM.ScreenManager {
         id: screenManager
         delegate: Image {
             // default to keeping aspect ratio
             fillMode: config.readEntry("BackgroundKeepAspectRatio") == false ? Image.Stretch : Image.PreserveAspectCrop;
             //read from config, if there's no entry use plasma theme
-            source: config.readEntry("Background") ? config.readEntry("Background"): plasmaTheme.wallpaperPath(Qt.size(width,height));
+                      
+            source: config.readEntry("Background") ? config.readEntry("Background"): theme.wallpaperPathForSize(width,height);
             smooth: true
         }
     }

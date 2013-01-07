@@ -33,8 +33,6 @@
 #include "fakegreeter.h"
 #include "configwrapper.h"
 
-#include <Plasma/Theme>
-
 void QmlPlugin::initializeEngine(QDeclarativeEngine *engine, const char *uri) {
     Q_UNUSED(uri)
 
@@ -47,8 +45,6 @@ void QmlPlugin::initializeEngine(QDeclarativeEngine *engine, const char *uri) {
         configPath.setPath(configPath.path() + "/main.xml");
         engine->rootContext()->setContextProperty(QLatin1String("config"), new ConfigWrapper(configPath));
     }
-
-    engine->rootContext()->setContextProperty("plasmaTheme", Plasma::Theme::defaultTheme());
 }
 
 void QmlPlugin::registerTypes(const char *uri)
