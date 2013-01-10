@@ -11,6 +11,7 @@ Categories=Qt;KDE;X-KDE-settings-system;
 X-KDE-System-Settings-Parent-Category=system-administration
 
 X-KDE-Keywords=lightdm,display manager,face,user,users,login,greeting,theme,language,session,sessions,shutdown,restart,guest,auto login
+X-KDE-Keywords[bs]=lightdm,display manager,face,user,users,login,greeting,theme,language,session,sessions,shutdown,restart,guest,auto login,menadžer ekrana,lice,korisnik,korisnici,prijava,tema,jezik,sesija,sesije,gašenje,pokretanje,gost,automatska prijava
 X-KDE-Keywords[da]=lightdm,display manager,ansigt,bruger,brugere,login,velkomst,tema,sprog,session,sessioner,nedlukning,genstart,gæst,autologin
 X-KDE-Keywords[el]=lightdm,διαχειριστής απεικόνισης,πρόσωπο,χρήστης,χρήστες,σύνδεση,καλωσόρισμα, θέμα,γλώσσα,συνεδρία,συνεδρίες,τερματισμός,επανεκκίνηση,επισκέπτης,αυτόματη σύνδεση
 X-KDE-Keywords[et]=lightdm,kuvahaldur,kasutaja,kasutajad,sisselogimine,tervitusekraan,teema,keel,seanss,seansid,seiskamine,taaskäivitamine,restart,külaline,guest,automaatne sisselogimine
@@ -29,6 +30,7 @@ X-KDE-Keywords[uk]=lightdm,display manager,face,user,users,login,greeting,theme,
 X-KDE-Keywords[x-test]=xxlightdm,display manager,face,user,users,login,greeting,theme,language,session,sessions,shutdown,restart,guest,auto loginxx
 
 Name=Login Screen (LightDM)
+Name[bs]=Ekran za prijavu (LightDM)
 Name[cs]=Přihlašovací obrazovka (LightDM)
 Name[da]=Login-skærm (LightDM)
 Name[de]=Anmeldebildschirm (LightDM)
@@ -52,6 +54,7 @@ Name[uk]=Екран вітання (LightDM)
 Name[x-test]=xxLogin Screen (LightDM)xx
 
 Comment=Select login theme, adjust login features
+Comment[bs]=Odaberi temu za prijavu i prilagodi mogućnosti prijave
 Comment[cs]=Zvolte motiv přihlášení, a upravte jeho vlastnosti
 Comment[da]=Vælg login-tema, tilpas login-funktioner
 Comment[de]=Design auswählen und Einstellungen vornehmen
