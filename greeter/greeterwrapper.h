@@ -21,7 +21,9 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #define GREETERWRAPPER_H
 
 #include <QLightDM/Greeter>
+
 #include <KSharedConfig>
+#include <KConfigGroup>
 
 class GreeterWrapper : public QLightDM::Greeter
 {
@@ -44,7 +46,7 @@ public slots:
 
 private:
     void saveLastUser(const QString &user);
-    KSharedConfig::Ptr m_config;
+    KConfigGroup m_configGroup;
 };
 
 #endif // GREETERWRAPPER_H

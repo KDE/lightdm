@@ -27,12 +27,16 @@ GreeterWrapper::GreeterWrapper(QObject *parent) :
     QLightDM::Greeter(parent)
 {
     connectSync();
-    m_config = KSharedConfig::openConfig("state-kde");
+    KSharedConfig::Ptr config = KSharedConfig::openConfig("state-kde");
+
+    //store a different config per display so last user is remembered per session
+    m_configGroup = config->group(QLatin1String("lightdm_") + qgetenv("DISPLAY"));
 }
 
 QString GreeterWrapper::lastLoggedInUser() const
 {
     //use suggested user from lightdm.conf if they exist, otherwise load from local config file of last logged in user.
+    //if nothing exists, return nothing
     if (selectGuestHint()) {
         return "*guest";
     }
@@ -40,7 +44,7 @@ QString GreeterWrapper::lastLoggedInUser() const
         return selectUserHint();
     }
 
-    return m_config->group("lightdm").readEntry("lastUser");
+    return m_configGroup.readEntry("lastUser");
 }
 
 QString GreeterWrapper::guestLoginName() const
@@ -57,7 +61,7 @@ bool GreeterWrapper::startSessionSync(const QString &session)
 
 void GreeterWrapper::saveLastUser(const QString &user)
 {
-    m_config->group("lightdm").writeEntry("lastUser", user);
+    m_configGroup.writeEntry("lastUser", user);
     //force a sync as our greeter gets killed
-    m_config->sync();
+    m_configGroup.sync();
 }
