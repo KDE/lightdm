@@ -46,8 +46,8 @@ AuthKitConfigLoader::AuthKitConfigLoader(KSharedConfigPtr config, QIODevice *xml
     : Plasma::ConfigLoader(config, xml, parent)
 {}
 
-//normal write fails due to needing root, worse it "readConfig" at the end of a write, deleting any values we once had
-//we overrise the usrWrite event to save all settings to entry map then retrieve that.
+//normal write fails due to needing root, worse it calls "readConfig" at the end of a write, deleting any values we once had
+//we override the usrWrite event to save all settings to entry map then retrieve that.
 void AuthKitConfigLoader::usrWriteConfig()
 {
     m_entryMap.clear();
