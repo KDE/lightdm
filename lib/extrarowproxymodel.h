@@ -53,15 +53,10 @@ private slots:
 
 
 private:
-    typedef QHash<int, QVariant> Item; //role, item.
-    typedef QHash<int, Item> Row; //column, item
-    typedef QVector<Row> Rows;
-
     int sourceRowCount() const;
 
     QWeakPointer<QAbstractItemModel> m_model;
     QStandardItemModel *m_extraRowModel;
-    Rows m_rows;
 };
 
 #endif /* EXTRAROWPROXYMODEL_H */
