@@ -30,17 +30,20 @@ class UsersModel : public ExtraRowProxyModel
 public:
     explicit UsersModel(QObject *parent = 0);
 
+    /** Temporary work around for AccountsService always returning ~/.face instead*/
+    virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+
     /** Add a row to the sessions model titled "Last Used Session" */
     void setShowGuest(bool showGuest);
     bool showGuest() const;
 
 signals:
-    
+
 public slots:
 
 private:
     bool m_showGuest;
-    
+
 };
 
 #endif // SESSIONSMODEL_H

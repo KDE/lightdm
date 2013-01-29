@@ -20,7 +20,7 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include "usersmodel.h"
 
 #include <QLightDM/UsersModel>
-#include <QDebug>
+#include <QFile>
 
 #include <KLocalizedString>
 
@@ -29,6 +29,22 @@ UsersModel::UsersModel(QObject *parent) :
     m_showGuest(false)
 {
     setSourceModel(new QLightDM::UsersModel(this));
+}
+
+//workaround for LightDM sometimes returning the wrong user icon path
+//if the provided path does not exist, try path + ".icon" (i.e  ~/.face.icon)
+//if that does exist, return that instead
+QVariant UsersModel::data(const QModelIndex &index, int role) const
+{
+    if (role == QLightDM::UsersModel::ImagePathRole) {
+        const QString path = ExtraRowProxyModel::data(index, role).toString();
+        if (QFile::exists(path)) {
+            return path;
+        } else if (QFile::exists(path + QLatin1String(".icon"))) {
+            return path + QLatin1String(".icon");
+        }
+    }
+    return ExtraRowProxyModel::data(index, role);
 }
 
 void UsersModel::setShowGuest(bool showGuest)
