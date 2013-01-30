@@ -192,6 +192,7 @@ Item {
                 anchors.top: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
                 source: imagePath
+                loggedIn: loggedIn
             }
 
             Text {

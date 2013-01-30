@@ -22,6 +22,7 @@ import org.kde.qtextracomponents 0.1 as QtExtraComponents
 Item {
     id : base
     property alias source: image.source
+    property alias loggedIn: loggedInIcon.visible
 
     Image {
         id: image
@@ -35,6 +36,15 @@ Item {
                 icon.visible = true;
             }
         }
+    }
+    
+    QtExtraComponents.QIconItem {
+        id: loggedInIcon
+        height: 20;
+        width: 20;
+        icon: "dialog-ok"
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
     }
 
     QtExtraComponents.QIconItem {
