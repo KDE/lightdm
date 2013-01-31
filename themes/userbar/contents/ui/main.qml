@@ -191,8 +191,8 @@ Item {
                 height: userFaceSize
                 anchors.top: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
-                source: imagePath
-                loggedIn: loggedIn
+                source: model.imagePath
+                loggedIn: model.loggedIn
             }
 
             Text {
