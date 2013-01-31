@@ -37,6 +37,13 @@ Item {
             }
         }
     }
+
+    QtExtraComponents.QIconItem {
+        id: icon
+        anchors.fill: parent
+        icon: "user-identity"
+        visible: false
+    }
     
     QtExtraComponents.QIconItem {
         id: loggedInIcon
@@ -45,12 +52,5 @@ Item {
         icon: "dialog-ok"
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-    }
-
-    QtExtraComponents.QIconItem {
-        id: icon
-        anchors.fill: parent
-        icon: "user-identity"
-        visible: false
     }
 }
