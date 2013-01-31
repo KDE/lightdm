@@ -18,8 +18,8 @@
 
 #include "powermanagement.h"
 
-static QString interface("org.freedesktop.UPower");
-static QString path("/org/freedesktop/UPower");
+static const QString interface("org.freedesktop.UPower");
+static const QString path("/org/freedesktop/UPower");
 
 PowerManagement::PowerManagement(QObject* parent)
     : QObject(parent)
