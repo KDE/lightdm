@@ -33,10 +33,11 @@ public:
     virtual ~PowerManagement();
 
 private Q_SLOTS:
-        void upowerChanged();
+    void upowerChanged();
 
 private:
     org::freedesktop::UPower *m_upower;
+    bool m_lidIsClosed;
 };
 
 #endif //POWER_MANAGEMENT_H

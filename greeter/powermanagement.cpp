@@ -25,6 +25,7 @@ PowerManagement::PowerManagement(QObject* parent)
     : QObject(parent)
 {
     m_upower = new org::freedesktop::UPower(interface, path, QDBusConnection::systemBus(), this);
+    m_lidIsClosed = m_upower->lidIsClosed();
     connect(m_upower, SIGNAL(Changed()), SLOT(upowerChanged()));
 }
 
@@ -34,9 +35,12 @@ PowerManagement::~PowerManagement()
 
 void PowerManagement::upowerChanged()
 {
-    if (!m_upower->lidIsClosed()) {
-        return;
-    }
+    bool lidIsClosed = m_upower->lidIsClosed();
 
-    m_upower->Suspend();
+    //if lid has changed to closed from not closed, suspend
+    if (lidIsClosed && !m_lidIsClosed) {
+        m_upower->Suspend();
+    }
+        
+    m_lidIsClosed = lidIsClosed;
 }
