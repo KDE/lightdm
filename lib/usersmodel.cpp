@@ -57,6 +57,12 @@ void UsersModel::setShowGuest(bool showGuest)
     if (m_showGuest) {
         QStandardItem *guest = new QStandardItem(i18n("Guest"));
         guest->setData("*guest", QLightDM::UsersModel::NameRole);
+        //set real name to the display name i18n("guest");
+        guest->setData(guest->data(), QLightDM::UsersModel::RealNameRole);
+        //guest is never shown as logged in, as clicking again should start a new guest session
+        guest->setData(false, QLightDM::UsersModel::LoggedInRole);
+        
+        
         extraRowModel()->appendRow(guest);
     } else {
         extraRowModel()->removeRow(0);
