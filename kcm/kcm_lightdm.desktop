@@ -28,6 +28,7 @@ X-KDE-Keywords[pt]=lightdm,gestor de autenticação,cara,utilizador,utilizadores
 X-KDE-Keywords[pt_BR]=lightdm,gerenciador de autenticação,rosto,usuário,usuários,conta,boas-vindas,tema,língua,sessão,sessões,encerramento,reinício,convidado,autenticação automática
 X-KDE-Keywords[ro]=față,utilizator,autentificare,temă,limbă,sesiune,sesiuni,oprire,repornire,oaspete,autentificare automată,lightdm,display manager,face,user,restart,login,administrator autentificare
 X-KDE-Keywords[sv]=lightdm,inloggningshanterare,ansikte,användare,inloggning,hälsning,tema,språk,session,sessioner,avstängning,omstart,gäst,automatisk inloggning
+X-KDE-Keywords[tr]=lightdm,gösterge yöneticisi,yüz,kullanıcı,kullanıcılar,oturum açma,karşılama,tema,dil,oturum,oturumlar,kapatma,yeniden başlatma,misafit,otomatik oturum aç
 X-KDE-Keywords[uk]=lightdm,display manager,face,user,users,login,greeting,theme,language,session,sessions,shutdown,restart,guest,auto login, керування екраном,обличчя,користувач,користувачі,вхід,вітання,тема,мова,сеанс,сеанси,вимикання,перезапуск,перезапустити,гість,гостьовий,автовхід,автоматичний вхід
 X-KDE-Keywords[x-test]=xxlightdm,display manager,face,user,users,login,greeting,theme,language,session,sessions,shutdown,restart,guest,auto loginxx
 
@@ -53,6 +54,7 @@ Name[pt]=Ecrã de Autenticação (LightDM)
 Name[pt_BR]=Tela de autenticação (LightDM)
 Name[ro]=Ecran de autentificare (LightDM)
 Name[sv]=Inloggningsskärm (LightDM)
+Name[tr]=Oturum Ekranı (LightDM)
 Name[uk]=Екран вітання (LightDM)
 Name[x-test]=xxLogin Screen (LightDM)xx
 
@@ -77,5 +79,6 @@ Comment[pt]=Seleccionar o tema de autenticação, ajustar as funcionalidades de 
 Comment[pt_BR]=Selecionar o tema de autenticação, ajustar as funcionalidades de autenticação
 Comment[ro]=Alege tema pentru autentificare, ajustează posibilitățile de autentificare
 Comment[sv]=Välj inloggningstema, justera inloggningsfunktioner
+Comment[tr]=Oturum açma temasını seçin, oturum açma özelliklerini ayarlayın
 Comment[uk]=Вибрати тему екрана вітання, скоригувати параметри вітання
 Comment[x-test]=xxSelect login theme, adjust login featuresxx
