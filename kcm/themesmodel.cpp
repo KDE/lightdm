@@ -70,7 +70,7 @@ QVariant ThemesModel::data(const QModelIndex &index, int role) const
     case Qt::DisplayRole:
         return metaData.name();
     case Qt::DecorationRole:
-        /* Drop Through*/
+        return QPixmap(package.filePath("preview")).scaled(QSize(100,100), Qt::KeepAspectRatio);
     case ThemesModel::PreviewRole:
         return QPixmap(package.filePath("preview"));
     case ThemesModel::IdRole:
