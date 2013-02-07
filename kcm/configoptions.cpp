@@ -85,13 +85,13 @@ void ConfigOptions::setTheme(const QDir &themeDir)
     }
 
     //if contains a valid config
-    if (themeDir.exists(QLatin1String("main.xml"))
-            && themeDir.exists(QLatin1String("config.ui"))) {
-        QFile kcfgFile(themeDir.filePath(QLatin1String("main.xml")));
+    if (themeDir.exists(QLatin1String("contents/config/main.xml"))
+            && themeDir.exists(QLatin1String("contents/config/config.ui"))) {
+        QFile kcfgFile(themeDir.filePath(QLatin1String("contents/config/main.xml")));
         kcfgFile.open(QFile::ReadOnly);
 
         QUiLoader loader;
-        QFile uiFile(themeDir.filePath(QLatin1String("config.ui")));
+        QFile uiFile(themeDir.filePath(QLatin1String("contents/config/config.ui")));
         m_wrapperWidget = loader.load(&uiFile, this);
 
         //both the following get deleted when the wrapped widget is deleted.
