@@ -44,25 +44,6 @@ Item {
         height: screenManager.activeScreen.height
     }
 
-    Connections {
-        target: greeter;
-
-        onShowPrompt: {
-            greeter.respond(passwordInput.text);
-        }
-
-        onAuthenticationComplete: {
-            if(greeter.authenticated) {
-                loginAnimation.start();
-            } else {
-                feedbackLabel.text = i18n("Sorry, incorrect password. Please try again.");
-                feedbackLabel.showFeedback();
-                passwordInput.selectAll()
-                passwordInput.forceActiveFocus()
-            }
-        }
-    }
-
     function doSessionSync() {
        var session = sessionButton.dataForIndex(sessionButton.currentIndex);
        if (session == "") {
@@ -219,16 +200,12 @@ Item {
         }
     }
 
-    function startLogin() {
-        var username = usersList.currentItem.username;
-
-        if (username == greeter.guestLoginName) {
-            greeter.authenticateAsGuest();
-        } else {
-            greeter.authenticate(username);
-        }
+    function startSessionSync()
+    {
+        loginAnimation.start;
     }
-    
+
+
     function indexForUserName(name) {
         var index;
         for (index = 0; index < usersList.count; ++index) {
@@ -279,29 +256,61 @@ Item {
                 passwordInput.forceActiveFocus();
             }
         }
+
+        onCurrentItemChanged: startLogin();
+    }
+
+    function startLogin() {
+        var username = usersList.currentItem.username;
+
+        if (username == greeter.guestLoginName) {
+            greeter.authenticateAsGuest();
+        } else {
+            greeter.authenticate(username);
+        }
     }
 
     FocusScope {
         id: loginButtonItem
+        height: 30
+
         anchors {
             horizontalCenter: activeScreen.horizontalCenter
             bottom: activeScreen.verticalCenter
         }
-        height: 30
 
-        property bool isGuestLogin: usersList.currentItem.username == greeter.guestLoginName
+        Connections {
+            target: greeter;
+
+            onShowPrompt: {
+                passwordInput.opacity = 1
+                guestLoginButton.opacity = 0
+            }
+
+            onAuthenticationComplete: {
+                if(greeter.authenticated) {
+                    guestLoginButton.opacity = 1
+                    passwordInput.opacity = 0
+                } else {
+                    feedbackLabel.text = i18n("Sorry, incorrect password. Please try again.");
+                    feedbackLabel.showFeedback();
+                    passwordInput.selectAll()
+                    passwordInput.forceActiveFocus()
+                }
+            }
+        }
 
         PlasmaComponents.TextField {
             id: passwordInput
             anchors.horizontalCenter: parent.horizontalCenter
             width: 200
             height: parent.height
-            focus: !loginButtonItem.isGuestLogin
-            opacity: loginButtonItem.isGuestLogin ? 0 : 1
+            focus: opacity == 1
+            opacity: 0
 
             echoMode: TextInput.Password
             placeholderText: i18n("Password")
-            onAccepted: startLogin();
+            onAccepted: greeter.respond(passwordInput.text)
 
             Keys.onEscapePressed: {
                 usersList.forceActiveFocus()
@@ -318,7 +327,7 @@ Item {
                 height: width
 
                 iconSource: "go-jump-locationbar"
-                onClicked: startLogin();
+                onClicked: greeter.respond(passwordInput.text);
             }
 
             Behavior on opacity {
@@ -331,12 +340,12 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             width: userFaceSize + 2 * padding
             height: parent.height
-            focus: loginButtonItem.isGuestLogin
-            opacity: 1 - passwordInput.opacity
+            focus: true
+            opacity: 0
 
             iconSource: loginButton.iconSource
             text: i18n("Login")
-            onClicked: startLogin();
+            onClicked: startSessionSync();
 
             Behavior on opacity {
                 NumberAnimation { duration: 100 }
