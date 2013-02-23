@@ -257,40 +257,51 @@ Item {
             }
         }
 
-        onCurrentItemChanged: startLogin();
+        onCurrentItemChanged: authManager.startAuth(usersList.currentItem.username);
     }
 
-    function startLogin() {
-        var username = usersList.currentItem.username;
 
-        if (username == greeter.guestLoginName) {
-            greeter.authenticateAsGuest();
-        } else {
-            greeter.authenticate(username);
-        }
-    }
-
-    FocusScope {
-        id: loginButtonItem
+    FocusScope { //TODO move this into lib as AuthManager class
+        id: authManager
         height: 30
+        property bool hasShownPrompt: false
 
         anchors {
             horizontalCenter: activeScreen.horizontalCenter
             bottom: activeScreen.verticalCenter
         }
 
+        function startAuth(username) {
+            if (username == greeter.guestLoginName) {
+                greeter.authenticateAsGuest();
+            } else {
+                greeter.authenticate(username);
+            }
+            authManager.hasShownPrompt = false;
+        }
+
         Connections {
             target: greeter;
 
             onShowPrompt: {
-                passwordInput.opacity = 1
-                guestLoginButton.opacity = 0
+                console.log(text);
+                passwordInput.opacity = 1;
+                passwordInput.focus = true;
+                guestLoginButton.opacity = 0;
+                authManager.hasShownPrompt = true;
             }
 
             onAuthenticationComplete: {
                 if(greeter.authenticated) {
-                    guestLoginButton.opacity = 1
-                    passwordInput.opacity = 0
+                    //if we have prompted the user interactively and auth finishes, log in. Otherwise show a button. Prevents "accidental" logins
+                    if (authManager.hasShownPrompt) {
+                        startSessionSync();
+                    }
+                    else {
+                        guestLoginButton.opacity = 1;
+                        guestLoginButton.focus = true;
+                        passwordInput.opacity = 0;
+                    }
                 } else {
                     feedbackLabel.text = i18n("Sorry, incorrect password. Please try again.");
                     feedbackLabel.showFeedback();
@@ -305,7 +316,6 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             width: 200
             height: parent.height
-            focus: opacity == 1
             opacity: 0
 
             echoMode: TextInput.Password
@@ -340,7 +350,6 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             width: userFaceSize + 2 * padding
             height: parent.height
-            focus: true
             opacity: 0
 
             iconSource: loginButton.iconSource
