@@ -24,7 +24,7 @@ import org.kde.lightdm 0.1 as LightDM
 
 Item {
     id: screen
-    
+
     LightDM.ScreenManager {
         id: screenManager
         delegate: Image {
@@ -57,14 +57,14 @@ Item {
         NumberAnimation { target: welcomeLabel; property: "opacity"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
         NumberAnimation { target: feedbackLabel; property: "opacity"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
         NumberAnimation { target: usersList; property: "opacity"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
-        NumberAnimation { target: loginButtonItem; property: "opacity"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: authManager; property: "opacity"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
         NumberAnimation { target: sessionButton; property: "opacity"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
         NumberAnimation { target: powerBar; property: "opacity"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
         onCompleted: doSessionSync()
     }
 
     Component.onCompleted: {
-        setTabOrder([usersList, loginButtonItem, sessionButton, suspendButton, hibernateButton, restartButton, shutdownButton]);
+        setTabOrder([usersList, authManager, sessionButton, suspendButton, hibernateButton, restartButton, shutdownButton]);
         usersList.forceActiveFocus();
     }
 
@@ -202,6 +202,7 @@ Item {
 
     function startSessionSync()
     {
+	doSessionSync();
         loginAnimation.start;
     }
 
@@ -220,7 +221,7 @@ Item {
         id: usersList
         anchors {
             horizontalCenter: activeScreen.horizontalCenter
-            bottom: loginButtonItem.top
+            bottom: authManager.top
             bottomMargin: 24
         }
         width: activeScreen.width
@@ -261,62 +262,21 @@ Item {
     }
 
 
-    FocusScope { //TODO move this into lib as AuthManager class
+    AuthManager {
         id: authManager
         height: 30
-        property bool hasShownPrompt: false
 
         anchors {
             horizontalCenter: activeScreen.horizontalCenter
             bottom: activeScreen.verticalCenter
         }
 
-        function startAuth(username) {
-            if (username == greeter.guestLoginName) {
-                greeter.authenticateAsGuest();
-            } else {
-                greeter.authenticate(username);
-            }
-            authManager.hasShownPrompt = false;
-        }
-
-        Connections {
-            target: greeter;
-
-            onShowPrompt: {
-                console.log(text);
-                passwordInput.opacity = 1;
-                passwordInput.focus = true;
-                guestLoginButton.opacity = 0;
-                authManager.hasShownPrompt = true;
-            }
-
-            onAuthenticationComplete: {
-                if(greeter.authenticated) {
-                    //if we have prompted the user interactively and auth finishes, log in. Otherwise show a button. Prevents "accidental" logins
-                    if (authManager.hasShownPrompt) {
-                        startSessionSync();
-                    }
-                    else {
-                        guestLoginButton.opacity = 1;
-                        guestLoginButton.focus = true;
-                        passwordInput.opacity = 0;
-                    }
-                } else {
-                    feedbackLabel.text = i18n("Sorry, incorrect password. Please try again.");
-                    feedbackLabel.showFeedback();
-                    passwordInput.selectAll()
-                    passwordInput.forceActiveFocus()
-                }
-            }
-        }
-
-        PlasmaComponents.TextField {
+        textFieldItem: PlasmaComponents.TextField {
             id: passwordInput
-            anchors.horizontalCenter: parent.horizontalCenter
+//             anchors.horizontalCenter: parent.horizontalCenter
             width: 200
-            height: parent.height
-            opacity: 0
+            height: parent.parent.height
+//             opacity: 0
 
             echoMode: TextInput.Password
             placeholderText: i18n("Password")
@@ -345,14 +305,13 @@ Item {
             }
         }
 
-        PlasmaComponents.Button {
-            id: guestLoginButton
-            anchors.horizontalCenter: parent.horizontalCenter
+        loginButtonItem: PlasmaComponents.Button {
+            anchors.horizontalCenter: parent.parent.horizontalCenter
             width: userFaceSize + 2 * padding
-            height: parent.height
-            opacity: 0
+            height: parent.parent.height
+//             opacity: 0
 
-            iconSource: loginButton.iconSource
+            iconSource: "go-jump-locationbar"
             text: i18n("Login")
             onClicked: startSessionSync();
 
@@ -365,7 +324,7 @@ Item {
     ListButton {
         id: sessionButton
         anchors {
-            top: loginButtonItem.bottom
+            top: authManager.bottom
             topMargin: 24
             bottom: powerBar.top
             horizontalCenter: activeScreen.horizontalCenter
