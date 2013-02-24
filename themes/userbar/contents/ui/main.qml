@@ -94,6 +94,7 @@ Item {
         anchors.top: welcomeLabel.bottom
         anchors.topMargin: 5
         font.pointSize: 14
+        text: authManager.feedbackText
     }
 
     property int userItemWidth: 120
@@ -300,24 +301,15 @@ Item {
                 onClicked: greeter.respond(passwordInput.text);
             }
 
-            Behavior on opacity {
-                NumberAnimation { duration: 100 }
-            }
         }
 
         loginButtonItem: PlasmaComponents.Button {
-            anchors.horizontalCenter: parent.parent.horizontalCenter
             width: userFaceSize + 2 * padding
             height: parent.parent.height
-//             opacity: 0
 
             iconSource: "go-jump-locationbar"
             text: i18n("Login")
             onClicked: startSessionSync();
-
-            Behavior on opacity {
-                NumberAnimation { duration: 100 }
-            }
         }
     }
 

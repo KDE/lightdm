@@ -49,7 +49,7 @@ FocusScope {
             greeter.authenticate(username);
         }
         authManager._hasShownPrompt = false;
-//         authWidget.sourceComponent = undefined;
+        feedbackText = ""
     }
 
     Connections {
@@ -71,7 +71,7 @@ FocusScope {
                     authWidget.sourceComponent = base.loginButtonItem
                 }
             } else {
-                feedbackLabel = i18n("Sorry, incorrect password. Please try again.");
+                feedbackText = i18n("Sorry, incorrect password. Please try again.");
                 authWidget.selectAll()
                 authWidget.forceActiveFocus()
             }
@@ -80,6 +80,7 @@ FocusScope {
 
     Loader {
         id: authWidget
+        focus: true
         anchors.horizontalCenter: base.horizontalCenter
     }
 }

@@ -33,8 +33,12 @@ PlasmaCore.FrameSvgItem {
     width: childrenRect.width + 2 * padding
     height: childrenRect.height + 2 * padding
 
-    function showFeedback() {
-        anim.start();
+    onTextChanged:  {
+        if (text) {
+            anim.start();
+        } else {
+            frame.opacity = 0;
+        }
     }
 
     SequentialAnimation {
