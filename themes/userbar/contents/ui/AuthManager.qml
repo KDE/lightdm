@@ -35,6 +35,8 @@ FocusScope {
     /** Text field to show for all text prompts */
     property Component textFieldItem
 
+    property alias currentItem: authWidget.item
+
     signal authComplete
 
     //private API
@@ -78,7 +80,6 @@ FocusScope {
 
     Loader {
         id: authWidget
-        onStatusChanged: if (authWidget.status == Loader.Ready) console.log('Loaded')
+        anchors.horizontalCenter: base.horizontalCenter
     }
-
 }
