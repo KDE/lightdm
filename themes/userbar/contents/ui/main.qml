@@ -270,7 +270,7 @@ Item {
     }
 
 
-    AuthManager {
+    LightDM.AuthManager {
         id: authManager
         height: 30
 

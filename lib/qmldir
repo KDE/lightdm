@@ -1,2 +1,3 @@
 plugin klightdmqmlplugin
 ScreenManager 0.1 ScreenManager.qml
+AuthManager 0.1 AuthManager.qml
