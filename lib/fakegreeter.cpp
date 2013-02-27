@@ -57,8 +57,9 @@ bool FakeGreeter::connectSync()
 void FakeGreeter::authenticate(const QString &username)
 {
     kDebug() << "authenticating as " << username;
-    //emit showPrompt in 4 seconds
-    QTimer::singleShot(4*1000, this, SLOT(onAuthenticationTimerExpired()));
+    Q_EMIT showPrompt("Password:", QLightDM::Greeter::PromptTypeQuestion);
+
+
 }
 
 void FakeGreeter::authenticateAsGuest()
@@ -70,7 +71,8 @@ void FakeGreeter::respond(const QString &response)
 {
     Q_UNUSED(response)
     m_isAuthenticated = true;
-    Q_EMIT authenticationComplete();
+    QTimer::singleShot(4*1000, this, SLOT(onAuthenticationTimerExpired()));
+
 }
 
 bool FakeGreeter::startSessionSync(const QString &session)
@@ -82,5 +84,5 @@ bool FakeGreeter::startSessionSync(const QString &session)
 
 void FakeGreeter::onAuthenticationTimerExpired()
 {
-    Q_EMIT showPrompt("Password:", QLightDM::Greeter::PromptTypeQuestion);
+    Q_EMIT authenticationComplete();
 }
