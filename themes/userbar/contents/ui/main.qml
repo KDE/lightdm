@@ -203,8 +203,7 @@ Item {
 
     function startSessionSync()
     {
-	doSessionSync();
-        loginAnimation.start;
+        loginAnimation.start();
     }
 
 
