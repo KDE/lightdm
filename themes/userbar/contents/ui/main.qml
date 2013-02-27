@@ -64,7 +64,7 @@ Item {
     }
 
     Component.onCompleted: {
-        setTabOrder([usersList, authManager, sessionButton, suspendButton, hibernateButton, restartButton, shutdownButton]);
+        setTabOrder([usersList, authManager, sessionButton, powerBar]);
         usersList.forceActiveFocus();
     }
 
@@ -232,6 +232,7 @@ Item {
                 showGuest: greeter.hasGuestAccount
             }
         cacheBuffer: count * 80
+        focus: true
 
         delegate: userDelegate
 
@@ -250,12 +251,18 @@ Item {
             if (event.key == Qt.Key_Down ||
                 event.key == Qt.Key_Enter ||
                 event.key == Qt.Key_Return) {
-                passwordInput.forceActiveFocus();
+                authManager.currentItem.forceActiveFocus();
             } else if (event.key & Qt.Key_Escape) {
                 //if special key, do nothing. Qt.Escape is 0x10000000 which happens to be a mask used for all special keys in Qt.
             } else {
-                passwordInput.text += event.text;
-                passwordInput.forceActiveFocus();
+                //this is perfectly likely to fail in the event that it is on a text prompt being shown.
+                try {
+                    authManager.currentItem.text += event.text;
+                }
+                catch(error) {
+                    //do nothing
+                }
+                authManager.currentItem.forceActiveFocus();
             }
         }
 
@@ -274,10 +281,8 @@ Item {
 
         textFieldItem: PlasmaComponents.TextField {
             id: passwordInput
-//             anchors.horizontalCenter: parent.horizontalCenter
             width: 200
             height: parent.parent.height
-//             opacity: 0
 
             echoMode: TextInput.Password
             placeholderText: i18n("Password")

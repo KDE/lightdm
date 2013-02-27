@@ -43,7 +43,7 @@ FocusScope {
     property bool _hasShownPrompt: false
 
     function startAuth(username) {
-        if (username == greeter.guestLoginName) {
+        if (username === greeter.guestLoginName) {
             greeter.authenticateAsGuest();
         } else {
             greeter.authenticate(username);
@@ -72,7 +72,11 @@ FocusScope {
                 }
             } else {
                 feedbackText = i18n("Sorry, incorrect password. Please try again.");
-                authWidget.selectAll()
+                try {
+                    authWidget.selectAll()
+                } catch (error) {
+                    //above only applies to text boxes
+                }
                 authWidget.forceActiveFocus()
             }
         }
