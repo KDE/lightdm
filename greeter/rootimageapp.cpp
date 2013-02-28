@@ -44,6 +44,8 @@ private:
 RootImageApp::RootImageApp(int &argc, char **argv):
     QApplication(argc, argv)
 {
+    XDefineCursor(QX11Info::display(), QX11Info::appRootWindow(), QCursor(Qt::ArrowCursor).handle());
+
     QTimer::singleShot(0, this, SLOT(setBackground()));
 }
 
