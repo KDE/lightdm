@@ -47,7 +47,7 @@ public:
 ThemesModel::ThemesModel(QObject *parent) :
     QAbstractListModel(parent)
 {
-    this->load();
+    load();
 }
 
 ThemesModel::~ThemesModel()
@@ -69,10 +69,8 @@ QVariant ThemesModel::data(const QModelIndex &index, int role) const
     switch(role) {
     case Qt::DisplayRole:
         return metaData.name();
-    case Qt::DecorationRole:
-        return QPixmap(package.filePath("preview")).scaled(QSize(100,100), Qt::KeepAspectRatio);
     case ThemesModel::PreviewRole:
-        return QPixmap(package.filePath("preview"));
+        return package.filePath("preview");
     case ThemesModel::IdRole:
         return metaData.pluginName();
     case ThemesModel::DescriptionRole:
@@ -90,7 +88,6 @@ QVariant ThemesModel::data(const QModelIndex &index, int role) const
 
 void ThemesModel::load()
 {
-    qDebug() << "loading themes";
     QStringList themeDirPaths = KGlobal::dirs()->findDirs("data", "lightdm-kde-greeter/themes");
 
     foreach(const QString &themeName, Plasma::Package::listInstalledPaths(themeDirPaths.last()))

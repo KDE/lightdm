@@ -20,6 +20,7 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include "ui_themeconfig.h"
 
 #include "themesmodel.h"
+#include "themesdelegate.h"
 
 #include <QUiLoader>
 #include <QFile>
@@ -48,6 +49,7 @@ ThemeConfig::ThemeConfig(QWidget *parent) :
 
     ThemesModel *model = new ThemesModel(this);
     ui->themesList->setModel(model);
+    ui->themesList->setItemDelegate(new ThemesDelegate(this));
 
     connect(ui->themesList, SIGNAL(activated(QModelIndex)), SLOT(onThemeSelected(QModelIndex)));
     connect(ui->themesList, SIGNAL(clicked(QModelIndex)), SLOT(onThemeSelected(QModelIndex)));
@@ -87,9 +89,7 @@ QModelIndex ThemeConfig::findIndexForTheme(const QString& theme) const
 
 void ThemeConfig::onThemeSelected(const QModelIndex &index)
 {
-    ui->nameLabel->setText(index.data().toString());
     ui->descriptionLabel->setText(index.data(ThemesModel::DescriptionRole).toString());
-    ui->authorLabel->setText(index.data(ThemesModel::AuthorRole).toString());
 
     //FUTURE, simply load the actual QML, specify an arbitrary screen size and scale the contents.
     //we can add fake components for the greeter so QML thinks it's working.
@@ -97,9 +97,9 @@ void ThemeConfig::onThemeSelected(const QModelIndex &index)
     //can't do this easily now as we need our private kdeclarative library and my widgets from the greeter
     //could make a private lib for all this - but that seems overkill when we won't need any of that in the 4.8 only versions.
  
-    QPixmap preview = index.data(ThemesModel::PreviewRole).value<QPixmap>();
+    QPixmap preview = QPixmap(index.data(ThemesModel::PreviewRole).toString());
     if (! preview.isNull()) {
-        ui->preview->setPixmap(preview.scaled(QSize(250, 250), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        ui->preview->setPixmap(preview.scaled(QSize(300, 300), Qt::KeepAspectRatio, Qt::SmoothTransformation));
     } else
     {
         ui->preview->setPixmap(QPixmap());

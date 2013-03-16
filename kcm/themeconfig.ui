@@ -34,6 +34,21 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="flow">
+      <enum>QListView::TopToBottom</enum>
+     </property>
+     <property name="resizeMode">
+      <enum>QListView::Adjust</enum>
+     </property>
+     <property name="layoutMode">
+      <enum>QListView::SinglePass</enum>
+     </property>
+     <property name="viewMode">
+      <enum>QListView::IconMode</enum>
+     </property>
+     <property name="selectionRectVisible">
+      <bool>false</bool>
+     </property>
     </widget>
    </item>
    <item>
@@ -88,32 +103,6 @@ border: 1px solid #888;</string>
         </spacer>
        </item>
       </layout>
-     </item>
-     <item>
-      <widget class="QLabel" name="nameLabel">
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string notr="true">[Theme Name]</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="authorLabel">
-       <property name="text">
-        <string notr="true">[Author]</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
      </item>
      <item>
       <spacer name="verticalSpacer_2">

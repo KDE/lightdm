@@ -23,6 +23,7 @@ add_subdirectory(configwidgets)
 set(LIGHTDM_KCM_SRCS
     themeconfig.cpp
     themesmodel.cpp
+    themesdelegate.cpp
     coreconfig.cpp
     lightdmkcm.cpp
     configoptions.cpp
