@@ -21,6 +21,7 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include <KDebug>
 #include <KConfig>
 #include <KConfigGroup>
+#include <Plasma/Package>
 
 #include <QFile>
 
@@ -84,6 +85,27 @@ KAuth::ActionReply Helper::save(const QVariantMap &args)
     greeterConfig->sync();
 
     return KAuth::ActionReply::SuccessReply;
+}
+
+ActionReply Helper::installpackage(const QVariantMap &args)
+{
+    QString packagePath = args["packagePath"].toString();
+    QString packageTarget = args["packageTarget"].toString();
+
+    if (packagePath.isEmpty() || packageTarget.isEmpty() || !QFile::exists(packagePath)) {
+        KAuth::ActionReply reply = KAuth::ActionReply::HelperErrorReply;
+        reply.setErrorDescription(QLatin1String("Invalid args supplied"));
+        return reply;
+    }
+
+    bool installSucess = Plasma::Package::installPackage(packagePath, packageTarget, QString());
+    if (installSucess) {
+        return KAuth::ActionReply::SuccessReply;
+    } else {
+        return KAuth::ActionReply::HelperErrorReply;
+    }
+
+
 }
 
 KDE4_AUTH_HELPER_MAIN("org.kde.kcontrol.kcmlightdm", Helper);

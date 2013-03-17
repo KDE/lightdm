@@ -98,3 +98,9 @@ Description[uk]=Зберегти параметри до LightDM
 Description[x-test]=xxSave Settings in LightDMxx
 Policy=auth_admin
 Persistence=session
+
+[org.kde.kcontrol.kcmlightdm.installpackage]
+Name=Install LightDM Theme Package
+Description=Install a KDE LightDM theme
+Policy=auth_admin
+Persistence=session

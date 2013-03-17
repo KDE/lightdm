@@ -29,6 +29,7 @@ class Helper: public QObject
     Q_OBJECT
 public slots:
     ActionReply save(const QVariantMap &args);
+    ActionReply installpackage(const QVariantMap &args);
 };
 
 #endif

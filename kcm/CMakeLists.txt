@@ -61,7 +61,7 @@ install(FILES kcm_lightdm.desktop
 )
 
 kde4_add_executable(kcmlightdmhelper helper.cpp)
-target_link_libraries(kcmlightdmhelper ${KDE4_KDECORE_LIBS})
+target_link_libraries(kcmlightdmhelper ${KDE4_KDECORE_LIBS} ${KDE4_PLASMA_LIBS})
 
 kde4_install_auth_helper_files(kcmlightdmhelper org.kde.kcontrol.kcmlightdm root)
 install(TARGETS kcmlightdmhelper DESTINATION ${LIBEXEC_INSTALL_DIR})

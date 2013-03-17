@@ -102,6 +102,12 @@ void ConfigOptions::setTheme(const QDir &themeDir)
         connect(m_manager, SIGNAL(widgetModified()), SLOT(onSettingsChanged()));
 
         layout()->addWidget(m_wrapperWidget.data());
+
+        //remove margins on the added widgets
+        //this is needed to avoid a double margin effect
+        if (m_wrapperWidget.data()->layout()) {
+            m_wrapperWidget.data()->layout()->setContentsMargins(0,0,0,0);
+        }
     }
 
     Q_EMIT changed(false);

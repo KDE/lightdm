@@ -29,6 +29,7 @@ namespace Ui {
 
 class QDir;
 class QModelIndex;
+class ThemesModel;
 
 class ThemeConfig : public QWidget
 {
@@ -46,11 +47,13 @@ signals:
 
 private slots:
     void onThemeSelected(const QModelIndex &index);
+    void onInstallThemeButtonPressed();
 
 private:
     Ui::ThemeConfig *ui;
     KSharedConfigPtr m_config;
 
+    ThemesModel *m_themesModel;
     QDir themeDir() const;
     QModelIndex findIndexForTheme(const QString& theme) const;
 };

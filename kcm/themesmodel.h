@@ -46,9 +46,9 @@ public:
 signals:
 
 public slots:
+    void load();
 
 private:
-    void load();
     void addTheme(const Plasma::Package &package);
     QList<Plasma::Package> m_themes;
 

@@ -34,6 +34,8 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include <KConfigGroup>
 #include <KConfigDialog>
 #include <KConfigSkeletonItem>
+#include <KStandardDirs>
+#include <KFileDialog>
 
 #include <KAuth/Action>
 
@@ -47,13 +49,16 @@ ThemeConfig::ThemeConfig(QWidget *parent) :
     ui->setupUi(this);
     ui->options->setConfig(m_config);
 
-    ThemesModel *model = new ThemesModel(this);
-    ui->themesList->setModel(model);
+    ui->messageWidget->hide();
+
+    m_themesModel = new ThemesModel(this);
+    ui->themesList->setModel(m_themesModel);
     ui->themesList->setItemDelegate(new ThemesDelegate(this));
 
     connect(ui->themesList, SIGNAL(activated(QModelIndex)), SLOT(onThemeSelected(QModelIndex)));
     connect(ui->themesList, SIGNAL(clicked(QModelIndex)), SLOT(onThemeSelected(QModelIndex)));
     connect(ui->options, SIGNAL(changed(bool)), SIGNAL(changed(bool)));
+    connect(ui->installThemeButton, SIGNAL(clicked()), SLOT(onInstallThemeButtonPressed()));
 
     QString theme = m_config->group("greeter").readEntry("theme-name", "userbar");
 
@@ -63,7 +68,7 @@ ThemeConfig::ThemeConfig(QWidget *parent) :
         index = findIndexForTheme("userbar");
         if (!index.isValid()) {
             kWarning() << "Could not find \"userbar\" theme. Something is wrong with this installation. Falling back to first available theme.";
-            index = model->index(0);
+            index = m_themesModel->index(0);
         }
     }
     ui->themesList->setCurrentIndex(index);
@@ -108,6 +113,42 @@ void ThemeConfig::onThemeSelected(const QModelIndex &index)
     ui->options->setTheme(themeDir());
 
     emit changed(true);
+}
+
+void ThemeConfig::onInstallThemeButtonPressed()
+{
+    //find file to install
+
+    QString systemInstallPath = KGlobal::dirs()->installPath("data");
+    systemInstallPath.append("/lightdm-kde-greeter/themes");
+    qDebug() << systemInstallPath;
+
+    QUrl packageFilePath = KFileDialog::getOpenUrl();
+
+    if (packageFilePath.isEmpty()) {
+        return;
+    }
+
+    QVariantMap args;
+    args["packageTarget"] = systemInstallPath;
+    args["packagePath"] = packageFilePath.toLocalFile();
+
+    KAuth::Action installAction("org.kde.kcontrol.kcmlightdm.installpackage");
+    installAction.setHelperID("org.kde.kcontrol.kcmlightdm");
+    installAction.setArguments(args);
+    KAuth::ActionReply reply = installAction.execute();
+    if (reply.failed()) {
+        ui->messageWidget->setMessageType(KMessageWidget::Warning);
+        ui->messageWidget->setText(i18n("Unable to install theme"));
+        ui->messageWidget->animatedShow();
+        kWarning() << "save failed:" << reply.errorDescription();
+
+    } else {
+        ui->messageWidget->setMessageType(KMessageWidget::Positive);
+        ui->messageWidget->setText(i18n("Theme installed"));
+        ui->messageWidget->animatedShow();
+        m_themesModel->load();
+    }
 }
 
 QDir ThemeConfig::themeDir() const

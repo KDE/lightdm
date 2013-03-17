@@ -88,16 +88,19 @@ QVariant ThemesModel::data(const QModelIndex &index, int role) const
 
 void ThemesModel::load()
 {
+    m_themes.clear();
+    reset();
+
     QStringList themeDirPaths = KGlobal::dirs()->findDirs("data", "lightdm-kde-greeter/themes");
+    foreach(const QString &themeDirPath, themeDirPaths) {
+        foreach(const QString &themeName, Plasma::Package::listInstalledPaths(themeDirPath)) {
+            //A new package structure is apparently needed for each new package, otherwise instances of different packages represent the same object in a horrendously broken way
+            Plasma::PackageStructure::Ptr packageStructure(new LightDMPackageStructure(this));
 
-    foreach(const QString &themeName, Plasma::Package::listInstalledPaths(themeDirPaths.last()))
-    {
-        //A new package structure is apparently needed for each new package, otherwise instances of different packages represent the same object in a horrendously broken way
-        Plasma::PackageStructure::Ptr packageStructure(new LightDMPackageStructure(this));
-
-        Plasma::Package package(themeDirPaths.last(), themeName, packageStructure);
-        if (package.isValid()) {
-            addTheme(package);
+            Plasma::Package package(themeDirPath, themeName, packageStructure);
+            if (package.isValid()) {
+                addTheme(package);
+            }
         }
     }
 }
