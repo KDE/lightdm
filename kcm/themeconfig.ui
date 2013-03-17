@@ -73,6 +73,9 @@
          <property name="text">
           <string>Install Theme</string>
          </property>
+         <property name="icon">
+          <iconset theme="document-import"/>
+         </property>
         </widget>
        </item>
       </layout>
