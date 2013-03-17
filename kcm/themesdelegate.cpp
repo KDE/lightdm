@@ -127,7 +127,7 @@ void ThemesDelegate::paint(QPainter *painter,
     int x = option.rect.left() + MARGIN;
 
     //Enable word-wrap
-    document.setTextWidth(m_maxWidth);
+    document.setTextWidth(option.rect.width());
 
     //Center text on the row
     int y = option.rect.top() + m_maxHeight + MARGIN * 2; //qMax(0 ,(int)((option.rect.height() - document.size().height()) / 2));
@@ -153,7 +153,7 @@ QSize ThemesDelegate::sizeHint(const QStyleOptionViewItem &option,
     QTextDocument document;
     QString html = QString("<strong>%1</strong><br />").arg(title);
     if (!author.isEmpty()) {
-        html += QString("<span style=\"font-size: %1pt;\">by %2</span><br />").arg(fontSize).arg(author);
+        html += QString("<span style=\"font-size: %1pt;\">by %2</span>").arg(fontSize).arg(author);
     }
 
     document.setHtml(html);

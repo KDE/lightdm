@@ -17,20 +17,20 @@
    <item>
     <widget class="QListView" name="themesList">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+      <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="minimumSize">
       <size>
-       <width>250</width>
+       <width>0</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>250</width>
+       <width>200</width>
        <height>16777215</height>
       </size>
      </property>
@@ -44,7 +44,7 @@
       <enum>QListView::SinglePass</enum>
      </property>
      <property name="viewMode">
-      <enum>QListView::IconMode</enum>
+      <enum>QListView::ListMode</enum>
      </property>
      <property name="selectionRectVisible">
       <bool>false</bool>
@@ -122,6 +122,12 @@ border: 1px solid #888;</string>
      </item>
      <item>
       <widget class="QLabel" name="descriptionLabel">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string notr="true">[Long description of the theme, may spawn multiple lines]</string>
        </property>
@@ -134,7 +140,14 @@ border: 1px solid #888;</string>
       </widget>
      </item>
      <item>
-      <widget class="ConfigOptions" name="options" native="true"/>
+      <widget class="ConfigOptions" name="options" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
      </item>
      <item>
       <spacer name="verticalSpacer">
