@@ -100,23 +100,12 @@
           </spacer>
          </item>
          <item>
-          <widget class="QLabel" name="preview">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: white;
-padding: 2px;
-border: 1px solid #888;</string>
-           </property>
-           <property name="text">
-            <string notr="true">[preview]</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
+          <widget class="GreeterPreview" name="themePreview" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>400</width>
+             <height>225</height>
+            </size>
            </property>
           </widget>
          </item>
@@ -219,6 +208,12 @@ border: 1px solid #888;</string>
    <class>KMessageWidget</class>
    <extends>QFrame</extends>
    <header location="global">KMessageWidget</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GreeterPreview</class>
+   <extends>QWidget</extends>
+   <header>greeterpreview.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

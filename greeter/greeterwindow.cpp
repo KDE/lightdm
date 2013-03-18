@@ -43,6 +43,7 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #include <kdeclarative.h>
 
 #include <KConfig>
+#include <KSharedConfigPtr>
 #include <KConfigGroup>
 #include <KStandardDirs>
 #include <KUrl>
@@ -69,8 +70,8 @@ GreeterWindow::GreeterWindow(QWidget *parent)
     //binds things like kconfig and icons
     kdeclarative.setupBindings();
 
-    KConfig config(LIGHTDM_CONFIG_DIR "/lightdm-kde-greeter.conf");
-    KConfigGroup configGroup = config.group("greeter");
+    KSharedConfigPtr config = KSharedConfig::openConfig(LIGHTDM_CONFIG_DIR "/lightdm-kde-greeter.conf");
+    KConfigGroup configGroup = config->group("greeter");
 
     QString theme = configGroup.readEntry("theme-name", "userbar");
 
@@ -90,7 +91,7 @@ GreeterWindow::GreeterWindow(QWidget *parent)
 
     KGlobal::locale()->insertCatalog("lightdm_theme_" + theme);
     
-    rootContext()->setContextProperty("config", new ConfigWrapper(package.filePath("configfile"), this));
+    rootContext()->setContextProperty("config", new ConfigWrapper(package.filePath("configfile"), config, this));
     rootContext()->setContextProperty("greeter", m_greeter);
 
     setSource(package.filePath("mainscript"));

@@ -48,6 +48,7 @@ signals:
 private slots:
     void onThemeSelected(const QModelIndex &index);
     void onInstallThemeButtonPressed();
+    void onConfigChanged();
 
 private:
     Ui::ThemeConfig *ui;

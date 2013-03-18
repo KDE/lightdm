@@ -27,9 +27,11 @@ set(LIGHTDM_KCM_SRCS
     coreconfig.cpp
     lightdmkcm.cpp
     configoptions.cpp
+    greeterpreview.cpp
     ${LIB_DIR}/extrarowproxymodel.cpp
     ${LIB_DIR}/usersmodel.cpp
     ${LIB_DIR}/lightdmpackagestructure.cpp
+    ${LIB_DIR}/configwrapper.cpp
 )
 
 set(LIGHTDM_KCM_UI
@@ -50,6 +52,7 @@ target_link_libraries(kcm_lightdm
   ${KDE4_PLASMA_LIBS}
   ${QLIGHTDM_LIBRARIES}
   ${KDE4_KIO_LIBS}
+  ${KDECLARATIVE_LIBRARIES}
   lightdm_config_widgets
 )
 

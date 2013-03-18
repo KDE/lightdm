@@ -73,6 +73,11 @@ void ConfigOptions::setConfig(const KSharedConfigPtr &config)
     m_config = config;
 }
 
+KSharedConfigPtr ConfigOptions::config() const
+{
+    return m_config;
+}
+
 void ConfigOptions::setTheme(const QDir &themeDir)
 {
     if(KDE_ISUNLIKELY(m_config.isNull())) {
@@ -115,7 +120,6 @@ void ConfigOptions::setTheme(const QDir &themeDir)
 
 void ConfigOptions::onSettingsChanged()
 {
-    qDebug() << "changed";
     Q_EMIT changed(true);
 }
 

@@ -20,6 +20,7 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 #define THEMESMODEL_H
 
 #include <QAbstractListModel>
+#include <QVariant>
 
 namespace Plasma {
     class Package;
@@ -35,7 +36,8 @@ public:
                DescriptionRole,
                VersionRole,
                PreviewRole,
-               PathRole};
+               PathRole,
+               PackageRole};
 
     explicit ThemesModel(QObject *parent = 0);
     virtual ~ThemesModel();

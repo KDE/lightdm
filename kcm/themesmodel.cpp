@@ -81,6 +81,8 @@ QVariant ThemesModel::data(const QModelIndex &index, int role) const
         return metaData.author();
     case ThemesModel::PathRole:
         return package.path();
+    case ThemesModel::PackageRole:
+        return QVariant::fromValue(package);
     }
 
     return QVariant();

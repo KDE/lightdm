@@ -40,6 +40,7 @@ public:
     void setConfig(const KSharedConfigPtr &config);
     void setTheme(const QDir &themeDir);
 
+    KSharedConfigPtr config() const;
     QVariantMap save();
     void defaults();
 
