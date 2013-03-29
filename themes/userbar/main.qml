@@ -194,7 +194,7 @@ Item {
                 source: "image://face/" + name
             }
 
-            Text {
+            PlasmaComponents.Label {
                 id: loginText
                 anchors.bottom: parent.bottom
                 anchors.horizontalCenter: parent.horizontalCenter
