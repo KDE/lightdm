@@ -367,7 +367,7 @@ Item {
         anchors.right: activeScreen.right
         width: childrenRect.width + margins.left
         height: childrenRect.height + margins.top
-        imagePath: "translucent/widgets/background"
+        imagePath: "widgets/background"
 
         enabledBorders: "LeftBorder|TopBorder"
 

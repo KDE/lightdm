@@ -86,7 +86,7 @@ Item {
 
     PlasmaCore.FrameSvgItem {
         id: dialog;
-        imagePath: "translucent/widgets/background"
+        imagePath: "widgets/background"
         anchors.centerIn: activeScreen;
 
         width: childrenRect.width + 55;
