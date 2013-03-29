@@ -366,9 +366,8 @@ Item {
         anchors.bottom: activeScreen.bottom
         anchors.right: activeScreen.right
         width: childrenRect.width + margins.left
-        height: childrenRect.height + margins.top * 2
-        imagePath: "translucent/widgets/panel-background"
-        prefix: "south-mini"
+        height: childrenRect.height + margins.top
+        imagePath: "translucent/widgets/background"
 
         enabledBorders: "LeftBorder|TopBorder"
 
