@@ -195,7 +195,7 @@ Item {
                 loggedIn: model.loggedIn
             }
 
-            Text {
+            PlasmaComponents.Label {
                 id: loginText
                 anchors.top: face.bottom
                 anchors.topMargin: padding * 1.5
