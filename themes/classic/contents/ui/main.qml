@@ -93,11 +93,11 @@ Item {
 
     PlasmaCore.FrameSvgItem {
         id: dialog;
-        imagePath: "translucent/dialogs/background"
+        imagePath: "translucent/widgets/background"
         anchors.centerIn: activeScreen;
 
-        width: childrenRect.width + 40;
-        height: childrenRect.height + 40;
+        width: childrenRect.width + 55;
+        height: childrenRect.height + 55;
 
         Column {
             spacing: 15
