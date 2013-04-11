@@ -165,9 +165,15 @@ Item {
 
             PlasmaCore.FrameSvgItem {
                 id: frame
-                anchors.centerIn: face
-                width: face.width + padding * 2
-                height: face.height + padding * 2
+
+                anchors {
+                    top: face.top
+                    bottom: loginText.bottom
+                    left: loginText.left
+                    right: loginText.right
+                    topMargin: -padding
+                }
+
                 imagePath: "widgets/lineedit"
                 prefix: "base"
                 enabledBorders: "NoBorder"
@@ -186,7 +192,6 @@ Item {
 
             Face {
                 id: face
-                anchors.bottom: loginText.top
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottomMargin: padding * 1.5
                 sourceSize.width: userFaceSize
@@ -196,8 +201,14 @@ Item {
 
             PlasmaComponents.Label {
                 id: loginText
-                anchors.bottom: parent.bottom
+                anchors.top: face.bottom
+                anchors.topMargin: padding
                 anchors.horizontalCenter: parent.horizontalCenter
+
+                elide: Text.ElideRight
+                horizontalAlignment: Text.AlignHCenter
+
+                width: parent.width - padding * 2
                 text: display
             }
 
@@ -221,7 +232,7 @@ Item {
             greeter.authenticate(username);
         }
     }
-    
+
     function indexForUserName(name) {
         var index;
         for (index = 0; index < usersList.count; ++index) {
@@ -271,6 +282,7 @@ Item {
                 passwordInput.forceActiveFocus();
             }
         }
+
     }
 
     FocusScope {
