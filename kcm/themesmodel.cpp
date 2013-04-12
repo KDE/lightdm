@@ -27,7 +27,8 @@ along with LightDM-KDE.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <KStandardDirs>
 #include <KGlobal>
-
+#include <KDesktopFile>
+#include <KConfigGroup>
 
 class ThemeItem {
 public:
@@ -106,15 +107,14 @@ void ThemesModel::load()
 }
 
 void ThemesModel::loadTheme(const QDir &themePath) {
-    QSettings themeInfo(themePath.filePath("theme.rc"), QSettings::IniFormat);
-    themeInfo.setIniCodec("UTF-8");
+    KDesktopFile themeInfo(themePath.filePath("theme.desktop"));
 
     ThemeItem *theme = new ThemeItem;
     theme->id = themePath.dirName();
-    theme->name = themeInfo.value("theme/Name").toString();
-    theme->description = themeInfo.value("theme/Description").toString();
-    theme->author = themeInfo.value("theme/Author").toString();
-    theme->version = themeInfo.value("theme/Version").toString();
+    theme->name = themeInfo.readName();
+    theme->description = themeInfo.readComment();
+    theme->author = themeInfo.desktopGroup().readEntry("author");
+    theme->version = themeInfo.desktopGroup().readEntry("version");
 
     theme->preview = QPixmap(themePath.absoluteFilePath("preview.png"));
     theme->path = themePath.path();
