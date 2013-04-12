@@ -91,6 +91,7 @@ void ConfigOptions::setTheme(const QDir &themeDir)
         kcfgFile.open(QFile::ReadOnly);
 
         QUiLoader loader;
+        loader.setLanguageChangeEnabled(true);
         QFile uiFile(themeDir.filePath(QLatin1String("config.ui")));
         m_wrapperWidget = loader.load(&uiFile, this);
 

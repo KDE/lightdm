@@ -105,6 +105,10 @@ void ThemeConfig::onThemeSelected(const QModelIndex &index)
         ui->preview->setPixmap(QPixmap());
     }
 
+    const QString theme = ui->themesList->currentIndex().data(ThemesModel::IdRole).toString();
+
+    KGlobal::locale()->insertCatalog("lightdm_theme_" + theme);
+
     ui->options->setTheme(themeDir());
 
     emit changed(true);
