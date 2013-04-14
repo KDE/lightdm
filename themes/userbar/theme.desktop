@@ -1,6 +1,22 @@
 [Desktop Entry]
 Name=User Bar
+Name[fi]=Käyttäjäpalkki
+Name[mr]=वापरकर्ता पट्टी
+Name[nl]=Gebruikersbalk
+Name[pt]=Barra do Utilizador
+Name[pt_BR]=Barra do usuário
+Name[sv]=Användarrad
+Name[uk]=Панель користувачів
+Name[x-test]=xxUser Barxx
 Comment=Pick your user from the user bar.
+Comment[fi]=Valitse käyttäjäsi käyttäjäpalkista.
+Comment[mr]=वापरकर्ता पट्टीवरून तुमचा वापरकर्ता निवडा.
+Comment[nl]=Kies uw gebruiker van de gebruikersbalk.
+Comment[pt]=Escolha o seu utilizador na barra respectiva.
+Comment[pt_BR]=Escolha o seu usuário na barra respectiva.
+Comment[sv]=Välj användare från användarraden.
+Comment[uk]=Виберіть користувача зі списку на панелі користувачів.
+Comment[x-test]=xxPick your user from the user bar.xx
 Version=0.3
 Author=Aurélien Gâteau
 Homepage=http://kde.org
