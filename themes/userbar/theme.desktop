@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=User Bar
+Name[da]=Brugerlinje
 Name[fi]=Käyttäjäpalkki
 Name[mr]=वापरकर्ता पट्टी
 Name[nl]=Gebruikersbalk
@@ -9,6 +10,7 @@ Name[sv]=Användarrad
 Name[uk]=Панель користувачів
 Name[x-test]=xxUser Barxx
 Comment=Pick your user from the user bar.
+Comment[da]=Vælg din bruger fra brugerlinje
 Comment[fi]=Valitse käyttäjäsi käyttäjäpalkista.
 Comment[mr]=वापरकर्ता पट्टीवरून तुमचा वापरकर्ता निवडा.
 Comment[nl]=Kies uw gebruiker van de gebruikersbalk.
