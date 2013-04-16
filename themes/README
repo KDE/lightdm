@@ -2,8 +2,8 @@ File format as follows:
 in /usr/share/lightdm-kde/
 
 themename/
-  theme.rc
-  Preview.png(or live preview?) 
+  desktop.rc
+  Preview.png(or live preview?)
      -live preview, fake QML entires. Easily do-able, would be good for testing
   main.qml
   config.kcfg

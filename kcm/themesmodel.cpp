@@ -98,8 +98,8 @@ void ThemesModel::load()
     {
         QDir themeDir(themeDirPath);
         foreach(const QString &dirPath, themeDir.entryList(QDir::NoDotAndDotDot | QDir::Dirs)) {
-            qDebug() << themeDir.filePath(dirPath + "/theme.rc");
-            if (QFile::exists(themeDir.filePath(dirPath + "/theme.rc"))) {
+            qDebug() << themeDir.filePath(dirPath + "/theme.desktop");
+            if (QFile::exists(themeDir.filePath(dirPath + "/theme.desktop"))) {
                 loadTheme(QDir(themeDir.filePath(dirPath)));
             }
         }
