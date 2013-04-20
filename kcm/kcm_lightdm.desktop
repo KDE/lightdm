@@ -22,6 +22,7 @@ X-KDE-Keywords[pl]=lightdm,menadżer wyświetlania,twarz,użytkownik,użytkownic
 X-KDE-Keywords[pt]=lightdm,gestor de autenticação,cara,utilizador,utilizadores,conta,boas-vindas,tema,língua,sessão,sessões,encerramento,reinício,convidado,autenticação automática
 X-KDE-Keywords[pt_BR]=lightdm,gerenciador de autenticação,rosto,usuário,usuários,conta,boas-vindas,tema,língua,sessão,sessões,encerramento,reinício,convidado,autenticação automática
 X-KDE-Keywords[sv]=lightdm,inloggningshanterare,ansikte,användare,inloggning,hälsning,tema,språk,session,sessioner,avstängning,omstart,gäst,automatisk inloggning
+X-KDE-Keywords[tr]=lightdm,görüntü yönetici,yüz,kullanıcı,kullanıcılar,oturum,karşılama,tema,dil,oturum,oturumlar,kapatma,yeniden başlatma,misafir,otomatik oturum aç
 X-KDE-Keywords[uk]=lightdm,display manager,face,user,users,login,greeting,theme,language,session,sessions,shutdown,restart,guest,auto login, керування екраном,обличчя,користувач,користувачі,вхід,вітання,тема,мова,сеанс,сеанси,вимикання,перезапуск,перезапустити,гість,гостьовий,автовхід,автоматичний вхід
 X-KDE-Keywords[x-test]=xxlightdm,display manager,face,user,users,login,greeting,theme,language,session,sessions,shutdown,restart,guest,auto loginxx
 
@@ -40,6 +41,7 @@ Name[pl]=Ekran logowania(LightDM)
 Name[pt]=Ecrã de Autenticação (LightDM)
 Name[pt_BR]=Tela de autenticação (LightDM)
 Name[sv]=Inloggningsskärm (LightDM)
+Name[tr]=Oturum Ekranı (LightDM)
 Name[uk]=Екран вітання (LightDM)
 Name[x-test]=xxLogin Screen (LightDM)xx
 
@@ -56,5 +58,6 @@ Comment[pl]=Wybierz motyw logowania, dostosuj funkcje logowania
 Comment[pt]=Seleccionar o tema de autenticação, ajustar as funcionalidades de autenticação
 Comment[pt_BR]=Selecionar o tema de autenticação, ajustar as funcionalidades de autenticação
 Comment[sv]=Välj inloggningstema, justera inloggningsfunktioner
+Comment[tr]=Oturum açma temasını seçin, oturum özelliklerini ayarlayın
 Comment[uk]=Вибрати тему екрана вітання, скоригувати параметри вітання
 Comment[x-test]=xxSelect login theme, adjust login featuresxx
