@@ -2,6 +2,7 @@
 Name=User Bar
 Name[da]=Brugerlinje
 Name[de]=Benutzerleiste
+Name[el]=Γραμμή χρηστών
 Name[fi]=Käyttäjäpalkki
 Name[fr]=Barre utilisateur
 Name[hu]=Felhasználósáv
@@ -20,6 +21,7 @@ Name[x-test]=xxUser Barxx
 Comment=Pick your user from the user bar.
 Comment[da]=Vælg din bruger fra brugerlinje
 Comment[de]=Wählen Sie einen Benutzer aus der Benutzerleiste.
+Comment[el]=Επιλέξτε τον χρήστη σας από τη γραμμή χρηστών.
 Comment[fi]=Valitse käyttäjäsi käyttäjäpalkista.
 Comment[fr]=Choisissez votre utilisateur depuis la barre utilisateur.
 Comment[hu]=Válassza ki a felhasználót a felhasználósávról.
