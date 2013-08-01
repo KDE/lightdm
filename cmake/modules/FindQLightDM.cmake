@@ -19,10 +19,19 @@ set(QLIGHTDM_LIBRARIES_FIND_REQUIRED ${QLightDM_FIND_REQUIRED})
 find_package(PkgConfig)
 if(PKG_CONFIG_FOUND)
     if (QLIGHTDM_MIN_VERSION)
-        PKG_CHECK_MODULES(PC_QLIGHTDM liblightdm-qt-2>=${QLIGHTDM_MIN_VERSION})
+        PKG_CHECK_MODULES(PC_QLIGHTDM liblightdm-qt-3>=${QLIGHTDM_MIN_VERSION})
     else (QLIGHTDM_MIN_VERSION)
-        PKG_CHECK_MODULES(PC_QLIGHTDM liblightdm-qt-2)
+        PKG_CHECK_MODULES(PC_QLIGHTDM liblightdm-qt-3)
     endif (QLIGHTDM_MIN_VERSION)
+    SET (QLIGHTDM_API 3)
+    if (NOT PC_QLIGHTDM_FOUND)
+        if (QLIGHTDM_MIN_VERSION)
+            PKG_CHECK_MODULES(PC_QLIGHTDM liblightdm-qt-2>=${QLIGHTDM_MIN_VERSION})
+        else (QLIGHTDM_MIN_VERSION)
+            PKG_CHECK_MODULES(PC_QLIGHTDM liblightdm-qt-2)
+        endif (QLIGHTDM_MIN_VERSION)
+        SET (QLIGHTDM_API 2)
+    endif (NOT PC_QLIGHTDM_FOUND)
 endif(PKG_CONFIG_FOUND)
 
 
@@ -34,7 +43,7 @@ find_path(QLIGHTDM_INCLUDE_DIR
 )
 
 find_library(QLIGHTDM_LIBRARIES
-             NAMES lightdm-qt-2
+             NAMES lightdm-qt-${QLIGHTDM_API}
              HINTS
              ${PC_QLIGHTDM_LIBDIR}
              ${PC_QLIGHTDM_LIBRARY_DIRS}
