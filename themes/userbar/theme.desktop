@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=User Bar
+Name[bs]=Korisnička traka
 Name[da]=Brugerlinje
 Name[de]=Benutzerleiste
 Name[el]=Γραμμή χρηστών
@@ -19,6 +20,7 @@ Name[tr]=Kullanıcı Çubuğu
 Name[uk]=Панель користувачів
 Name[x-test]=xxUser Barxx
 Comment=Pick your user from the user bar.
+Comment[bs]=Dohvati korisnik iz korisničke trake
 Comment[da]=Vælg din bruger fra brugerlinje
 Comment[de]=Wählen Sie einen Benutzer aus der Benutzerleiste.
 Comment[el]=Επιλέξτε τον χρήστη σας από τη γραμμή χρηστών.
