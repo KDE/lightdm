@@ -42,6 +42,7 @@ target_link_libraries(lightdm-kde-greeter
 
 install(TARGETS lightdm-kde-greeter RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/sbin/)
 install(FILES lightdm-kde-greeter.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/share/xgreeters)
+install(FILES 40-lightdm-kde-greeter.conf DESTINATION ${CMAKE_INSTALL_PREFIX}/share/lightdm/lightdm.conf.d)
 
 # Create the background hack
 kde4_add_executable(lightdm-kde-greeter-rootimage rootimageapp.cpp)
