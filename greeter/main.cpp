@@ -29,8 +29,7 @@ int main(int argc, char *argv[])
 {
     KAboutData aboutData(
         "lightdm-kde-greeter",        // appName
-        //HACK. Force a catalog name. All strings are stored in the theme messages files, however we need a catalog name here, otherwise our call to loadCatalog does not work
-        "kcm_lightdm",                // catalogName
+        "lightdm_greeter",                // catalogName
         ki18n("LightDM KDE Greeter"), // programName
         "0");                         // version (set by initAboutData)
 
