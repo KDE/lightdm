@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string notr="true">MainWindow</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <property name="margin">
