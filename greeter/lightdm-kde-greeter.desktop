@@ -2,6 +2,7 @@
 Name=LightDM KDE Greeter
 Name[bs]=LightDM KDE pozdravljač
 Name[ca]=Benvinguda del LightDM pel KDE
+Name[ca@valencia]=Benvinguda del LightDM pel KDE
 Name[cs]=Přihlašovací obrazovka LightDM KDE
 Name[da]=KDE-velkomstskærm til LightDM
 Name[de]=LightDM-KDE-Anmeldebildschirm
@@ -35,6 +36,7 @@ Name[zh_CN]=LightDM KDE 欢迎屏幕
 Comment=This runs the KDE greeter, it should only be run from LightDM
 Comment[bs]=Ovo pokreće KDE pozdrav, to bi se trebalo pokretati iz LightDM
 Comment[ca]=Executa la pantalla de benvinguda del KDE, només s'ha d'executar des de LightDM
+Comment[ca@valencia]=Executa la pantalla de benvinguda del KDE, només s'ha d'executar des de LightDM
 Comment[da]=Dette kører KDE-velkomstskærmen, den skal kun køres fra LightDM
 Comment[de]=Führt den KDE-Anmeldebildschirm aus – sollte nur durch LightDM gestartet werden
 Comment[el]=Αυτό εκτελεί την υποδοχή του KDE, θα πρέπει να εκτελείται μόνο από το LightDM

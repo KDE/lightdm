@@ -2,6 +2,7 @@
 Name=User Bar
 Name[bs]=Korisnička traka
 Name[ca]=Barra d'usuaris
+Name[ca@valencia]=Barra d'usuaris
 Name[cs]=Pruh uživatelů
 Name[da]=Brugerlinje
 Name[de]=Benutzerleiste
@@ -30,6 +31,7 @@ Name[zh_CN]=用户列表
 Comment=Pick your user from the user bar.
 Comment[bs]=Dohvati korisnik iz korisničke trake
 Comment[ca]=Trieu un usuari de la barra d'usuaris.
+Comment[ca@valencia]=Trieu un usuari de la barra d'usuaris.
 Comment[cs]=Vyberte si svůj účet z pruhu uživatelů.
 Comment[da]=Vælg din bruger fra brugerlinje
 Comment[de]=Wählen Sie einen Benutzer aus der Benutzerleiste.
