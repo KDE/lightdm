@@ -39,7 +39,6 @@ X-KDE-Keywords[sl]=lightdm,upravljalnik namizja,obraz,uporabnik,uporabniki,prija
 X-KDE-Keywords[sv]=lightdm,inloggningshanterare,ansikte,användare,inloggning,hälsning,tema,språk,session,sessioner,avstängning,omstart,gäst,automatisk inloggning
 X-KDE-Keywords[tr]=lightdm,gösterge yöneticisi,yüz,kullanıcı,kullanıcılar,oturum açma,karşılama,tema,dil,oturum,oturumlar,kapatma,yeniden başlatma,misafit,otomatik oturum aç
 X-KDE-Keywords[uk]=lightdm,display manager,face,user,users,login,greeting,theme,language,session,sessions,shutdown,restart,guest,auto login, керування екраном,обличчя,користувач,користувачі,вхід,вітання,тема,мова,сеанс,сеанси,вимикання,перезапуск,перезапустити,гість,гостьовий,автовхід,автоматичний вхід
-X-KDE-Keywords[x-test]=xxlightdm,display manager,face,user,users,login,greeting,theme,language,session,sessions,shutdown,restart,guest,auto loginxx
 X-KDE-Keywords[zh_CN]=lightdm,display manager,face,user,users,login,greeting,theme,language,session,sessions,shutdown,restart,guest,auto login,显示管理器,用户,登录,欢迎,会话,字体,墙纸,关机,重启,自动登录
 
 Name=Login Screen (LightDM)
@@ -74,7 +73,6 @@ Name[sl]=Prijavni zaslon (LightDM)
 Name[sv]=Inloggningsskärm (LightDM)
 Name[tr]=Oturum Ekranı (LightDM)
 Name[uk]=Екран вітання (LightDM)
-Name[x-test]=xxLogin Screen (LightDM)xx
 Name[zh_CN]=登录屏幕 (LightDM)
 
 Comment=Select login theme, adjust login features
@@ -108,5 +106,4 @@ Comment[sl]=Izberite temo prijave, prilagodite zmožnosti prijave
 Comment[sv]=Välj inloggningstema, justera inloggningsfunktioner
 Comment[tr]=Oturum açma temasını seçin, oturum açma özelliklerini ayarlayın
 Comment[uk]=Вибрати тему екрана вітання, скоригувати параметри вітання
-Comment[x-test]=xxSelect login theme, adjust login featuresxx
 Comment[zh_CN]=选择登录主题，调整登录功能
