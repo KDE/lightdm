@@ -109,6 +109,7 @@ Persistence=session
 
 [org.kde.kcontrol.kcmlightdm.save]
 Name=Save Settings
+Name[ast]=Guardar axustes
 Name[bs]=Snimi postavke
 Name[ca]=Desa l'arranjament
 Name[ca@valencia]=Guarda l'arranjament
