@@ -31,4 +31,3 @@ Comment[uk]=Запускає вікно входу KDE, можна викону�
 Comment[x-test]=xxThis runs the KDE greeter, it should only be run from LightDMxx
 Exec=lightdm-kde-greeter
 Type=Application
-X-Ubuntu-Gettext-Domain=lightdm
